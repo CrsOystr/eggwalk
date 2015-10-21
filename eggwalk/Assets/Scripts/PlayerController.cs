@@ -13,6 +13,8 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
+	[SerializeField] GameObject groundTrigger; // ground trigger will detect when the player is standing on something
+
 	private PlayerMotor motor;
 
 	void Start () {
@@ -37,8 +39,8 @@ public class PlayerController : MonoBehaviour {
 
 		motor.setXZvelocity (horzInput, vertInput);
 
-		// jump!
-		if (Input.GetButton ("Jump"))
+		// jump only when on the ground
+		if (groundTrigger.GetComponent<GroundTriggerBehavior>().isOnGround() && Input.GetButton ("Jump"))
 			motor.addJumpForce();
 
 	}
