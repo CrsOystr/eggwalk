@@ -7,7 +7,6 @@ using System.Collections;
 
 public class GroundTriggerBehavior : MonoBehaviour {
 	
-	[SerializeField]
 	public GameObject user; // the gameobject "using" this component
 	
 	private bool onGround = false;

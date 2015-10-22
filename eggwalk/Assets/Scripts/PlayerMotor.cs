@@ -13,9 +13,9 @@ using System.Collections;
 
 public class PlayerMotor : MonoBehaviour {
 
-	[SerializeField] public float forwardSpeed; // the player's run speed (Z direction)
-	[SerializeField] public float strafeSpeed; // the player's strafe speed (X direction)
-	[SerializeField] public float jumpForce; // the force applied to the rigid body when the jump button is pressed
+	public float forwardSpeed; // the player's run speed (Z direction)
+	public float strafeSpeed; // the player's strafe speed (X direction)
+	public float jumpForce; // the force applied to the rigid body when the jump button is pressed
 
 	private float xVel, zVel; // x = side to side, z = forward and back
 	private Rigidbody rigidBody;

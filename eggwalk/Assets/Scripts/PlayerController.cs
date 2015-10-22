@@ -13,7 +13,7 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
-	[SerializeField] GameObject groundTrigger; // ground trigger will detect when the player is standing on something
+	[SerializeField] private GameObject groundTrigger; // ground trigger will detect when the player is standing on something
 
 	private PlayerMotor motor;
 
