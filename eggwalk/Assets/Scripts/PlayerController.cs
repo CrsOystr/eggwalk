@@ -23,20 +23,11 @@ public class PlayerController : MonoBehaviour {
 
 	void Update () {
 		// initilize inputs to zero
-		float horzInput = 0;
-		float vertInput = 0;
+		float horzInput = Input.GetAxis ("Horizontal");
+		float vertInput = Input.GetAxis ("Vertical");
 
-		// input for keyboard control
-		// button input can be -1, 0, or 1
-		if (Input.GetButton ("W"))
-			vertInput = 1.0f;
-		if (Input.GetButton ("S"))
-			vertInput = -1.0f;
-		if (Input.GetButton ("D"))
-			horzInput = 1.0f;
-		if (Input.GetButton ("A"))
-			horzInput = -1.0f;
 
+		
 		motor.setXZvelocity (horzInput, vertInput);
 
 		// jump only when on the ground
