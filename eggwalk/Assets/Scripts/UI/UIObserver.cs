@@ -27,6 +27,12 @@ public class UIObserver : MonoBehaviour, Observer {
 				UISys.setVisibilityToRestart(true);
 				break;
 			}
-		}
+            case GameEnumerations.EventCategory.Player_HasRotatedHands:
+            {
+                float rotation = playerCharacter.P_RollingRotation;
+                UISys.setRotationToBalanceBar(rotation);
+                break;
+            }
+        }
 	}
 }

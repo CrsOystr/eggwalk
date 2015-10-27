@@ -9,12 +9,10 @@ public class SoundObserver : MonoBehaviour, Observer {
 		switch (category) {
 			case GameEnumerations.EventCategory.Player_IsHurt:
 			{
-				Debug.Log("From the SoundObserver");
 				break;
 			}
 			case GameEnumerations.EventCategory.Player_IsDead:
 			{
-				Debug.Log("From the SoundObserver");
 				break;
 			}
 		}

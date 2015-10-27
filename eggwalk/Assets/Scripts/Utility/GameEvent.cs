@@ -4,7 +4,8 @@ namespace GameEnumerations {
 	public enum EventCategory {
 		Player_PastRotationBounds,
 		Player_IsHurt,
-		Player_IsDead
+		Player_IsDead,
+        Player_HasRotatedHands
 	};
 }
 

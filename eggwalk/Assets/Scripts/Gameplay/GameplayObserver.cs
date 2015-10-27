@@ -14,9 +14,9 @@ public class GameplayObserver : MonoBehaviour, Observer {
 			}
 			case GameEnumerations.EventCategory.Player_IsDead:
 			{
-				Debug.Log("From the GameplayObserver");
 				break;
 			}
-		}
+
+        }
 	}
 }
