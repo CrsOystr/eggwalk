@@ -6,7 +6,7 @@ using System.Collections;
 
 public class SlidingObstacleBehavior : MonoBehaviour {
 
-	public float moveLerp; // how fast the object slides to the target position;
+	public float moveSpeed;
 	public Vector3 targetOffset; // the position (relative the this object's initial position!) the object should slide to
 
 	private GameObject player;
@@ -14,6 +14,7 @@ public class SlidingObstacleBehavior : MonoBehaviour {
 	private Rigidbody rigidBody;
 	private bool targetSet;
 	private Vector3 target;
+	private Vector3 unLerpedMoveTo; // a placeholder variable, see below. Used to calculate object's position before lerping values to smooth movement
 
 	// Use this for initialization
 	void Start () {
@@ -31,7 +32,8 @@ public class SlidingObstacleBehavior : MonoBehaviour {
 		}
 
 		if (targetSet) {
-			Vector3 newPos = Vector3.Lerp(transform.position, target, moveLerp);
+			unLerpedMoveTo = Vector3.MoveTowards (transform.position, target, moveSpeed * Time.deltaTime);
+			Vector3 newPos = Vector3.Lerp(transform.position, unLerpedMoveTo, 0.1f);
 			rigidBody.MovePosition(newPos);
 		}
 	}
