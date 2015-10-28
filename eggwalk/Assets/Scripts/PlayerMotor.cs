@@ -12,13 +12,20 @@ public class PlayerMotor : MonoBehaviour {
 
 	public float forwardSpeed; // the player's run speed (Z direction)
 	public float strafeSpeed; // the player's strafe speed (X direction)
+	public float rotationDueToGravity; // how much 'gravity' pulls the player over (not actually Rigidbody gravity)
+	public float dropAtRotation; // how far the player can tip over before dropping the item
+	public float tipsiness; // how easily the player tips over using input
 
 	private float xVel, zVel; // x = side to side, z = forward and back
+	private float horzInput, vertInput, balanceInput;
 
+	// camera bob values
 	public float cameraBobRate;
-	public float cameraBobHeight;
+	public float cameraBobAmplitude;
+	private float cameraStartHeight;
 
-	//handles the lives for player
+	//player life
+	private bool isAlive;
 	public int playerLives = 5;
 	private int currentLives;
 
@@ -31,13 +38,16 @@ public class PlayerMotor : MonoBehaviour {
 
 	//Initializes our player
 	void Start () {
+		isAlive = true;
 		rigidBody = GetComponent<Rigidbody> ();
+		cameraStartHeight = playerCamera.transform.localPosition.y;
 	}
 
 	//use this for stuff like inputs
 	void Update () {
-		float horzInput = Input.GetAxis ("Horizontal");
-		float vertInput = Input.GetAxis ("Vertical");
+		horzInput = Input.GetAxis ("Horizontal");
+		vertInput = Input.GetAxis ("Vertical");
+		balanceInput = Input.GetAxis ("Balance") * 1.5f;
 		
 		setXZvelocity (horzInput, vertInput);
 
@@ -45,14 +55,17 @@ public class PlayerMotor : MonoBehaviour {
 
 	// FixedUpdate e is used because we are doing things with physics.
 	void FixedUpdate () {
+		updateRotation ();
 		updateVelocity ();
 		updateCamera ();
 	}
+	
 	private void updateCamera (){
-		if (Time.time % cameraBobRate < (cameraBobRate / 2)) 
-			playerCamera.transform.position += new Vector3 (0, cameraBobHeight*Time.deltaTime, 0);
-		else
-			playerCamera.transform.position += new Vector3 (0, -cameraBobHeight*Time.deltaTime, 0);
+		float newHeight = cameraStartHeight + (cameraBobAmplitude*Mathf.Sin(cameraBobRate*Time.time));
+		playerCamera.transform.localPosition = new Vector3(
+			playerCamera.transform.localPosition.x,
+			newHeight,
+			playerCamera.transform.localPosition.z);
 	}
 
 	private void updateVelocity(){
@@ -62,6 +75,41 @@ public class PlayerMotor : MonoBehaviour {
 			currentVelocity.y, // keep the rigidbody's y velocity
 			zVel * Time.deltaTime);
 		rigidBody.velocity = newVelocity;
+	}
+
+	private void updateRotation() {
+
+		float inputVector = -horzInput + balanceInput; // this value ranges from -2 to 2
+
+		float playerRotation = transform.eulerAngles.z;
+		if (playerRotation > 180) // player's rotation will be from -180 to 180 (0 is up, 180 and -180 is down)
+			playerRotation -= 360;
+
+		float rotateBy;
+
+		if (horzInput == 0 && balanceInput == 0) { // only account for gravity when there is no player input
+			rotateBy = rotationDueToGravity * playerRotation;
+		} else { // player input takes over
+			rotateBy = inputVector * tipsiness;
+		}
+
+		transform.RotateAround (transform.position, Vector3.forward, rotateBy * Time.deltaTime);
+
+		/*
+		if (playerRotation > dropAtRotation) {
+			Vector3 newRotation = new Vector3 (
+				transform.eulerAngles.x,
+				transform.eulerAngles.y,
+				dropAtRotation);
+			transform.rotation = Quaternion.Euler (newRotation);
+		} else if (playerRotation < -dropAtRotation) {
+			Vector3 newRotation = new Vector3 (
+				transform.eulerAngles.x,
+				transform.eulerAngles.y,
+				360 - dropAtRotation);
+			transform.rotation = Quaternion.Euler (newRotation);
+		}
+		*/
 	}
 
 	public void setXZvelocity(float xInput, float zInput) {
