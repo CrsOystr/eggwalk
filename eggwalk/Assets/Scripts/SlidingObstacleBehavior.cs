@@ -7,6 +7,7 @@ using System.Collections;
 public class SlidingObstacleBehavior : MonoBehaviour {
 
 	public float moveSpeed;
+	public float moveLerp;
 	public Vector3 targetOffset; // the position (relative the this object's initial position!) the object should slide to
 
 	private GameObject player;
@@ -33,7 +34,7 @@ public class SlidingObstacleBehavior : MonoBehaviour {
 
 		if (targetSet) {
 			unLerpedMoveTo = Vector3.MoveTowards (transform.position, target, moveSpeed * Time.deltaTime);
-			Vector3 newPos = Vector3.Lerp(transform.position, unLerpedMoveTo, 0.1f);
+			Vector3 newPos = Vector3.Lerp(transform.position, unLerpedMoveTo, moveLerp);
 			rigidBody.MovePosition(newPos);
 		}
 	}

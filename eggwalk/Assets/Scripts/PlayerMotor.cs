@@ -28,6 +28,8 @@ public class PlayerMotor : MonoBehaviour {
 	private bool isAlive;
 	public int playerLives = 5;
 	private int currentLives;
+	private float lifeLossCooldown; // how quickly the player can lose life, so they don't lose all their lives at once
+	private float lifeLossCooldownCounter;
 
 	//Important objects used by player
 	private Rigidbody rigidBody;
@@ -41,6 +43,10 @@ public class PlayerMotor : MonoBehaviour {
 		isAlive = true;
 		rigidBody = GetComponent<Rigidbody> ();
 		cameraStartHeight = playerCamera.transform.localPosition.y;
+
+		currentLives = playerLives;
+		lifeLossCooldown = 100; // one second between lives lost
+		lifeLossCooldownCounter = 0f; // start at zero, because you can lose life immediately at the start of the game
 	}
 
 	//use this for stuff like inputs
@@ -51,9 +57,12 @@ public class PlayerMotor : MonoBehaviour {
 		
 		setXZvelocity (horzInput, vertInput);
 
+		if (lifeLossCooldownCounter > 0) {
+			lifeLossCooldownCounter -= Time.deltaTime;
+			if(lifeLossCooldownCounter < 0) lifeLossCooldownCounter = 0;
+		}
 	}
 
-	// FixedUpdate e is used because we are doing things with physics.
 	void FixedUpdate () {
 		updateRotation ();
 		updateVelocity ();
@@ -95,7 +104,7 @@ public class PlayerMotor : MonoBehaviour {
 
 		transform.RotateAround (transform.position, Vector3.forward, rotateBy * Time.deltaTime);
 
-		/*
+		/* commented out for now, prevent the player from tilting past a certain angle
 		if (playerRotation > dropAtRotation) {
 			Vector3 newRotation = new Vector3 (
 				transform.eulerAngles.x,
@@ -121,5 +130,20 @@ public class PlayerMotor : MonoBehaviour {
 	public void addJumpForce() {
 		// and jump force in the world's up direction
 		rigidBody.AddForce (Vector3.up * jumpForce, ForceMode.Impulse); // ForceMode.Impulse creates more of a "pop" when the force is applied
+	}
+
+	public int getCurrentLives() {
+		return currentLives;
+	}
+
+	void OnCollisionEnter(Collision col) {
+
+		if (col.gameObject.tag == "Obstacle") {
+			if (lifeLossCooldownCounter == 0) {
+				lifeLossCooldownCounter = lifeLossCooldown;
+				currentLives -= 1;
+			}
+		}
+
 	}
 }
