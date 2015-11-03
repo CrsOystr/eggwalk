@@ -15,6 +15,8 @@ public class PlayerMotor : MonoBehaviour {
 	public float rotationDueToGravity; // how much 'gravity' pulls the player over (not actually Rigidbody gravity)
 	public float dropAtRotation; // how far the player can tip over before dropping the item
 	public float tipsiness; // how easily the player tips over using input
+	public float balanceOverpower; // scales the balance input so that tilting opposite directions on the left and right sticks still allows the player to correct their balance. 
+									// Otherwise the player would not rotate.
 
 	private float xVel, zVel; // x = side to side, z = forward and back
 	private float horzInput, vertInput, balanceInput;
@@ -45,7 +47,7 @@ public class PlayerMotor : MonoBehaviour {
 		cameraStartHeight = playerCamera.transform.localPosition.y;
 
 		currentLives = playerLives;
-		lifeLossCooldown = 100; // one second between lives lost
+		lifeLossCooldown = 1; // one second between lives lost
 		lifeLossCooldownCounter = 0f; // start at zero, because you can lose life immediately at the start of the game
 	}
 
@@ -53,7 +55,13 @@ public class PlayerMotor : MonoBehaviour {
 	void Update () {
 		horzInput = Input.GetAxis ("Horizontal");
 		vertInput = Input.GetAxis ("Vertical");
-		balanceInput = Input.GetAxis ("Balance") * 1.5f;
+		balanceInput = Input.GetAxis ("Balance");
+
+		if (Mathf.Abs (balanceInput) < 0.1f)
+			balanceInput = 0f;
+		balanceInput *= balanceOverpower;
+
+		Debug.Log (balanceInput);
 		
 		setXZvelocity (horzInput, vertInput);
 
