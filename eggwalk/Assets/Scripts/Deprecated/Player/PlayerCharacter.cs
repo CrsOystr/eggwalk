@@ -15,6 +15,7 @@ public class PlayerCharacter : MonoBehaviour {
 	[SerializeField] private int TotalLives;
 	[SerializeField] private int CurrentLives;
 	private float P_LocalBobbingTime;
+
 	[SerializeField] private SphereCollider P_HandParent;
 	[SerializeField] private Camera P_Camera;
 	[SerializeField] private GameplayNotifier P_Notifier;

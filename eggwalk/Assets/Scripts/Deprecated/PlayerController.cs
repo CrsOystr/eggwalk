@@ -26,11 +26,11 @@ public class PlayerController : MonoBehaviour {
 		float horzInput = Input.GetAxis ("Horizontal");
 		float vertInput = Input.GetAxis ("Vertical");
 
-		motor.setXZvelocity (horzInput, vertInput);
+		//motor.setXZvelocity (horzInput, vertInput);
 
 		// jump only when on the ground
-		if (groundTrigger.GetComponent<GroundTriggerBehavior>().isOnGround() && Input.GetButton ("Jump"))
-			motor.addJumpForce();
+		//if (groundTrigger.GetComponent<GroundTriggerBehavior>().isOnGround() && Input.GetButton ("Jump"))
+			//motor.addJumpForce();
 
 	}
 }
