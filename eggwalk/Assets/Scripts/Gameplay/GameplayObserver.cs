@@ -11,8 +11,8 @@ public class GameplayObserver : MonoBehaviour, Observer
         {
             case GameEnumerations.EventCategory.Player_IsHurt:
                 {
-                    PlayerCharacter playerCharacter = e.Entity.GetComponent<PlayerCharacter>();
-                    playerCharacter.RecieveDamage(1);
+                    PlayerMotor player = e.Entity.GetComponent<PlayerMotor>();
+                    player.RecieveDamage(1);
                     break;
                 }
             case GameEnumerations.EventCategory.Player_IsDead:

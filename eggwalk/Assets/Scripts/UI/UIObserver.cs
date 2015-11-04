@@ -14,18 +14,11 @@ public class UIObserver : MonoBehaviour, Observer
         {
             case GameEnumerations.EventCategory.Player_IsHurt:
                 {
-                    PlayerCharacter playerCharacter = e.Entity.GetComponent<PlayerCharacter>();
-                    int currentLives = playerCharacter.P_CurrentLives;
-                    int totalLives = playerCharacter.P_TotalLives;
-
-                    if (currentLives < 0)
-                    {
-                        UISys.setCurrentLives(0, totalLives);
-                    }
-                    else
-                    {
-                        UISys.setCurrentLives(currentLives, totalLives);
-                    }
+                    PlayerMotor playerCharacter = e.Entity.GetComponent<PlayerMotor>();
+                    int currentLives = playerCharacter.getCurrentLives();
+                    int totalLives = playerCharacter.getTotalLives();
+                    UISys.setCurrentLives(currentLives, totalLives);
+                    UISys.showHurtMask(true);
 
                     break;
                 }
@@ -36,8 +29,8 @@ public class UIObserver : MonoBehaviour, Observer
                 }
             case GameEnumerations.EventCategory.Player_HasRotatedHands:
                 {
-                    PlayerCharacter playerCharacter = e.Entity.GetComponent<PlayerCharacter>();
-                    float rotation = playerCharacter.P_RollingRotation;
+                    PlayerMotor playerCharacter = e.Entity.GetComponent<PlayerMotor>();
+                    float rotation = playerCharacter.getRollingRotation;
                     UISys.setRotationToBalanceBar(rotation);
                     break;
                 }
