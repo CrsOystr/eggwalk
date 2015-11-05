@@ -178,8 +178,6 @@ public class PlayerMotor : MonoBehaviour
                 lifeLossCooldownCounter = lifeLossCooldown;
                 playerNotifier.notify(new GameEvent(this.gameObject, GameEnumerations.EventCategory.Player_IsHurt));
             }
-            //attempting to remove some of the effects of physics
-            col.gameObject.GetComponent<BoxCollider>().enabled = false;
         }
     }
 }
