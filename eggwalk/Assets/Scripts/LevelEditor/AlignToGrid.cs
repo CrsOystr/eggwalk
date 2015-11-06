@@ -11,7 +11,8 @@ public class AlignToGrid : MonoBehaviour {
 	public bool alignToX, alignToY, alignToZ;
 	void Update() {
 
-		if(!EditorApplication.isPlaying) return;
+// this will run in both edit and play mode, but shouldn't run in a build of the game
+#if UNITY_EDITOR
 
 		float newX, newY, newZ;
 		
@@ -34,7 +35,7 @@ public class AlignToGrid : MonoBehaviour {
 
 		transform.position = newPos;
 
-		Debug.Log ("test");
+#endif
 
 	}
 
