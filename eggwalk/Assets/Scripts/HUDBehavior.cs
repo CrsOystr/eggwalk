@@ -22,7 +22,7 @@ public class HUDBehavior : MonoBehaviour {
 		float difZRot = (playerHands.transform.rotation.z - balanceArrow.transform.rotation.z) * Mathf.Rad2Deg;
 		balanceArrow.transform.RotateAround (balanceArrow.transform.position, Vector3.forward, difZRot);
 
-		livesText.GetComponent<Text> ().text = "Lives: " + playerMotor.getCurrentLives() + "/" + playerMotor.playerLives;
+		livesText.GetComponent<Text> ().text = "Lives: " + playerMotor.getCurrentLives() + "/" + playerMotor.getTotalLives();
 		if (!playerMotor.getPlayerAlive()) {
 			restartButton.SetActive(true);
 		}
