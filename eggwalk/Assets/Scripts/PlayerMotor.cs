@@ -61,13 +61,13 @@ public class PlayerMotor : MonoBehaviour
             isAlive = false;
         }
 
-        // Get inputs
-        float horzInput = Input.GetAxis("Horizontal");
-        float balanceInput = Input.GetAxis("Rotation");
+		float HorizontalInput;
+		float BalanceInput;
+		getInput (out HorizontalInput, out BalanceInput);
 
         // Move player, add rotation based on inputs and gravity
-        movePlayer(horzInput);
-        addRollingRotationToHand(balanceInput + (rotationDueToGravity * getRollingRotation));
+		movePlayer(HorizontalInput);
+		addRollingRotationToHand(BalanceInput + (rotationDueToGravity * getRollingRotation));
 
         // Notify that hands have rotated
         playerNotifier.notify(new GameEvent(this.gameObject, GameEnumerations.EventCategory.Player_HasRotatedHands));
@@ -101,6 +101,26 @@ public class PlayerMotor : MonoBehaviour
         playerHandParent.transform.Rotate(Vector3.right * RotationAxisInput * rotationSpeed * Time.deltaTime);
         playerCamera.transform.Rotate(Vector3.forward * RotationAxisInput * rotationDueToStrafing * Time.deltaTime * cameraRotationSpeed);
     }
+
+	// Get inputs
+	private void getInput(out float HorizontalInput, out float BalanceInput) 
+	{
+		HorizontalInput = Input.GetAxis("Horizontal");
+		BalanceInput = Input.GetAxis("Rotation");
+		
+		// Gyroscope input
+		if (Mathf.Abs (Input.gyro.rotationRate.z) > 0.1f) 
+		{
+			BalanceInput = -1.0f * Input.gyro.rotationRate.z * 2.5f;
+		}
+		
+		// Touch
+		if (Input.touches.Length == 1) 
+		{
+			Touch t1 = Input.GetTouch (0);
+			HorizontalInput = (t1.position.x < Screen.width / 2) ? -1 : 1;
+		}
+	}
 
     public int getCurrentLives()
     {
