@@ -31,6 +31,11 @@ public class PlayerMotor : MonoBehaviour
 
     //player life
     private bool isAlive = true;
+	private bool canTurn = false;
+	private bool canTurnLeft;
+	private bool canTurnRight;
+	private bool isTurning = false;
+	private bool isTurningLeft;
     [SerializeField] private int currentLives = 5;
     [SerializeField] private int playerLives = 5;
 
@@ -41,11 +46,15 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private GameplayNotifier playerNotifier;
 
     private List<GameObject> obstaclesCollidedWith;
+	private List<GameObject> objectsInHand;
+	public GameObject obj;
+	public Transform objTransform;
 
     //Initializes our player
     void Start()
     {
         obstaclesCollidedWith = new List<GameObject>();
+		objectsInHand = new List<GameObject> ();
     }
 
     void Update()
@@ -57,7 +66,7 @@ public class PlayerMotor : MonoBehaviour
 
         if (currentLives <= 0 || Mathf.Abs(getRollingRotation) > dropAtRotation)
         {
-            playerNotifier.notify(new GameEvent(this.gameObject, GameEnumerations.EventCategory.Player_IsDead));
+			playerNotifier.notify(new GameEvent(new List<GameObject>{this.gameObject}, GameEnumerations.EventCategory.Player_IsDead));
             isAlive = false;
         }
 
@@ -69,8 +78,36 @@ public class PlayerMotor : MonoBehaviour
 		movePlayer(HorizontalInput);
 		addRollingRotationToHand(BalanceInput + (rotationDueToGravity * getRollingRotation));
 
-        // Notify that hands have rotated
-        playerNotifier.notify(new GameEvent(this.gameObject, GameEnumerations.EventCategory.Player_HasRotatedHands));
+		if (Input.GetButtonDown("TAction"))
+		{
+			Instantiate(obj, objTransform.position,objTransform.rotation);
+		}
+
+		if (canTurn) 
+		{
+			if (canTurnRight && Input.GetAxis("TurnRight") > 0)
+			{
+				isTurning = true;
+				isTurningLeft = true;
+				Debug.Log("Right");
+			}
+
+			if (canTurnLeft && Input.GetAxis("TurnLeft") > 0)
+			{
+				isTurning = true;
+				isTurningLeft = false;
+				Debug.Log("Left");
+			}
+		}
+
+		if (isTurning) 
+		{
+			float direction = (isTurningLeft) ? 1.0f : -1.0f;
+			turnPlayer(direction * 90.0f);
+		}
+		
+		// Notify that hands have rotated
+		playerNotifier.notify(new GameEvent(new List<GameObject>{this.gameObject}, GameEnumerations.EventCategory.Player_HasRotatedHands));
     }
 
     private void movePlayer(float MovementAxisInput)
@@ -79,15 +116,15 @@ public class PlayerMotor : MonoBehaviour
         Vector3 StrafingVector = Vector3.right * MovementAxisInput * playerStrafeSpeed * Time.deltaTime;
 
         // Bobbing Vectors
-        Vector3 BobbingVector = Vector3.up * bobbingAmplitude * Mathf.Sin(Time.time * bobbingRate);
-        Vector3 CameraBobbingVector = Vector3.up * cameraBobAmplitude * Mathf.Sin(Time.time * cameraBobRate);
+		Vector3 BobbingVector = Vector3.up * bobbingAmplitude * bobbingRate * Mathf.Sin(Time.time * bobbingRate) * Time.deltaTime;
+		Vector3 CameraBobbingVector = Vector3.up * cameraBobAmplitude * cameraBobRate * Mathf.Sin(Time.time * cameraBobRate) * Time.deltaTime;
 
         // Translation Vector
         Vector3 ShiftingHandsVector = Vector3.right * handStrafeSpeed * MovementAxisInput * Time.deltaTime;
 
         // Move the player, bob the hand
         playerHandParent.transform.Translate(BobbingVector + ShiftingHandsVector, Space.World);
-        this.transform.Translate(WalkingVector + StrafingVector);
+        //this.transform.Translate(WalkingVector + StrafingVector);
 
         // Camera Bob
         playerCamera.transform.Translate(CameraBobbingVector);
@@ -98,7 +135,7 @@ public class PlayerMotor : MonoBehaviour
 
     private void addRollingRotationToHand(float RotationAxisInput)
     {
-        playerHandParent.transform.Rotate(Vector3.right * RotationAxisInput * rotationSpeed * Time.deltaTime);
+        playerHandParent.transform.Rotate(Vector3.forward * RotationAxisInput * rotationSpeed * Time.deltaTime);
         playerCamera.transform.Rotate(Vector3.forward * RotationAxisInput * rotationDueToStrafing * Time.deltaTime * cameraRotationSpeed);
     }
 
@@ -131,6 +168,7 @@ public class PlayerMotor : MonoBehaviour
     {
         return playerLives;
     }
+
     public bool getPlayerAlive()
     {
         return isAlive;
@@ -141,8 +179,8 @@ public class PlayerMotor : MonoBehaviour
     {
         get
         {
-            return (playerHandParent.transform.eulerAngles.x < 0.0001f) ? 0  : 
-                NormalizeAngle(playerHandParent.transform.eulerAngles.x);
+            return (Mathf.Abs(playerHandParent.transform.eulerAngles.z) < 0.0001f) ? 0  : 
+                NormalizeAngle(playerHandParent.transform.eulerAngles.z);
         }
     }
 
@@ -157,15 +195,63 @@ public class PlayerMotor : MonoBehaviour
         currentLives -= damage;
     }
 
+	private void turnPlayer(float offset) 
+	{
+		if (Mathf.Abs (NormalizeAngle(this.transform.eulerAngles.y)) < 90.0f) 
+		{
+			this.transform.Rotate (offset * Time.deltaTime * Vector3.up, Space.World);
+		} else 
+		{
+			this.isTurning = false;
+		}
+	}
+
     //handles collison detection
     void OnCollisionEnter(Collision col)
-    {
-
+	{
         if (col.gameObject.tag == "Obstacle" && 
             !obstaclesCollidedWith.Contains(col.gameObject))
         {
             obstaclesCollidedWith.Add(col.gameObject);
-            playerNotifier.notify(new GameEvent(this.gameObject, GameEnumerations.EventCategory.Player_IsHurt));
+			playerNotifier.notify(new GameEvent(new List<GameObject>{this.gameObject}, GameEnumerations.EventCategory.Player_IsHurt));
+			return;
         }
+
+		if (col.gameObject.GetComponent<TurningVolume> () != null) 
+		{
+			TurningVolume turn = col.gameObject.GetComponent<TurningVolume> ();
+			if (turn.canTurnLeft) 
+			{
+				canTurnLeft = true;
+				playerNotifier.notify(new GameEvent(null, GameEnumerations.EventCategory.Player_CanTurnLeft));
+			}
+
+			if (turn.canTurnRight)
+			{
+				canTurnRight = true;
+				playerNotifier.notify(new GameEvent(null, GameEnumerations.EventCategory.Player_CanTurnRight));
+			}
+
+			this.canTurn = true;
+			return;
+		}
+
+		if (col.gameObject.GetComponent<Pickup> () != null) 
+		{
+			//Pickup pickup = col.gameObject.GetComponent<Pickup>();
+			Instantiate(obj, objTransform.position, objTransform.rotation);
+			return;
+		}
     }
+
+	void OnCollisionExit(Collision col) 
+	{
+		if (col.gameObject.GetComponent<TurningVolume> () != null) 
+		{
+			this.canTurn = false;
+			this.canTurnRight = false;
+			this.canTurnLeft = false;
+			return;
+		}
+	}
 }

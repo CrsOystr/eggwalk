@@ -48,7 +48,7 @@ public class UISystem : MonoBehaviour
 
     public void setRotationToBalanceBar(float deltaRotation)
     {
-        BalanceTriangle.transform.localEulerAngles = Vector3.forward * deltaRotation * -1.0f;
+        BalanceTriangle.transform.localEulerAngles = Vector3.forward * deltaRotation;
     }
 
     public void showHurtMask(bool visible)

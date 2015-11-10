@@ -11,7 +11,7 @@ public class GameplayObserver : MonoBehaviour, Observer
         {
             case GameEnumerations.EventCategory.Player_IsHurt:
                 {
-                    PlayerMotor player = e.Entity.GetComponent<PlayerMotor>();
+                    PlayerMotor player = e.Entity[0].GetComponent<PlayerMotor>();
                     player.RecieveDamage(1);
                     break;
                 }

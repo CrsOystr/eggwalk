@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerCharacter : MonoBehaviour {
 
@@ -33,7 +33,7 @@ public class PlayerCharacter : MonoBehaviour {
         }
 
 		if (P_CurrentLives <= 0 || Mathf.Abs(P_RollingRotation) > P_MaxRotation) {
-			P_Notifier.notify (new GameEvent (this.gameObject, GameEnumerations.EventCategory.Player_IsDead));
+			P_Notifier.notify (new GameEvent (new List<GameObject> {this.gameObject}, GameEnumerations.EventCategory.Player_IsDead));
             P_IsAlive = false;
 			return;
 		}
@@ -42,14 +42,14 @@ public class PlayerCharacter : MonoBehaviour {
 		float RotationAxisInput = Input.GetAxis ("Rotation");
 
 		if (Input.GetKeyUp (KeyCode.P)) {
-			P_Notifier.notify (new GameEvent (this.gameObject, GameEnumerations.EventCategory.Player_IsHurt));
+			P_Notifier.notify (new GameEvent (new List<GameObject>{this.gameObject}, GameEnumerations.EventCategory.Player_IsHurt));
 		}
 
 		MoveRight (HorizontalAxisInput);
 		AddRollingRotationToHand (RotationAxisInput);
         AddRollingRotationToHand(P_RotationDueToGravity * P_RollingRotation);
 
-        P_Notifier.notify(new GameEvent(this.gameObject, GameEnumerations.EventCategory.Player_HasRotatedHands));
+		P_Notifier.notify(new GameEvent(new List<GameObject>{this.gameObject}, GameEnumerations.EventCategory.Player_HasRotatedHands));
     }
 
 	/**
@@ -75,7 +75,7 @@ public class PlayerCharacter : MonoBehaviour {
 	}
 
 	private void AddRollingRotationToHand(float RotationAxisInput) {
-		P_HandParent.transform.Rotate (Vector3.right * RotationAxisInput * P_RotationSpeed * Time.deltaTime);
+		P_HandParent.transform.Rotate (Vector3.forward * RotationAxisInput * P_RotationSpeed * Time.deltaTime * -1.0f);
 		P_Camera.transform.Rotate (Vector3.forward * RotationAxisInput * P_RotationDueToStrafing * Time.deltaTime * 50.0f);
 	}
 
