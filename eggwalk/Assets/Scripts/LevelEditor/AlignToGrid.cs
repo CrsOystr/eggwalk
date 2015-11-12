@@ -39,6 +39,8 @@ public class AlignToGrid : MonoBehaviour {
 	}
 
 	private float roundToGridSize(float r) {
+		if (gridSize == 0)
+			return 0f;
 		return r - (r % gridSize);
 	}
 
