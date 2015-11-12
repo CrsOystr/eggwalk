@@ -39,6 +39,7 @@ public class FollowPathBehavior : MonoBehaviour {
 
 			transform.LookAt (pathPoints[pathIndex]);
 		}
+
 		transform.position = newPos;
 	}
 
