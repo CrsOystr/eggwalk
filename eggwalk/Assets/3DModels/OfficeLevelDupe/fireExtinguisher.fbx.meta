@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 2825294aba8e4344abae73c677652642
-timeCreated: 1445962573
+guid: 197e94cb53edf46408d9845328cc5f41
+timeCreated: 1445713419
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: pCube2
+    4300000: pCube4
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -50,9 +50,9 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
-    normalSmoothAngle: 60
+    normalSmoothAngle: 0
     splitTangentsAcrossUV: 1
-    normalImportMode: 0
+    normalImportMode: 1
     tangentImportMode: 1
   importAnimation: 1
   copyAvatar: 0

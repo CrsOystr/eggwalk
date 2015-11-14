@@ -1,7 +1,7 @@
 fileFormatVersion: 2
-guid: 2389614fc56679a49a7e7419cd812e9f
-timeCreated: 1446064010
-licenseType: Pro
+guid: a00ae0608febf7947a0af40050f2dac6
+timeCreated: 1445963876
+licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: pCube5
+    4300000: polySurface2
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -50,9 +50,9 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
-    normalSmoothAngle: 60
+    normalSmoothAngle: 0
     splitTangentsAcrossUV: 1
-    normalImportMode: 0
+    normalImportMode: 1
     tangentImportMode: 1
   importAnimation: 1
   copyAvatar: 0

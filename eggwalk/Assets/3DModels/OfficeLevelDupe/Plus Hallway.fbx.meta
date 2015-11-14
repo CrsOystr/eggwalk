@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: c533ff4889c41484891412802b3c30e0
-timeCreated: 1447359656
+guid: 2a094571be2f99040a74ddb18638688b
+timeCreated: 1446064010
 licenseType: Pro
 ModelImporter:
   serializedVersion: 18
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: pPlane21
+    4300000: pCube1
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -34,7 +34,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .00999999978
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
