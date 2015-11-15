@@ -23,8 +23,8 @@ public class PlayerController : MonoBehaviour {
 
 	void Update () {
 		// initilize inputs to zero
-		float horzInput = Input.GetAxis ("Horizontal");
-		float vertInput = Input.GetAxis ("Vertical");
+		//float horzInput = Input.GetAxis ("Horizontal");
+		//float vertInput = Input.GetAxis ("Vertical");
 
 		//motor.setXZvelocity (horzInput, vertInput);
 

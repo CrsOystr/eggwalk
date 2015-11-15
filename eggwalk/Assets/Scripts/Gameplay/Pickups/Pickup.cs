@@ -16,6 +16,6 @@ public class Pickup : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col)
 	{
-
+        Destroy(this.gameObject);
 	}
 }
