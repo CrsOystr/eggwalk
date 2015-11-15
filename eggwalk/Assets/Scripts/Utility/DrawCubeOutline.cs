@@ -3,12 +3,11 @@ using System.Collections;
 
 public class DrawCubeOutline : MonoBehaviour {
 
-    public BoxCollider boxCollider;
+    public Color BoxOutlineColor;
 
     void OnDrawGizmos()
     {
-        boxCollider = gameObject.GetComponent<BoxCollider>();
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(transform.position, boxCollider.size);
+        Gizmos.color = BoxOutlineColor;
+        Gizmos.DrawWireCube(transform.position, transform.localScale);
     }
 }
