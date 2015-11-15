@@ -8,7 +8,7 @@ using System.Collections.Generic;
  * 
  */
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent (typeof (Rigidbody))]
 
 public class PlayerMotor : MonoBehaviour
 {
@@ -46,7 +46,6 @@ public class PlayerMotor : MonoBehaviour
     private bool isAlive = true;
 
     // Important objects used by player
-    [SerializeField] private Rigidbody rigidBody;
     [SerializeField] private GameObject playerCamera;
     [SerializeField] private SphereCollider playerHandParent;
     [SerializeField] private GameplayNotifier playerNotifier;
@@ -298,8 +297,8 @@ public class PlayerMotor : MonoBehaviour
 	{
 		HorizontalInput = Input.GetAxis("Horizontal");
 		BalanceInput = Input.GetAxis("Rotation");
-        TurnRightInput = Input.GetButtonUp("TurnRight");
-        TurnLeftInput = Input.GetButtonUp("TurnLeft");
+        TurnRightInput = Input.GetButtonDown("TurnRight");
+        TurnLeftInput = Input.GetButtonDown("TurnLeft");
 
         // Gyroscope input
         if (Mathf.Abs (Input.gyro.rotationRate.z) > 0.1f) 
