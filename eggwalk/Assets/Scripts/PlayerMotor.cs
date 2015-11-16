@@ -195,12 +195,14 @@ public class PlayerMotor : MonoBehaviour
             {
                 isTurning = true;
                 isTurningLeft = false;
+                playerNotifier.notify(new GameEvent(null, GameEnumerations.EventCategory.Player_IsTurningRight));
             }
 
             if (canTurnLeft && TurnLeftPressed)
             {
                 isTurning = true;
                 isTurningLeft = true;
+                playerNotifier.notify(new GameEvent(null, GameEnumerations.EventCategory.Player_IsTurningLeft));
             }
         }
 
@@ -243,6 +245,7 @@ public class PlayerMotor : MonoBehaviour
         if (col.gameObject.GetComponent<TurningVolume>() != null)
         {
             TurningVolume turn = col.gameObject.GetComponent<TurningVolume>();
+
             if (turn.canTurnLeft)
             {
                 canTurnLeft = true;
@@ -256,6 +259,8 @@ public class PlayerMotor : MonoBehaviour
             }
 
             this.canTurn = true;
+            col.gameObject.GetComponent<TurningVolume>().IsPlayerTurning = true;
+
             return;
         }
     }
@@ -269,6 +274,8 @@ public class PlayerMotor : MonoBehaviour
     {
         if (col.gameObject.GetComponent<TurningVolume>() != null)
         {
+            col.gameObject.GetComponent<TurningVolume>().IsPlayerTurning = false;
+
             this.canTurn = false;
             this.canTurnRight = false;
             this.canTurnLeft = false;

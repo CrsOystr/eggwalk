@@ -7,6 +7,6 @@ using System.Collections;
  * Collect and Return an item 
  */
 public interface Objective {
-
+    string getObjectiveName();
     bool hasCompletedObjective();
 }

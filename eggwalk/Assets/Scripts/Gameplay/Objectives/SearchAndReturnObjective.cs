@@ -5,6 +5,7 @@ using System.Collections;
 
 public class SearchAndReturnObjective : MonoBehaviour, Objective {
 
+    [SerializeField] private string objectiveName;
     [SerializeField] private GameObject item;
     [SerializeField] private Transform assetStartLocation;
     [SerializeField] private bool hasCompleted;
@@ -26,6 +27,11 @@ public class SearchAndReturnObjective : MonoBehaviour, Objective {
         {
             this.hasCompleted = true;
         }
+    }
+
+    public string getObjectiveName()
+    {
+        return objectiveName;
     }
 
     public bool hasCompletedObjective()

@@ -9,8 +9,10 @@ namespace GameEnumerations {
         Player_HasRotatedHands,
 		Player_CanTurnRight,
 		Player_CanTurnLeft,
-		Player_IsTurning
-	};
+		Player_IsTurningLeft,
+        Player_IsTurningRight,
+        Gameplay_InitializeEvents
+    };
 }
 
 public class GameEvent {
