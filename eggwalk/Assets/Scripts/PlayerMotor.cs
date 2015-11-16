@@ -246,13 +246,13 @@ public class PlayerMotor : MonoBehaviour
         {
             TurningVolume turn = col.gameObject.GetComponent<TurningVolume>();
 
-            if (turn.canTurnLeft)
+            if (turn.canTurnLeft(this.transform.forward))
             {
                 canTurnLeft = true;
                 playerNotifier.notify(new GameEvent(null, GameEnumerations.EventCategory.Player_CanTurnLeft));
             }
 
-            if (turn.canTurnRight)
+            if (turn.canTurnRight(this.transform.forward))
             {
                 canTurnRight = true;
                 playerNotifier.notify(new GameEvent(null, GameEnumerations.EventCategory.Player_CanTurnRight));
