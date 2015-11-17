@@ -4,8 +4,8 @@ using System.Collections.Generic;
 public class GameState : MonoBehaviour {
 
     [SerializeField] private GameplayNotifier notifier;
-    [SerializeField] private GameObject currentObjective;
     [SerializeField] private List<GameObject> objectiveList;
+    private GameObject currentObjective;
     private bool isGameOver;
 
 	// Use this for initialization
@@ -16,10 +16,22 @@ public class GameState : MonoBehaviour {
         }
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    public bool startObjective(int id)
+    {
+        for (int i = 0; i < objectiveList.Count; i++)
+        {
+            Objective obj = objectiveList[i].GetComponent<Objective>();
+            if (id == obj.getObjectiveID())
+            {
+                currentObjective = objectiveList[i];
+                objectiveList[i].GetComponent<Objective>().startObjective();
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     private Objective getObjectiveFromGameObject(GameObject gameObject)
     {

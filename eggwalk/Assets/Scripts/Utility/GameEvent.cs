@@ -11,7 +11,10 @@ namespace GameEnumerations {
 		Player_CanTurnLeft,
 		Player_IsTurningLeft,
         Player_IsTurningRight,
-        Gameplay_InitializeEvents
+        Player_StartedObjective,
+        Player_ReturnedTarget,
+        Gameplay_InitializeEvents,
+        Gameplay_InitializeHUD
     };
 }
 

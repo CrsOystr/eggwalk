@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 public class UIObserver : MonoBehaviour, Observer
 {
-    [SerializeField]
-    private UISystem UISys;
+    [SerializeField] private UISystem UISys;
 
     public void onNotify(GameEvent e)
     {
@@ -12,6 +11,12 @@ public class UIObserver : MonoBehaviour, Observer
 
         switch (category)
         {
+            case GameEnumerations.EventCategory.Gameplay_InitializeHUD:
+                {
+                    PlayerMotor player = e.Entity[0].GetComponent<PlayerMotor>();
+                    UISys.setCurrentLives(player.getCurrentLives(), player.getTotalLives());
+                    break;
+                }
             case GameEnumerations.EventCategory.Gameplay_InitializeEvents:
                 {
                     List<GameObject> objectives = e.Entity;
@@ -39,6 +44,7 @@ public class UIObserver : MonoBehaviour, Observer
             case GameEnumerations.EventCategory.Player_IsDead:
                 {
                     UISys.setVisibilityToRestart(true);
+                    UISys.setVisibilityToLives(false);
                     break;
                 }
             case GameEnumerations.EventCategory.Player_HasRotatedHands:
@@ -66,6 +72,11 @@ public class UIObserver : MonoBehaviour, Observer
             case GameEnumerations.EventCategory.Player_IsTurningRight:
                 {
                     UISys.showLeftSignalImage(false);
+                    break;
+                }
+            case GameEnumerations.EventCategory.Player_StartedObjective:
+                {
+
                     break;
                 }
         }

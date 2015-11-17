@@ -85,6 +85,12 @@ public class UISystem : MonoBehaviour
         RestartButton.SetActive(true);
     }
 
+    public void setVisibilityToLives(bool visible)
+    {
+        LifeText.color = (visible) ? new Color(1.0f, 1.0f, 1.0f, 1.0f) :
+            new Color(0.0f, 0.0f, 0.0f, 0.0f);
+    }
+
     public void returnButtonAction(string level)
     {
         Application.LoadLevel(level);

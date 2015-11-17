@@ -8,5 +8,9 @@ using System.Collections;
  */
 public interface Objective {
     string getObjectiveName();
+    int getObjectiveID();
+    void startObjective();
+    void completeObjective();
+    bool hasStartedObjective();
     bool hasCompletedObjective();
 }

@@ -151,8 +151,7 @@ Shader "Shader Forge/Glow" {
                 float NdotL = max(0, dot( normalDirection, lightDirection ));
                 float LdotH = max(0.0,dot(lightDirection, halfDirection));
                 float node_65 = 0.0;
-                float node_3124 = (node_65 + ( (i.posWorld.g - _LowestValue) * (1.0 - node_65) ) / (_HighestValue - _LowestValue));
-                float3 diffuseColor = lerp(_BaseColor.rgb,(_GlowColor.rgb*_GlowIntensity*saturate(node_3124)),((1.0 - pow(1.0-max(0,dot(i.normalDir, viewDirection)),_Exp))*_Slider)); // Need this for specular when using metallic
+                float3 diffuseColor = lerp(_BaseColor.rgb,(_GlowColor.rgb*_GlowIntensity*saturate((node_65 + ( (i.posWorld.g - _LowestValue) * (1.0 - node_65) ) / (_HighestValue - _LowestValue)))),((1.0 - pow(1.0-max(0,dot(i.normalDir, viewDirection)),_Exp))*_Slider)); // Need this for specular when using metallic
                 float specularMonochrome;
                 float3 specularColor;
                 diffuseColor = DiffuseAndSpecularFromMetallic( diffuseColor, _Metallic, specularColor, specularMonochrome );
@@ -271,8 +270,7 @@ Shader "Shader Forge/Glow" {
                 float NdotL = max(0, dot( normalDirection, lightDirection ));
                 float LdotH = max(0.0,dot(lightDirection, halfDirection));
                 float node_65 = 0.0;
-                float node_3124 = (node_65 + ( (i.posWorld.g - _LowestValue) * (1.0 - node_65) ) / (_HighestValue - _LowestValue));
-                float3 diffuseColor = lerp(_BaseColor.rgb,(_GlowColor.rgb*_GlowIntensity*saturate(node_3124)),((1.0 - pow(1.0-max(0,dot(i.normalDir, viewDirection)),_Exp))*_Slider)); // Need this for specular when using metallic
+                float3 diffuseColor = lerp(_BaseColor.rgb,(_GlowColor.rgb*_GlowIntensity*saturate((node_65 + ( (i.posWorld.g - _LowestValue) * (1.0 - node_65) ) / (_HighestValue - _LowestValue)))),((1.0 - pow(1.0-max(0,dot(i.normalDir, viewDirection)),_Exp))*_Slider)); // Need this for specular when using metallic
                 float specularMonochrome;
                 float3 specularColor;
                 diffuseColor = DiffuseAndSpecularFromMetallic( diffuseColor, _Metallic, specularColor, specularMonochrome );
@@ -366,8 +364,7 @@ Shader "Shader Forge/Glow" {
                 o.Emission = 0;
                 
                 float node_65 = 0.0;
-                float node_3124 = (node_65 + ( (i.posWorld.g - _LowestValue) * (1.0 - node_65) ) / (_HighestValue - _LowestValue));
-                float3 diffColor = lerp(_BaseColor.rgb,(_GlowColor.rgb*_GlowIntensity*saturate(node_3124)),((1.0 - pow(1.0-max(0,dot(i.normalDir, viewDirection)),_Exp))*_Slider));
+                float3 diffColor = lerp(_BaseColor.rgb,(_GlowColor.rgb*_GlowIntensity*saturate((node_65 + ( (i.posWorld.g - _LowestValue) * (1.0 - node_65) ) / (_HighestValue - _LowestValue)))),((1.0 - pow(1.0-max(0,dot(i.normalDir, viewDirection)),_Exp))*_Slider));
                 float specularMonochrome;
                 float3 specColor;
                 diffColor = DiffuseAndSpecularFromMetallic( diffColor, _Metallic, specColor, specularMonochrome );

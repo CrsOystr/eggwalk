@@ -26,7 +26,7 @@ public class TurningVolume : MonoBehaviour {
      * On Output:
      *     If the player is allowed to turn right
      * Call:
-     *     PlayerMotor player = ...;
+     *     GameObject player = ...;
      *     Vector3 localForwardVector = player.transform.forward;
      *     TurningVolume vol = ...;
      *     if (vol.canTurnRight(localForwardVector)) {
@@ -38,8 +38,6 @@ public class TurningVolume : MonoBehaviour {
         float flfwDot = Vector3.Dot(localForwardVector, Vector3.forward);
         float flrwDot = Vector3.Dot(localForwardVector, Vector3.right);
         float epsilon = 0.0001f;
-
-        Debug.Log(flfwDot + ", " + flrwDot);
 
         if (southLaneOpen && NearlyEqual(flfwDot, 0.0f, epsilon) && NearlyEqual(flrwDot, 1.0f, epsilon))
         {
@@ -71,7 +69,7 @@ public class TurningVolume : MonoBehaviour {
      * On Output:
      *     If the player is allowed to turn left
      * Call:
-     *     PlayerMotor player = ...;
+     *     GameObject player = ...;
      *     Vector3 localForwardVector = player.transform.forward;
      *     TurningVolume vol = ...;
      *     if (vol.canTurnLeft(localForwardVector)) {
@@ -83,8 +81,6 @@ public class TurningVolume : MonoBehaviour {
         float flfwDot = Vector3.Dot(localForwardVector, Vector3.forward);
         float flrwDot = Vector3.Dot(localForwardVector, Vector3.right);
         float epsilon = 0.0001f;
-
-        Debug.Log(flfwDot + ", " + flrwDot);
 
         if (northLaneOpen && NearlyEqual(flfwDot, 0.0f, epsilon) && NearlyEqual(flrwDot, 1.0f, epsilon))
         {

@@ -49,7 +49,15 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private GameObject playerCamera;
     [SerializeField] private SphereCollider playerHandParent;
     [SerializeField] private GameplayNotifier playerNotifier;
+    [SerializeField] private Transform itemLocation;
+    private GameObject heldItem;
     private List<GameObject> obstaclesCollidedWith = new List<GameObject>();
+
+    void Start()
+    {
+        List<GameObject> entityMessage = new List<GameObject>{ this.gameObject };
+        playerNotifier.notify(new GameEvent(entityMessage, GameEnumerations.EventCategory.Gameplay_InitializeHUD));
+    }
 
     void Update()
     {
@@ -139,8 +147,11 @@ public class PlayerMotor : MonoBehaviour
      */
     private void addRollingRotationToHand(float RotationAxisInput)
     {
-        playerHandParent.transform.Rotate(Vector3.forward * RotationAxisInput * rotationSpeed * Time.deltaTime);
-        playerCamera.transform.Rotate(Vector3.forward * RotationAxisInput * cameraRotationSpeed * Time.deltaTime * -1.0f);
+        if (heldItem != null)
+        {
+            playerHandParent.transform.Rotate(Vector3.forward * RotationAxisInput * rotationSpeed * Time.deltaTime);
+            playerCamera.transform.Rotate(Vector3.forward * RotationAxisInput * cameraRotationSpeed * Time.deltaTime * -1.0f);
+        }
     }
 
     /**
@@ -229,7 +240,7 @@ public class PlayerMotor : MonoBehaviour
             return;
         }
 
-        if (col.gameObject.GetComponent<Pickup>() != null)
+        if (col.gameObject.GetComponent<BasicPickup>() != null)
         {
             return;
         }
@@ -262,6 +273,29 @@ public class PlayerMotor : MonoBehaviour
             col.gameObject.GetComponent<TurningVolume>().IsPlayerTurning = true;
 
             return;
+        }
+
+        if (col.gameObject.GetComponent<TriggerBox>() != null)
+        {
+            TriggerBox trigger = col.gameObject.GetComponent<TriggerBox>();
+            if (this.heldItem != null && trigger.Activated)
+            {
+                List<GameObject> entityMessage = new List<GameObject>() { this.gameObject, col.gameObject };
+                playerNotifier.notify(new GameEvent(entityMessage, GameEnumerations.EventCategory.Player_ReturnedTarget));
+            }
+
+            return;
+        }
+
+        if (col.gameObject.GetComponent<Pickup>() != null)
+        {
+            GameObject objective = col.gameObject.transform.parent.gameObject;
+            GameObject pickup = col.gameObject;
+
+            List<GameObject> entityMessage = new List<GameObject>() { this.gameObject, objective, pickup };
+
+            addItemIntoHand(col.gameObject.GetComponent<Pickup>().getTargetItem());
+            playerNotifier.notify(new GameEvent(entityMessage, GameEnumerations.EventCategory.Player_StartedObjective));
         }
     }
 
@@ -321,6 +355,36 @@ public class PlayerMotor : MonoBehaviour
 		}
 	}
 
+    public bool addItemIntoHand(GameObject targetItem)
+    {
+        if (this.heldItem != null)
+        {
+            return false;
+        }
+
+        this.heldItem = targetItem;
+        targetItem.transform.parent = playerHandParent.transform;
+        targetItem.transform.localPosition = this.itemLocation.localPosition;
+        targetItem.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        return true;
+    }
+
+    public bool removeItemFromHand()
+    {
+        if (this.heldItem == null)
+        {
+            return false;
+        }
+
+        this.heldItem = null;
+        return true;
+    }
+
+    public GameObject getItemInHand()
+    {
+        return heldItem;
+    }
+
     /**
      * getCurrentLives - Get Current Lives
      */
@@ -355,6 +419,11 @@ public class PlayerMotor : MonoBehaviour
             return (Mathf.Abs(playerHandParent.transform.eulerAngles.z) < 0.0001f) ? 0  : 
                 NormalizeAngle(playerHandParent.transform.eulerAngles.z);
         }
+    }
+
+    public void returnToNeutral()
+    {
+        playerHandParent.transform.localRotation = Quaternion.AngleAxis(0.0f, playerHandParent.transform.up);
     }
 
     /**
