@@ -13,11 +13,14 @@ public class GameplayObserver : MonoBehaviour, Observer
             case GameEnumerations.EventCategory.Player_IsHurt:
                 {
                     PlayerMotor player = e.Entity[0].GetComponent<PlayerMotor>();
+                    player.bumpPlayer();
                     player.RecieveDamage(1);
                     break;
                 }
             case GameEnumerations.EventCategory.Player_IsDead:
                 {
+                    Pickup pickup = e.Entity[0].GetComponent<PlayerMotor>().getItemInHand().GetComponent<Pickup>();
+                    pickup.pickupAction();
                     break;
                 }
             case GameEnumerations.EventCategory.Player_StartedObjective:

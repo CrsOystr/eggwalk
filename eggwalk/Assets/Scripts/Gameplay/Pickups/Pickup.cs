@@ -6,4 +6,5 @@ public interface Pickup {
     int getMass();
     Transform getCenterOfMass();
     GameObject getTargetItem();
+    void pickupAction();
 }

@@ -365,7 +365,7 @@ public class PlayerMotor : MonoBehaviour
         this.heldItem = targetItem;
         targetItem.transform.parent = playerHandParent.transform;
         targetItem.transform.localPosition = this.itemLocation.localPosition;
-        targetItem.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        targetItem.transform.localScale = new Vector3(4.0f, 4.0f, 4.0f);
         return true;
     }
 
@@ -378,6 +378,12 @@ public class PlayerMotor : MonoBehaviour
 
         this.heldItem = null;
         return true;
+    }
+
+    public void bumpPlayer()
+    {
+        float noise = UnityEngine.Random.Range(-20.0f, 20.0f);
+        addRollingRotationToHand(noise);
     }
 
     public GameObject getItemInHand()

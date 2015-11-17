@@ -1,31 +1,23 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent (typeof (SphereCollider))]
 
-public class BasicPickup : MonoBehaviour, Pickup {
+public class ExplodePickup : MonoBehaviour, Pickup {
 
     [SerializeField] private string pickupName;
     [SerializeField] private int mass;
     [SerializeField] private Transform centerOfMass;
-	public float amplitude;
-	public float rate;
+    [SerializeField] private List<Rigidbody> fragmentRigidBodies;
 
-    void Start()
-    {
-        this.gameObject.GetComponent<SphereCollider>().isTrigger = true;
+	// Use this for initialization
+	void Start () {
+        /*for (int i = 0; i < fragmentRigidBodies.Count; i++)
+        {
+            fragmentRigidBodies[i].useGravity = true;
+            fragmentRigidBodies[i].isKinematic = true;
+        }*/
     }
-
-	void FixedUpdate() 
-	{
-		Vector3 BobbingVector = Vector3.up * amplitude * rate * Mathf.Sin (rate * Time.time) * Time.deltaTime;
-		this.transform.Translate (BobbingVector);
-	}
-
-	void OnTriggerEnter(Collider col)
-	{
-        //Destroy(this.gameObject);
-	}
 
     public string getName()
     {
@@ -49,6 +41,9 @@ public class BasicPickup : MonoBehaviour, Pickup {
 
     public void pickupAction()
     {
-
+        for (int i = 0; i < fragmentRigidBodies.Count; i++)
+        {
+            fragmentRigidBodies[i].isKinematic = false;
+        }
     }
 }
