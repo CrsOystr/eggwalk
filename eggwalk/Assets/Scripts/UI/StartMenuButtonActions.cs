@@ -14,4 +14,9 @@ public class StartMenuButtonActions : MonoBehaviour {
     {
         Application.LoadLevel(level);
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }
