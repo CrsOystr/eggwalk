@@ -61,6 +61,11 @@ public class PlayerMotor : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetButtonDown("Restart"))
+        {
+            Application.LoadLevel("City_Master");
+        }
+
         if (!isAlive)
         {
             return;
@@ -365,7 +370,8 @@ public class PlayerMotor : MonoBehaviour
         this.heldItem = targetItem;
         targetItem.transform.parent = playerHandParent.transform;
         targetItem.transform.localPosition = this.itemLocation.localPosition;
-        targetItem.transform.localScale = new Vector3(4.0f, 4.0f, 4.0f);
+        //targetItem.transform.localScale = new Vector3(4.0f, 4.0f, 4.0f);
+        targetItem.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         return true;
     }
 
