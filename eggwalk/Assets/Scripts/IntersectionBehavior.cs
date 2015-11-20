@@ -3,6 +3,6 @@ using System.Collections;
 
 public class IntersectionBehavior : MonoBehaviour {
 
-	public bool northClosed, southClosed, eastClosed, westClosed;
+	public GameObject toNorth, toSouth, toEast, toWest; // the intersections adjacent to this intersection
 
 }
