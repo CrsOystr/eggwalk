@@ -42,8 +42,11 @@ public class VehicleBehavior : MonoBehaviour {
 		turnTowardTarget ();
 
 		// accelerate to desired speed
-		if (rb.velocity.magnitude < driveSpeed) {
-			rb.AddForce(transform.forward * acceleration, ForceMode.Force);
+		
+		rb.AddForce(transform.forward * acceleration, ForceMode.Force);
+		if (rb.velocity.magnitude > driveSpeed) {
+			Vector3 newVel = rb.velocity.normalized * driveSpeed;
+			rb.velocity = newVel;
 		}
 
 		float distToTarget = Vector3.Distance (transform.position, target.position);
@@ -64,7 +67,7 @@ public class VehicleBehavior : MonoBehaviour {
 
 		Quaternion targetRotation = Quaternion.LookRotation (adjTarget - transform.position);
 
-		transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, 0.5f);
+		transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, 0.1f);
 	}
 
 	private void pickNextTarget() {
