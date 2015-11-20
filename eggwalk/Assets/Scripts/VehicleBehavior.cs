@@ -9,16 +9,19 @@ public class VehicleBehavior : MonoBehaviour {
 		NORTH, SOUTH, EAST, WEST
 	}
 
+	public bool debug;
 	public float driveSpeed; // target drive speed
 	public float acceleration; // force applied to accelerate vehicle
 	public float roadWidth; // (minimum) width of the road this vehicle will drive along
 	public bool driveOnRight; // does this car drive on the left side of the road or the right side?
 	public Transform target; // where is the next point this car is driving too?
-	public float turnSpeed;
+	public float targetDistThreshold; // how close can you get to the target before choosing another?
+	//public float turnSpeed;
 	public DriveDirection direction;
 
 	private Rigidbody rb;
 	private Ray frontRay, backRay, leftRay, rightRay;
+	private bool targetSelected;
 
 	// Use this for initialization
 	void Start () {
@@ -28,10 +31,12 @@ public class VehicleBehavior : MonoBehaviour {
 		backRay = new Ray (transform.position, -transform.forward);
 		leftRay = new Ray (transform.position, -transform.right);
 		rightRay = new Ray (transform.position, transform.right);
+
+		targetSelected = true;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
 		// turn toward target
 		turnTowardTarget ();
@@ -41,25 +46,30 @@ public class VehicleBehavior : MonoBehaviour {
 			rb.AddForce(transform.forward * acceleration, ForceMode.Force);
 		}
 
-	}
-	
-	void OnTriggerEnter(Collider col) {
-		if (col.gameObject.tag == "Intersection") {
-			pickNextTarget();
-			Debug.Log (col.gameObject.tag);
+		float distToTarget = Vector3.Distance (transform.position, target.position);
+
+		if (distToTarget < targetDistThreshold) {
+			pickNextTarget ();
 		}
+
+		if (debug) {
+			Debug.DrawLine(transform.position, target.position);
+		}
+
 	}
 
 	private void turnTowardTarget () {
-		Quaternion targetRotation = Quaternion.LookRotation (target.position - transform.position);
+		//adjust target position so that target y is equal to the vehicle's y
+		Vector3 adjTarget = new Vector3 (target.position.x, transform.position.y, target.position.z);
 
-		transform.rotation = Quaternion.Slerp (transform.rotation, targetRotation, 1);
+		Quaternion targetRotation = Quaternion.LookRotation (adjTarget - transform.position);
+
+		transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, 0.5f);
 	}
 
 	private void pickNextTarget() {
 		bool success = false;
 		int choose;
-		DriveDirection nextDir;
 		IntersectionBehavior ib = target.GetComponentInParent<IntersectionBehavior> ();
 
 		// randomly pick the next direction
@@ -69,7 +79,6 @@ public class VehicleBehavior : MonoBehaviour {
 			switch(choose) {
 			case 0: // pick north
 				if(ib.toNorth != null && direction != DriveDirection.SOUTH) {
-					Debug.Log(ib.name);
 					direction = DriveDirection.NORTH;
 					target = ib.toNorth.transform.Find("SouthEast");
 					success = true;
@@ -78,7 +87,6 @@ public class VehicleBehavior : MonoBehaviour {
 				break;
 			case 1: // pick south
 				if(ib.toSouth != null && direction != DriveDirection.NORTH) {
-					Debug.Log(ib.name);
 					direction = DriveDirection.SOUTH;
 					target = ib.toSouth.transform.Find("NorthWest");
 					success = true;
@@ -87,7 +95,6 @@ public class VehicleBehavior : MonoBehaviour {
 				break;
 			case 2: // pick east
 				if(ib.toEast != null && direction != DriveDirection.WEST) {
-					Debug.Log(ib.name);
 					direction = DriveDirection.EAST;
 					target = ib.toEast.transform.Find("SouthWest");
 					success = true;
@@ -96,7 +103,6 @@ public class VehicleBehavior : MonoBehaviour {
 				break;
 			case 3: // pick west
 				if(ib.toWest != null && direction != DriveDirection.EAST) {
-					Debug.Log(ib.name);
 					direction = DriveDirection.WEST;
 					target = ib.toWest.transform.Find("NorthEast");
 					success = true;
