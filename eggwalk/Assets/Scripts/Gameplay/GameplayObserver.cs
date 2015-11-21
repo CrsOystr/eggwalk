@@ -26,8 +26,6 @@ public class GameplayObserver : MonoBehaviour, Observer
             case GameEnumerations.EventCategory.Player_StartedObjective:
                 {
                     Objective obj = e.Entity[1].GetComponent<Objective>();
-                    Pickup p = e.Entity[2].GetComponent<Pickup>();
-
                     gameState.startObjective(obj.getObjectiveID());
                     break;
                 }
@@ -35,8 +33,13 @@ public class GameplayObserver : MonoBehaviour, Observer
                 {
                     PlayerMotor player = e.Entity[0].GetComponent<PlayerMotor>();
                     GameObject pickup = player.getItemInHand();
-                    if (e.Entity[1].GetComponent<TriggerBox>().isTargetEqual(pickup))
+                    GameObject collider = e.Entity[1];
+                    if (collider.GetComponent<TriggerBox>().isTargetEqual(pickup))
                     {
+                        Objective obj = collider.GetComponentInParent<Objective>();
+
+                        gameState.completeObjective(obj.getObjectiveID());
+                        gameState.addToItemDeliveredList(pickup.GetComponent<Pickup>().getName());
                         player.returnToNeutral();
                         Destroy(pickup);
                     }

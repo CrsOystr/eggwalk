@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class UIObserver : MonoBehaviour, Observer
 {
+    [SerializeField] private GameState gameState;
     [SerializeField] private UISystem UISys;
 
     public void onNotify(GameEvent e)
@@ -19,16 +20,9 @@ public class UIObserver : MonoBehaviour, Observer
                 }
             case GameEnumerations.EventCategory.Gameplay_InitializeEvents:
                 {
-                    List<GameObject> objectives = e.Entity;
-                    string text = "";
-                    for (int i = 0; i < objectives.Count; i++)
-                    {
-                        text += "Obj " + (i + 1) + ": ";
-                        text += objectives[i].GetComponent<Objective>().getObjectiveName();
-                        text += "\n";
-                    }
+                    List<Objective> objList = gameState.getObjectiveList();
+                    UISys.setObjectiveListText(objList);
 
-                    UISys.setObjectiveListText(text);
                     break;
                 }
             case GameEnumerations.EventCategory.Player_IsHurt:
@@ -76,7 +70,25 @@ public class UIObserver : MonoBehaviour, Observer
                 }
             case GameEnumerations.EventCategory.Player_StartedObjective:
                 {
+                    Objective obj = gameState.getCurrentObjective().GetComponent<Objective>();
+                    List<Objective> objList = gameState.getObjectiveList();
+                    UISys.setObjectiveListText(obj, objList);
 
+                    break;
+                }
+            case GameEnumerations.EventCategory.Player_ReturnedTarget:
+                {
+                    GameObject obj = gameState.getCurrentObjective();
+                    List<Objective> objList = gameState.getObjectiveList();
+                    if (obj != null)
+                    {
+                        UISys.setObjectiveListText(obj.GetComponent<Objective>(), objList);
+                    } else
+                    {
+                        UISys.setDeliveredText(gameState.getLastDeliveredItem());
+                        UISys.setVisiblilityToDeliveredText(true);
+                        UISys.setObjectiveListText(objList);
+                    }
                     break;
                 }
         }

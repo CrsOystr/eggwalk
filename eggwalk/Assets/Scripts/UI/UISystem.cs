@@ -11,7 +11,9 @@ public class UISystem : MonoBehaviour
     [SerializeField] private Image TurnRightSignal;
     [SerializeField] private Image TurnLeftSignal;
     [SerializeField] private Text ObjectiveListTextBox;
+    [SerializeField] private Text DeliveredTextBox;
     private bool HurtMaskisVisible;
+    private bool DeliveredTextIsVisible;
     private bool TurnRightSignalIsVisible;
     private bool TurnLeftSignalIsVisible;
 
@@ -24,6 +26,10 @@ public class UISystem : MonoBehaviour
         setImageAlpha(ref HurtImageMask, 0.0f);
         setImageAlpha(ref TurnRightSignal, 0.0f);
         setImageAlpha(ref TurnLeftSignal, 0.0f);
+        DeliveredTextBox.color = new Color(DeliveredTextBox.color.r,
+                    DeliveredTextBox.color.g,
+                    DeliveredTextBox.color.b,
+                    0.0f);
     }
 
     void Update()
@@ -70,6 +76,27 @@ public class UISystem : MonoBehaviour
             {
                 setImageAlpha(ref TurnLeftSignal, 0.0f);
                 TurnLeftSignalIsVisible = false;
+            }
+        }
+
+        if (DeliveredTextIsVisible)
+        {
+            float alpha = DeliveredTextBox.color.a - 0.01f;
+
+            if (alpha > 0)
+            {
+                DeliveredTextBox.color = new Color(DeliveredTextBox.color.r, 
+                    DeliveredTextBox.color.g, 
+                    DeliveredTextBox.color.b, 
+                    alpha);
+            }
+            else
+            {
+                DeliveredTextBox.color = new Color(DeliveredTextBox.color.r,
+                    DeliveredTextBox.color.g,
+                    DeliveredTextBox.color.b,
+                    0.0f);
+                DeliveredTextIsVisible = false;
             }
         }
     }
@@ -123,9 +150,51 @@ public class UISystem : MonoBehaviour
     {
         image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
     }
+
+    public void setObjectiveListText(Objective currentObjective, List<Objective> objList)
+    {
+        setObjectiveListText("");
+        for (int i = 0; i < objList.Count; i++)
+        {
+            if (currentObjective.getObjectiveID() == objList[i].getObjectiveID())
+            {
+                setObjectiveListText(" * " + currentObjective.getObjectiveName());
+            }
+        }
+
+        for (int i = 0; i < objList.Count; i++)
+        {
+            if (currentObjective.getObjectiveID() != objList[i].getObjectiveID())
+            {
+                setObjectiveListText(ObjectiveListTextBox.text + "\n" + objList[i].getObjectiveName());
+            }
+        }
+    }
+
+    public void setObjectiveListText(List<Objective> objList)
+    {
+        setObjectiveListText("");
+        for (int i = 0; i < objList.Count; i++)
+        {
+            string text = (i > 0) ? "\n" + objList[i].getObjectiveName() :
+                                    objList[i].getObjectiveName();
+            setObjectiveListText(this.ObjectiveListTextBox.text + text);
+        }
+    }
     
     public void setObjectiveListText(string text)
     {
         ObjectiveListTextBox.text = text;
     } 
+
+    public void setVisiblilityToDeliveredText(bool val)
+    {
+        DeliveredTextBox.color = new Color(DeliveredTextBox.color.r, DeliveredTextBox.color.g, DeliveredTextBox.color.b, 1.0f);
+        DeliveredTextIsVisible = val;
+    }
+
+    public void setDeliveredText(string text)
+    {
+        DeliveredTextBox.text = "Delivered\n" + text;
+    }
 }

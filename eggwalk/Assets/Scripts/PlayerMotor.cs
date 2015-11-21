@@ -244,11 +244,6 @@ public class PlayerMotor : MonoBehaviour
             playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, GameEnumerations.EventCategory.Player_IsHurt));
             return;
         }
-
-        if (col.gameObject.GetComponent<BasicPickup>() != null)
-        {
-            return;
-        }
     }
 
     /**
@@ -299,8 +294,11 @@ public class PlayerMotor : MonoBehaviour
 
             List<GameObject> entityMessage = new List<GameObject>() { this.gameObject, objective, pickup };
 
-            addItemIntoHand(col.gameObject.GetComponent<Pickup>().getTargetItem());
-            playerNotifier.notify(new GameEvent(entityMessage, GameEnumerations.EventCategory.Player_StartedObjective));
+            if (heldItem == null)
+            {
+                addItemIntoHand(col.gameObject.GetComponent<Pickup>().getTargetItem());
+                playerNotifier.notify(new GameEvent(entityMessage, GameEnumerations.EventCategory.Player_StartedObjective));
+            }
         }
     }
 
@@ -370,7 +368,6 @@ public class PlayerMotor : MonoBehaviour
         this.heldItem = targetItem;
         targetItem.transform.parent = playerHandParent.transform;
         targetItem.transform.localPosition = this.itemLocation.localPosition;
-        //targetItem.transform.localScale = new Vector3(4.0f, 4.0f, 4.0f);
         targetItem.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         return true;
     }

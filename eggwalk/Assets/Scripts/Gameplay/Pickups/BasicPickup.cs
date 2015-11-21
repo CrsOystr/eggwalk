@@ -19,7 +19,7 @@ public class BasicPickup : MonoBehaviour, Pickup {
 	void FixedUpdate() 
 	{
 		Vector3 BobbingVector = Vector3.up * amplitude * rate * Mathf.Sin (rate * Time.time) * Time.deltaTime;
-		this.transform.Translate (BobbingVector);
+		this.transform.parent.Translate (BobbingVector, Space.Self);
 	}
 
 	void OnTriggerEnter(Collider col)
