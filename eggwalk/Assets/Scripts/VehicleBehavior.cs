@@ -62,10 +62,7 @@ public class VehicleBehavior : MonoBehaviour {
 	}
 
 	private void turnTowardTarget () {
-		//adjust target position so that target y is equal to the vehicle's y
-		Vector3 adjTarget = new Vector3 (target.position.x, transform.position.y, target.position.z);
-
-		Quaternion targetRotation = Quaternion.LookRotation (adjTarget - transform.position);
+		Quaternion targetRotation = Quaternion.LookRotation (target.transform.position - transform.position);
 
 		transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, 0.1f);
 	}
@@ -114,6 +111,9 @@ public class VehicleBehavior : MonoBehaviour {
 				break;
 			}
 		}
+
+		Vector3 adjTarget = new Vector3 (target.position.x, transform.position.y, target.position.z);
+		target.transform.position = adjTarget;
 
 	}
 
