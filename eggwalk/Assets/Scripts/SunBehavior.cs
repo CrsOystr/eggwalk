@@ -6,8 +6,9 @@ using System.Collections;
 public class SunBehavior : MonoBehaviour {
 
 	public Vector3 noonRotation;
-
 	public float hours, minutes; // enter time (24-hour time, i.e. 13:00 instead of 1:00PM)
+	public float minAmbient, maxAmbient; // min/max ambient intentsity
+
 	private Quaternion noonRotationQ; // x = 50, y = 330, z = 0
 	private Light sun;
 
@@ -25,8 +26,10 @@ public class SunBehavior : MonoBehaviour {
 
 		if (fraction < 0.25 || fraction > 0.75) {
 			sun.intensity = Mathf.Lerp (sun.intensity, 0f, 0.1f);
+			RenderSettings.ambientIntensity = Mathf.Lerp(RenderSettings.ambientIntensity, minAmbient, 0.1f);
 		} else {
 			sun.intensity = Mathf.Lerp (sun.intensity, 1f, 0.1f);
+			RenderSettings.ambientIntensity = Mathf.Lerp(RenderSettings.ambientIntensity, maxAmbient, 0.1f);
 		}
 	}
 
