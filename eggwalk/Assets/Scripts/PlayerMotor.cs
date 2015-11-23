@@ -61,11 +61,6 @@ public class PlayerMotor : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Restart"))
-        {
-            Application.LoadLevel("City_Master");
-        }
-
         if (!isAlive)
         {
             return;
@@ -356,7 +351,17 @@ public class PlayerMotor : MonoBehaviour
 			Touch t1 = Input.GetTouch (0);
 			HorizontalInput = (t1.position.x < Screen.width / 2) ? -1 : 1;
 		}
-	}
+
+        if (Input.GetButtonDown("Restart"))
+        {
+            Application.LoadLevel("City_Master");
+        }
+
+        if (Input.GetButtonDown("Pause"))
+        {
+            Time.timeScale = (Time.timeScale != 0.0f) ? 0.0f : 1.0f;
+        }
+    }
 
     public bool addItemIntoHand(GameObject targetItem)
     {
@@ -368,7 +373,7 @@ public class PlayerMotor : MonoBehaviour
         this.heldItem = targetItem;
         targetItem.transform.parent = playerHandParent.transform;
         targetItem.transform.localPosition = this.itemLocation.localPosition;
-        targetItem.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        targetItem.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
         return true;
     }
 
