@@ -2,6 +2,7 @@
 using System.Collections;
 
 [RequireComponent (typeof (SphereCollider))]
+[RequireComponent (typeof (Rigidbody))]
 
 public class BasicPickup : MonoBehaviour, Pickup {
 
@@ -14,6 +15,7 @@ public class BasicPickup : MonoBehaviour, Pickup {
     void Start()
     {
         this.gameObject.GetComponent<SphereCollider>().isTrigger = true;
+		this.gameObject.GetComponent<Rigidbody> ().isKinematic = true;
     }
 
 	void FixedUpdate() 
@@ -24,7 +26,7 @@ public class BasicPickup : MonoBehaviour, Pickup {
 
 	void OnTriggerEnter(Collider col)
 	{
-        //Destroy(this.gameObject);
+
 	}
 
     public string getName()
@@ -49,6 +51,6 @@ public class BasicPickup : MonoBehaviour, Pickup {
 
     public void pickupAction()
     {
-
+		this.gameObject.GetComponent<Rigidbody> ().isKinematic = false;
     }
 }

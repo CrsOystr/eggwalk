@@ -238,7 +238,7 @@ public class PlayerMotor : MonoBehaviour
             obstaclesCollidedWith.Add(col.gameObject);
             playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, GameEnumerations.EventCategory.Player_IsHurt));
             return;
-        }
+		}
     }
 
     /**
@@ -354,7 +354,7 @@ public class PlayerMotor : MonoBehaviour
 
         if (Input.GetButtonDown("Restart"))
         {
-            Application.LoadLevel("City_Master");
+            Application.LoadLevel("City_Gio");
         }
 
         if (Input.GetButtonDown("Pause"))
