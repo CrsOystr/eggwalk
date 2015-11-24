@@ -19,8 +19,12 @@ public class GameplayObserver : MonoBehaviour, Observer
                 }
             case GameEnumerations.EventCategory.Player_IsDead:
                 {
-                    Pickup pickup = e.Entity[0].GetComponent<PlayerMotor>().getItemInHand().GetComponent<Pickup>();
-                    pickup.pickupAction();
+					
+                    PlayerMotor player = e.Entity[0].GetComponent<PlayerMotor>();
+					if (player != null) {
+						Pickup pickup = player.getItemInHand().GetComponent<Pickup>();
+		                    pickup.pickupAction();
+					}
                     break;
                 }
             case GameEnumerations.EventCategory.Player_StartedObjective:
