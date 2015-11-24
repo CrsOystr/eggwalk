@@ -33,7 +33,7 @@ public class SunBehavior : MonoBehaviour {
 		}
 	}
 
-	private float getTimeFraction() { // 0.5 = noon
+	public float getTimeFraction() { // 0.5 = noon
 		float adjMinutes = minutes/60;
 		float adjHour = (hours + adjMinutes) % 24;
 		
