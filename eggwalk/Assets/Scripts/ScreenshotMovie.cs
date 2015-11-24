@@ -7,15 +7,22 @@ public class ScreenshotMovie : MonoBehaviour
 	public string folder = "ScreenshotMovieOutput";
 	public int frameRate = 30;
 	public int sizeMultiplier = 1;
+	public bool recording = false;
 	
 	private string realFolder = "";
 	
 	void Start()
 	{
+	
+	}
+
+	private void StartRecording()
+	{
+		recording = true;
 		// Set the playback framerate!
 		// (real time doesn't influence time anymore)
 		Time.captureFramerate = frameRate;
-		
+
 		// Find a folder that doesn't exist yet by appending numbers!
 		realFolder = folder;
 		int count = 1;
@@ -30,10 +37,16 @@ public class ScreenshotMovie : MonoBehaviour
 	
 	void Update()
 	{
+		if (!recording && Input.GetKeyDown("space"))
+			StartRecording ();
 		// name is "realFolder/shot 0005.png"
-		var name = string.Format("{0}/shot {1:D04}.png", realFolder, Time.frameCount);
+		else if(recording && Input.GetKeyDown("space"))
+			recording = false;
+		else if(recording){
+			var name = string.Format("{0}/shot {1:D04}.png", realFolder, Time.frameCount);
 		
-		// Capture the screenshot
-		Application.CaptureScreenshot(name, sizeMultiplier);
+			// Capture the screenshot
+			Application.CaptureScreenshot(name, sizeMultiplier);
+		}
 	}
 }
