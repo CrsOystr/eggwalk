@@ -1,16 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(Rigidbody))]
+
 public class PhysicsOnCollision : MonoBehaviour {
 
+	private Rigidbody rb;
+
+	void Start () {
+		rb = GetComponent<Rigidbody> ();
+		rb.isKinematic = true;
+	}
+
 	void OnCollisionEnter(Collision col) {
-		if (col.gameObject.GetComponent<Rigidbody> () != null && gameObject.GetComponent<Rigidbody>() == null) {
 
-			Rigidbody rb = gameObject.AddComponent<Rigidbody>();
-			rb.mass = 1;
+		Rigidbody colRB = col.gameObject.GetComponent<Rigidbody> ();
 
+		if (colRB != null)
+			rb.isKinematic = false;
 
-		}
 	}
 
 }
