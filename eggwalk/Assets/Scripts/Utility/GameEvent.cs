@@ -14,7 +14,10 @@ namespace GameEnumerations {
         Player_StartedObjective,
         Player_ReturnedTarget,
         Gameplay_InitializeEvents,
-        Gameplay_InitializeHUD
+        Gameplay_InitializeHUD,
+        Gameplay_Countdown,
+        Gameplay_StartLevel,
+        Gameplay_CompletedLevel
     };
 }
 

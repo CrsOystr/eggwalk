@@ -16,6 +16,8 @@ public class UIObserver : MonoBehaviour, Observer
                 {
                     PlayerMotor player = e.Entity[0].GetComponent<PlayerMotor>();
                     UISys.setCurrentLives(player.getCurrentLives(), player.getTotalLives());
+                    UISys.setCountDownText(gameState.InitialTimeToStart + "");
+                    UISys.setVisibilityToGameOverText(false);
                     break;
                 }
             case GameEnumerations.EventCategory.Gameplay_InitializeEvents:
@@ -25,20 +27,46 @@ public class UIObserver : MonoBehaviour, Observer
 
                     break;
                 }
+            case GameEnumerations.EventCategory.Gameplay_Countdown:
+                {
+                    if (gameState.CountdownTime > 0)
+                    {
+                        UISys.setCountDownText(gameState.CountdownTime + "");
+                    } else if (gameState.CountdownTime == 0)
+                    {
+                        UISys.setCountDownText("GO!");
+                    } else
+                    {
+                        UISys.setCountDownText("");
+                    }
+
+                    break;
+                }
+            case GameEnumerations.EventCategory.Gameplay_StartLevel:
+                {
+                    break;
+                }
+            case GameEnumerations.EventCategory.Gameplay_CompletedLevel:
+                {
+                    UISys.goToNextLevelScreen();
+                    break;
+                }
             case GameEnumerations.EventCategory.Player_IsHurt:
                 {
                     PlayerMotor playerCharacter = e.Entity[0].GetComponent<PlayerMotor>();
-                    int currentLives = playerCharacter.getCurrentLives();
-                    int totalLives = playerCharacter.getTotalLives();
-                    UISys.setCurrentLives(currentLives, totalLives);
-                    UISys.showHurtMask(true);
+                    if (playerCharacter.getPlayerAlive())
+                    {
+                        int currentLives = playerCharacter.getCurrentLives();
+                        int totalLives = playerCharacter.getTotalLives();
+                        UISys.setCurrentLives(currentLives, totalLives);
+                        UISys.showHurtMask(true);
+                    }
 
                     break;
                 }
             case GameEnumerations.EventCategory.Player_IsDead:
                 {
-                    UISys.setVisibilityToRestart(true);
-                    UISys.setVisibilityToLives(false);
+                    UISys.goToGameOverScreen();
                     break;
                 }
             case GameEnumerations.EventCategory.Player_HasRotatedHands:
@@ -73,6 +101,7 @@ public class UIObserver : MonoBehaviour, Observer
                     Objective obj = gameState.getCurrentObjective().GetComponent<Objective>();
                     List<Objective> objList = gameState.getObjectiveList();
                     UISys.setObjectiveListText(obj, objList);
+                    UISys.setVisibilityToBalanceBar(true);
 
                     break;
                 }
@@ -89,6 +118,7 @@ public class UIObserver : MonoBehaviour, Observer
                         UISys.setVisiblilityToDeliveredText(true);
                         UISys.setObjectiveListText(objList);
                     }
+                    UISys.setVisibilityToBalanceBar(false);
                     break;
                 }
         }

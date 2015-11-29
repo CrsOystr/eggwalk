@@ -4,14 +4,20 @@ using System.Collections.Generic;
 
 public class UISystem : MonoBehaviour
 {
+    [SerializeField] private GameObject HUDElements;
+    [SerializeField] private GameObject GameOverElements;
     [SerializeField] private Text LifeText;
     [SerializeField] private GameObject RestartButton;
+    [SerializeField] private GameObject BalanceBar;
     [SerializeField] private GameObject BalanceTriangle;
     [SerializeField] private Image HurtImageMask;
     [SerializeField] private Image TurnRightSignal;
     [SerializeField] private Image TurnLeftSignal;
+    [SerializeField] private Text ObjectiveTitle;
     [SerializeField] private Text ObjectiveListTextBox;
     [SerializeField] private Text DeliveredTextBox;
+    [SerializeField] private Text CountdownText;
+    [SerializeField] private Text GameOverText;
     private bool HurtMaskisVisible;
     private bool DeliveredTextIsVisible;
     private bool TurnRightSignalIsVisible;
@@ -22,6 +28,7 @@ public class UISystem : MonoBehaviour
         HurtMaskisVisible = false;
         TurnRightSignalIsVisible = false;
         TurnLeftSignalIsVisible = false;
+        setVisibilityToBalanceBar(false);
 
         setImageAlpha(ref HurtImageMask, 0.0f);
         setImageAlpha(ref TurnRightSignal, 0.0f);
@@ -30,6 +37,7 @@ public class UISystem : MonoBehaviour
                     DeliveredTextBox.color.g,
                     DeliveredTextBox.color.b,
                     0.0f);
+        GameOverElements.SetActive(false);
     }
 
     void Update()
@@ -107,17 +115,6 @@ public class UISystem : MonoBehaviour
                                              "Lives " + 0 + "/" + maxLives;
     }
 
-    public void setVisibilityToRestart(bool isVisible)
-    {
-        RestartButton.SetActive(true);
-    }
-
-    public void setVisibilityToLives(bool visible)
-    {
-        LifeText.color = (visible) ? new Color(1.0f, 1.0f, 1.0f, 1.0f) :
-            new Color(0.0f, 0.0f, 0.0f, 0.0f);
-    }
-
     public void returnButtonAction(string level)
     {
         Application.LoadLevel(level);
@@ -185,7 +182,26 @@ public class UISystem : MonoBehaviour
     public void setObjectiveListText(string text)
     {
         ObjectiveListTextBox.text = text;
-    } 
+    }
+
+    public void setVisibilityToRestart(bool isVisible)
+    {
+        RestartButton.SetActive(true);
+    }
+
+    public void setVisibilityToLives(bool visible)
+    {
+        LifeText.color = (visible) ? new Color(1.0f, 1.0f, 1.0f, 1.0f) :
+            new Color(0.0f, 0.0f, 0.0f, 0.0f);
+    }
+
+    public void setVisibilityToObjectives(bool visible)
+    {
+        ObjectiveListTextBox.color = (visible) ? new Color(1.0f, 1.0f, 1.0f, 1.0f) :
+            new Color(0.0f, 0.0f, 0.0f, 0.0f);
+        ObjectiveTitle.color = (visible) ? new Color(1.0f, 1.0f, 1.0f, 1.0f) :
+            new Color(0.0f, 0.0f, 0.0f, 0.0f);
+    }
 
     public void setVisiblilityToDeliveredText(bool val)
     {
@@ -193,8 +209,37 @@ public class UISystem : MonoBehaviour
         DeliveredTextIsVisible = val;
     }
 
+    public void setVisibilityToGameOverText(bool val)
+    {
+    }
+
+    public void setVisibilityToBalanceBar(bool val)
+    {
+        BalanceTriangle.SetActive(val);
+        BalanceBar.SetActive(val);
+    }
+
     public void setDeliveredText(string text)
     {
         DeliveredTextBox.text = "Delivered\n" + text;
+    }
+
+    public void goToGameOverScreen()
+    {
+        HUDElements.SetActive(false);
+        GameOverElements.SetActive(true);
+        GameOverText.text = "GAME OVER";
+    }
+
+    public void goToNextLevelScreen()
+    {
+        HUDElements.SetActive(false);
+        GameOverElements.SetActive(true);
+        GameOverText.text = "SUCCESS!";
+    }
+
+    public void setCountDownText(string text)
+    {
+        CountdownText.text = text;
     }
 }

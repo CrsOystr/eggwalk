@@ -10,6 +10,11 @@ public class GameplayObserver : MonoBehaviour, Observer
         GameEnumerations.EventCategory category = e.Category;
         switch (category)
         {
+            case GameEnumerations.EventCategory.Gameplay_StartLevel:
+                {
+                    gameState.startGame();
+                    break;
+                }
             case GameEnumerations.EventCategory.Player_IsHurt:
                 {
                     PlayerMotor player = e.Entity[0].GetComponent<PlayerMotor>();
@@ -19,11 +24,15 @@ public class GameplayObserver : MonoBehaviour, Observer
                 }
             case GameEnumerations.EventCategory.Player_IsDead:
                 {
-					
+                    gameState.IsGameOver = true;
+
                     PlayerMotor player = e.Entity[0].GetComponent<PlayerMotor>();
-					if (player != null) {
-						Pickup pickup = player.getItemInHand().GetComponent<Pickup>();
-		                    pickup.pickupAction();
+                    player.onDeath();
+
+                    GameObject pickup = player.getItemInHand();
+                    if (pickup != null)
+                    {
+		                pickup.GetComponent<Pickup>().pickupAction();
 					}
                     break;
                 }
@@ -46,6 +55,12 @@ public class GameplayObserver : MonoBehaviour, Observer
                         gameState.addToItemDeliveredList(pickup.GetComponent<Pickup>().getName());
                         player.returnToNeutral();
                         Destroy(pickup);
+
+                        if (gameState.HasCompletedLevel)
+                        {
+                            gameState.completeLevel();
+                            player.startPlayer(false);
+                        }
                     }
                     break;
                 }

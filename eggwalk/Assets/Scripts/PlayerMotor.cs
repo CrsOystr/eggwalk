@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 public class PlayerMotor : MonoBehaviour
 {
-
+    [SerializeField] private bool playerCanStart = true;
     [SerializeField] private float playerForwardSpeed; // the player's run speed (Z direction)
     [SerializeField] private float playerStrafeSpeed; // the player's strafe speed (X direction)
     [SerializeField] private float handStrafeSpeed;
@@ -43,6 +43,8 @@ public class PlayerMotor : MonoBehaviour
     // Player life
     [SerializeField] private int currentLives = 5;
     [SerializeField] private int playerLives = 5;
+    [SerializeField] private float buffingTime = 2.0f;
+    private bool buffed;
     private bool isAlive = true;
 
     // Important objects used by player
@@ -51,7 +53,6 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private GameplayNotifier playerNotifier;
     [SerializeField] private Transform itemLocation;
     private GameObject heldItem;
-    private List<GameObject> obstaclesCollidedWith = new List<GameObject>();
 
     void Start()
     {
@@ -110,16 +111,23 @@ public class PlayerMotor : MonoBehaviour
      */
     private void movePlayer(float MovementAxisInput)
     {
-        Vector3 WalkingVector = playerHandParent.transform.forward * playerForwardSpeed * Time.deltaTime;
+        float baseSpeed = (this.playerCanStart) ? 1.0f : 0.0f;
 
-        // Bobbing Vectors
-		Vector3 BobbingVector = playerHandParent.transform.up * bobbingAmplitude * bobbingRate * Mathf.Sin(Time.time * bobbingRate) * Time.deltaTime;
-		Vector3 CameraBobbingVector = Vector3.up * cameraBobAmplitude * cameraBobRate * Mathf.Sin(Time.time * cameraBobRate) * Time.deltaTime;
+        Vector3 WalkingVector = playerHandParent.transform.forward * playerForwardSpeed * Time.deltaTime * baseSpeed;
+
+        if (this.buffed)
+        {
+            WalkingVector = 0.5f * WalkingVector;
+        }
 
         // Translation Vector
         Vector3 RightVector = Vector3.Cross(Vector3.up, playerHandParent.transform.forward);
-        Vector3 StrafingVector = RightVector * MovementAxisInput * playerStrafeSpeed * Time.deltaTime;
-        Vector3 ShiftingHandsVector = RightVector * handStrafeSpeed * MovementAxisInput * Time.deltaTime;
+        Vector3 StrafingVector = RightVector * MovementAxisInput * playerStrafeSpeed * Time.deltaTime * baseSpeed;
+
+        // Bobbing Vectors
+        Vector3 BobbingVector = playerHandParent.transform.up * bobbingAmplitude * bobbingRate * Mathf.Sin(Time.time * bobbingRate) * Time.deltaTime * baseSpeed;
+		Vector3 CameraBobbingVector = Vector3.up * cameraBobAmplitude * cameraBobRate * Mathf.Sin(Time.time * cameraBobRate) * Time.deltaTime * baseSpeed;
+        Vector3 ShiftingHandsVector = RightVector * handStrafeSpeed * MovementAxisInput * Time.deltaTime * baseSpeed;
 
         // Move the player, bob the hand
         playerHandParent.transform.Translate(ShiftingHandsVector + BobbingVector, Space.World);
@@ -232,10 +240,10 @@ public class PlayerMotor : MonoBehaviour
      */
     void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.tag == "Obstacle" &&
-            !obstaclesCollidedWith.Contains(col.gameObject))
+        if (col.gameObject.tag == "Obstacle" && !buffed)
         {
-            obstaclesCollidedWith.Add(col.gameObject);
+            this.buffed = true;
+            StartCoroutine(removeBuffer());
             playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, GameEnumerations.EventCategory.Player_IsHurt));
             return;
 		}
@@ -388,10 +396,23 @@ public class PlayerMotor : MonoBehaviour
         return true;
     }
 
+    private IEnumerator removeBuffer()
+    {
+        yield return new WaitForSeconds(this.buffingTime);
+        this.buffed = false;
+    }
+
     public void bumpPlayer()
     {
         float noise = UnityEngine.Random.Range(-20.0f, 20.0f);
         addRollingRotationToHand(noise);
+    }
+
+    public void onDeath()
+    {
+        this.GetComponent<Rigidbody>().freezeRotation = false;
+        this.GetComponentsInChildren<MeshRenderer>()[0].enabled = false;
+        this.GetComponentsInChildren<MeshRenderer>()[1].enabled = false;
     }
 
     public GameObject getItemInHand()
@@ -433,6 +454,11 @@ public class PlayerMotor : MonoBehaviour
             return (Mathf.Abs(playerHandParent.transform.eulerAngles.z) < 0.0001f) ? 0  : 
                 NormalizeAngle(playerHandParent.transform.eulerAngles.z);
         }
+    }
+
+    public void startPlayer(bool val)
+    {
+        this.playerCanStart = val;
     }
 
     public void returnToNeutral()
