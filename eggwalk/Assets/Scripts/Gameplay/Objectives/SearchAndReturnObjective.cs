@@ -29,6 +29,11 @@ public class SearchAndReturnObjective : MonoBehaviour, Objective {
         return objectiveID;
     }
 
+    public Transform getObjectiveDestination()
+    {
+        return targetTrigger.Destination;
+    }
+
     public void startObjective()
     {
         hasStarted = true;

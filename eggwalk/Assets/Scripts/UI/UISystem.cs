@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections.Generic;
 
 public class UISystem : MonoBehaviour
@@ -11,6 +12,7 @@ public class UISystem : MonoBehaviour
     [SerializeField] private GameObject BalanceBar;
     [SerializeField] private GameObject BalanceTriangle;
     [SerializeField] private Image HurtImageMask;
+    [SerializeField] private Image HurtDeathImageMask;
     [SerializeField] private Image TurnRightSignal;
     [SerializeField] private Image TurnLeftSignal;
     [SerializeField] private Text ObjectiveTitle;
@@ -18,10 +20,14 @@ public class UISystem : MonoBehaviour
     [SerializeField] private Text DeliveredTextBox;
     [SerializeField] private Text CountdownText;
     [SerializeField] private Text GameOverText;
+    [SerializeField] private Text TimeCompletedLabel;
+    [SerializeField] private Text TimeCompletedText;
+    [SerializeField] private Compass compass;
     private bool HurtMaskisVisible;
     private bool DeliveredTextIsVisible;
     private bool TurnRightSignalIsVisible;
     private bool TurnLeftSignalIsVisible;
+    private bool GagueActivated;
 
     void Start()
     {
@@ -209,10 +215,6 @@ public class UISystem : MonoBehaviour
         DeliveredTextIsVisible = val;
     }
 
-    public void setVisibilityToGameOverText(bool val)
-    {
-    }
-
     public void setVisibilityToBalanceBar(bool val)
     {
         BalanceTriangle.SetActive(val);
@@ -228,6 +230,8 @@ public class UISystem : MonoBehaviour
     {
         HUDElements.SetActive(false);
         GameOverElements.SetActive(true);
+        TimeCompletedLabel.enabled = false;
+        TimeCompletedText.enabled = false;
         GameOverText.text = "GAME OVER";
     }
 
@@ -235,11 +239,24 @@ public class UISystem : MonoBehaviour
     {
         HUDElements.SetActive(false);
         GameOverElements.SetActive(true);
+        HurtDeathImageMask.enabled = false;
         GameOverText.text = "SUCCESS!";
     }
 
     public void setCountDownText(string text)
     {
         CountdownText.text = text;
+    }
+
+    public void setTimeText(float timeInSeconds)
+    {
+        TimeSpan t = TimeSpan.FromSeconds(timeInSeconds);
+        string formattedTime = string.Format("{0:D2}h:{1:D2}m:{2:D2}s", t.Hours, t.Minutes, t.Seconds);
+        TimeCompletedText.text = formattedTime;
+    }
+
+    public void moveGague(float pixels)
+    {
+        compass.moveGague(pixels);
     }
 }

@@ -32,14 +32,27 @@ public class GameplayObserver : MonoBehaviour, Observer
                     GameObject pickup = player.getItemInHand();
                     if (pickup != null)
                     {
-		                pickup.GetComponent<Pickup>().pickupAction();
+		                pickup.GetComponent<Pickup>().onDropAction();
 					}
                     break;
                 }
             case GameEnumerations.EventCategory.Player_StartedObjective:
                 {
-                    Objective obj = e.Entity[1].GetComponent<Objective>();
-                    gameState.startObjective(obj.getObjectiveID());
+                    PlayerMotor player = e.Entity[0].GetComponent<PlayerMotor>();
+
+                    Pickup pickup = e.Entity[1].GetComponent<Pickup>();
+                    pickup.onPickupAction();
+
+                    gameState.startObjective(pickup.getId());
+
+                    Transform targetDestination = gameState.getDestinationFromObjective(pickup.getId());
+
+                    if (targetDestination != null)
+                    {
+                        player.enableArrow(true);
+                        player.setTarget(targetDestination);
+                    }
+
                     break;
                 }
             case GameEnumerations.EventCategory.Player_ReturnedTarget:
@@ -51,6 +64,7 @@ public class GameplayObserver : MonoBehaviour, Observer
                     {
                         Objective obj = collider.GetComponentInParent<Objective>();
 
+                        player.enableArrow(false);
                         gameState.completeObjective(obj.getObjectiveID());
                         gameState.addToItemDeliveredList(pickup.GetComponent<Pickup>().getName());
                         player.returnToNeutral();

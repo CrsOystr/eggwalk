@@ -44,4 +44,9 @@ public class TriggerBox : MonoBehaviour {
         get { return targetObject; }
         set { targetObject = value; }
     }
+
+    public Transform Destination
+    {
+        get { return this.transform; }
+    }
 }

@@ -9,6 +9,7 @@ using System.Collections;
 public interface Objective {
     string getObjectiveName();
     int getObjectiveID();
+    Transform getObjectiveDestination();
     void startObjective();
     void completeObjective();
     bool hasStartedObjective();

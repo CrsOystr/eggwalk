@@ -2,21 +2,23 @@
 using System.Collections;
 
 [RequireComponent (typeof (SphereCollider))]
-[RequireComponent(typeof(BoxCollider))]
+[RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent (typeof (Rigidbody))]
 
 public class BasicPickup : MonoBehaviour, Pickup {
 
+    [SerializeField] private int id;
     [SerializeField] private string pickupName;
     [SerializeField] private int mass;
     [SerializeField] private Transform centerOfMass;
+    [SerializeField] private GameObject pickupIndicatorObject;
 	public float amplitude;
 	public float rate;
     private bool canBob = true;
 
     void Start()
     {
-        this.gameObject.GetComponent<BoxCollider>().isTrigger = true;
+        this.gameObject.GetComponent<CapsuleCollider>().isTrigger = true;
         this.gameObject.GetComponent<SphereCollider>().isTrigger = true;
 		this.gameObject.GetComponent<Rigidbody> ().isKinematic = true;
     }
@@ -25,8 +27,8 @@ public class BasicPickup : MonoBehaviour, Pickup {
 	{
         if (canBob)
         {
-            Vector3 BobbingVector = Vector3.up * amplitude * rate * Mathf.Sin(rate * Time.time) * Time.deltaTime;
-            this.transform.parent.Translate(BobbingVector, Space.Self);
+            //Vector3 BobbingVector = Vector3.up * amplitude * rate * Mathf.Sin(rate * Time.time) * Time.deltaTime;
+            //this.transform.parent.Translate(BobbingVector, Space.Self);
         }
 	}
 
@@ -34,6 +36,11 @@ public class BasicPickup : MonoBehaviour, Pickup {
 	{
 
 	}
+
+    public int getId()
+    {
+        return this.id;
+    }
 
     public string getName()
     {
@@ -55,10 +62,15 @@ public class BasicPickup : MonoBehaviour, Pickup {
         return this.gameObject;
     }
 
-    public void pickupAction()
+    public void onPickupAction()
     {
-        this.gameObject.GetComponent<BoxCollider>().isTrigger = false;
-        this.gameObject.GetComponent<Rigidbody> ().isKinematic = false;
+        Destroy(this.pickupIndicatorObject);
+    }
+
+    public void onDropAction()
+    {
+        this.gameObject.GetComponent<CapsuleCollider>().isTrigger = false;
+        this.gameObject.GetComponent<Rigidbody>().isKinematic = false;
         this.canBob = false;
     }
 }

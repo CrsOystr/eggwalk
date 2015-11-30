@@ -43,8 +43,10 @@ public class PlayerMotor : MonoBehaviour
     // Player life
     [SerializeField] private int currentLives = 5;
     [SerializeField] private int playerLives = 5;
+    [SerializeField] private float initialBuffingTime = 10.0f;
     [SerializeField] private float buffingTime = 2.0f;
     private bool buffed;
+    private bool buffedSpeed;
     private bool isAlive = true;
 
     // Important objects used by player
@@ -52,12 +54,19 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private SphereCollider playerHandParent;
     [SerializeField] private GameplayNotifier playerNotifier;
     [SerializeField] private Transform itemLocation;
+    [SerializeField] private Arrow arrow;
     private GameObject heldItem;
 
     void Start()
     {
+        this.arrow.setActive(true);
         List<GameObject> entityMessage = new List<GameObject>{ this.gameObject };
         playerNotifier.notify(new GameEvent(entityMessage, GameEnumerations.EventCategory.Gameplay_InitializeHUD));
+
+        this.buffed = true;
+        StartCoroutine(initialBuffer());
+
+        this.arrow.setActive(false);
     }
 
     void Update()
@@ -115,7 +124,7 @@ public class PlayerMotor : MonoBehaviour
 
         Vector3 WalkingVector = playerHandParent.transform.forward * playerForwardSpeed * Time.deltaTime * baseSpeed;
 
-        if (this.buffed)
+        if (this.buffedSpeed)
         {
             WalkingVector = 0.5f * WalkingVector;
         }
@@ -243,6 +252,7 @@ public class PlayerMotor : MonoBehaviour
         if (col.gameObject.tag == "Obstacle" && !buffed)
         {
             this.buffed = true;
+            this.buffedSpeed = true;
             StartCoroutine(removeBuffer());
             playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, GameEnumerations.EventCategory.Player_IsHurt));
             return;
@@ -292,10 +302,9 @@ public class PlayerMotor : MonoBehaviour
 
         if (col.gameObject.GetComponent<Pickup>() != null)
         {
-            GameObject objective = col.gameObject.transform.parent.gameObject;
             GameObject pickup = col.gameObject;
 
-            List<GameObject> entityMessage = new List<GameObject>() { this.gameObject, objective, pickup };
+            List<GameObject> entityMessage = new List<GameObject>() { this.gameObject, pickup };
 
             if (heldItem == null)
             {
@@ -396,10 +405,17 @@ public class PlayerMotor : MonoBehaviour
         return true;
     }
 
+    private IEnumerator initialBuffer()
+    {
+        yield return new WaitForSeconds(this.initialBuffingTime);
+        this.buffed = false;
+    }
+
     private IEnumerator removeBuffer()
     {
         yield return new WaitForSeconds(this.buffingTime);
         this.buffed = false;
+        this.buffedSpeed = false;
     }
 
     public void bumpPlayer()
@@ -410,9 +426,15 @@ public class PlayerMotor : MonoBehaviour
 
     public void onDeath()
     {
+        this.arrow.setActive(false);
         this.GetComponent<Rigidbody>().freezeRotation = false;
         this.GetComponentsInChildren<MeshRenderer>()[0].enabled = false;
         this.GetComponentsInChildren<MeshRenderer>()[1].enabled = false;
+    }
+
+    public void enableArrow(bool val)
+    {
+        this.arrow.setActive(val);
     }
 
     public GameObject getItemInHand()
@@ -464,6 +486,11 @@ public class PlayerMotor : MonoBehaviour
     public void returnToNeutral()
     {
         playerHandParent.transform.localRotation = Quaternion.AngleAxis(0.0f, playerHandParent.transform.up);
+    }
+
+    public void setTarget(Transform newDestination)
+    {
+        this.arrow.WorldDestination = newDestination;
     }
 
     /**

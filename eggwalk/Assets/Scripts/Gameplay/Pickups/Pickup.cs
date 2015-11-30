@@ -2,9 +2,11 @@
 using System.Collections;
 
 public interface Pickup {
+    int getId();
     string getName();
     int getMass();
     Transform getCenterOfMass();
     GameObject getTargetItem();
-    void pickupAction();
+    void onPickupAction();
+    void onDropAction();
 }

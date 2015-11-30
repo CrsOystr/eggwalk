@@ -12,6 +12,8 @@ public class GameState : MonoBehaviour {
     private List<string> deliveredItems;
     private bool isGameOver;
     private bool hasCompletedLevel;
+    private bool hasStartedLevel;
+    private float timeInLevel;
 
 	// Use this for initialization
 	void Start () {
@@ -21,8 +23,17 @@ public class GameState : MonoBehaviour {
             StartCoroutine(countdown());
             this.notifier.notify(new GameEvent(objectiveList, GameEnumerations.EventCategory.Gameplay_InitializeEvents));
             this.deliveredItems = new List<string>();
+            this.hasStartedLevel = false;
         }
 	}
+
+    void Update()
+    {
+        if (this.HasStartedLevel)
+        {
+            timeInLevel += Time.deltaTime;
+        }
+    }
 
     public bool startObjective(int id)
     {
@@ -148,5 +159,31 @@ public class GameState : MonoBehaviour {
     public void startGame()
     {
         GameObject.FindObjectOfType<PlayerMotor>().startPlayer(true);
+        this.HasStartedLevel = true;
+    }
+
+    public Transform getDestinationFromObjective(int id)
+    {
+        for (int i = 0; i < objectiveList.Count; i++)
+        {
+            Objective obj = objectiveList[i].GetComponent<Objective>();
+            if (obj.getObjectiveID() == id)
+            {
+                return obj.getObjectiveDestination();
+            }
+        }
+
+        return null;
+    }
+
+    public bool HasStartedLevel
+    {
+        get { return this.hasStartedLevel; }
+        set { this.hasStartedLevel = value; }
+    }
+
+    public float TimeInLevel
+    {
+        get { return this.timeInLevel; }
     }
 }

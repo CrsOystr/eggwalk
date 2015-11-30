@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class ExplodePickup : MonoBehaviour, Pickup {
 
+    [SerializeField] private int id;
     [SerializeField] private string pickupName;
     [SerializeField] private int mass;
     [SerializeField] private Transform centerOfMass;
@@ -15,8 +16,6 @@ public class ExplodePickup : MonoBehaviour, Pickup {
         for (int i = 0; i < fragmentRigidBodies.Count; i++)
         {
             fragmentRigidBodies[i].GetComponent<BoxCollider>().enabled = false;
-            //fragmentRigidBodies[i].useGravity = true;
-            //fragmentRigidBodies[i].isKinematic = true;
         }
     }
 
@@ -24,6 +23,11 @@ public class ExplodePickup : MonoBehaviour, Pickup {
     {
         Vector3 BobbingVector = Vector3.up * 0.01f * 10 * Mathf.Sin(10 * Time.time) * Time.deltaTime;
         this.transform.Translate(BobbingVector);
+    }
+
+    public int getId()
+    {
+        return this.id;
     }
 
     public string getName()
@@ -46,7 +50,11 @@ public class ExplodePickup : MonoBehaviour, Pickup {
         return this.gameObject;
     }
 
-    public void pickupAction()
+    public void onPickupAction()
+    {
+    }
+
+    public void onDropAction()
     {
         for (int i = 0; i < fragmentRigidBodies.Count; i++)
         {
