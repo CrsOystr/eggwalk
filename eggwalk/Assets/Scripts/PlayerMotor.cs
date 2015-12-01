@@ -78,8 +78,11 @@ public class PlayerMotor : MonoBehaviour
 
         if (currentLives <= 0 || Mathf.Abs(getRollingRotation) > dropAtRotation)
         {
-			playerNotifier.notify(new GameEvent(new List<GameObject>{this.gameObject}, GameEnumerations.EventCategory.Player_IsDead));
-            isAlive = false;
+            if (isAlive)
+            {
+                playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, GameEnumerations.EventCategory.Player_IsDead));
+                isAlive = false;
+            }
         }
 
         // Get input from device
@@ -485,6 +488,7 @@ public class PlayerMotor : MonoBehaviour
 
     public void returnToNeutral()
     {
+        playerCamera.transform.localRotation = Quaternion.AngleAxis(0.0f, playerCamera.transform.up);
         playerHandParent.transform.localRotation = Quaternion.AngleAxis(0.0f, playerHandParent.transform.up);
     }
 
