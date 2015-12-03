@@ -6,6 +6,8 @@ public class UIObserver : MonoBehaviour, Observer
     [SerializeField] private GameState gameState;
     [SerializeField] private UISystem UISys;
 
+	private PlayerPrefsManager ppm;
+
     public void onNotify(GameEvent e)
     {
         GameEnumerations.EventCategory category = e.Category;
@@ -49,6 +51,10 @@ public class UIObserver : MonoBehaviour, Observer
                 {
                     UISys.goToNextLevelScreen();
                     UISys.setTimeText(gameState.TimeInLevel);
+
+					// record time score
+					ppm.addTimeScore(gameState.TimeInLevel);
+
                     break;
                 }
             case GameEnumerations.EventCategory.Player_IsHurt:
