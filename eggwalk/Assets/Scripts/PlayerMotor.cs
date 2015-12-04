@@ -374,7 +374,7 @@ public class PlayerMotor : MonoBehaviour
 
         if (Input.GetButtonDown("Restart"))
         {
-            Application.LoadLevel("City_Gio");
+            Application.LoadLevel(Application.loadedLevelName);
         }
 
         if (Input.GetButtonDown("Pause"))

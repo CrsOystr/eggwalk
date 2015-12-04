@@ -1,17 +1,64 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+ * This is a class intended to make the process of extracting data from PlayerPrefs easier.
+ * 
+ * KEY FORMATS:
+ * ------------
+ * 
+ * Time Scores (index starts at 1, with 1 being the best score):
+ * [levelname]_timescore_[index]
+ * 
+ */
+
 public class PlayerPrefsManager{
 
-	public void addTimeScore(float newTime) {
+	// RIGHT NOW this might not be generic enough, maybe eventually create a method that looks like addScore(string levelname, string scoreType, float newScore) ?
+
+	public void addTimeScore(string levelname, float newTime) {
 
 		int numOfScores = 10;
-		string scoreFormat = "Score_";
 
+		float[] timeScores = getTimeScores (levelname, numOfScores);
+		float[] newTimeScores = new float[timeScores.Length];
+
+		bool scoreSet = false;
+		float tempScore;
 		for (int i = 0; i < numOfScores; i++) {
-
+			if(!scoreSet) {
+				if(newTime > timeScores[i]) {
+					tempScore = timeScores[i];
+					newTimeScores[i] = newTime;
+					scoreSet = true;
+				} else {
+					newTimeScores[i] = timeScores[i];
+				}
+			} else if(newTimeScores[i+1] != null) newTimeScores[i+1] = timeScores[i]; // shift time scores down
 		}
 
+		Debug.Log ("Score Added!");
+	}
+
+	public float[] getTimeScores(string levelname, int numOfScores) {
+	
+		float[] timeScores = new float[numOfScores];
+
+		// return the value if it exists, else return zero
+		for (int i = 0; i < numOfScores; i++) {
+			if(PlayerPrefs.HasKey(levelname + "_timescore_" + (i+1).ToString()))
+				timeScores[i] = PlayerPrefs.GetFloat(levelname + "_timescore_" + (i+1).ToString());
+			else
+				timeScores[i] = 0f;
+		}
+
+		return timeScores;
+	}
+
+	private void setTimeScores(string levelname, float[] timeScores) {
+		for (int i = 0; i < timeScores.Length; i++) {
+			PlayerPrefs.SetFloat(levelname + "_timescore_" + (i+1).ToString(), timeScores[i]);
+		}
 	}
 
 }
