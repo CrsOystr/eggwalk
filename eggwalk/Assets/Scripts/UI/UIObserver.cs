@@ -6,7 +6,7 @@ public class UIObserver : MonoBehaviour, Observer
     [SerializeField] private GameState gameState;
     [SerializeField] private UISystem UISys;
 
-	private PlayerPrefsManager ppm;
+	private PlayerPrefsManager ppm = new PlayerPrefsManager();
 
     public void onNotify(GameEvent e)
     {

@@ -34,7 +34,7 @@ public class PlayerPrefsManager{
 				} else {
 					newTimeScores[i] = timeScores[i];
 				}
-			} else if(newTimeScores[i+1] != null) newTimeScores[i+1] = timeScores[i]; // shift time scores down
+			} else if(i+1 <= newTimeScores.Length - 1) newTimeScores[i+1] = timeScores[i]; // shift time scores down
 		}
 
 		Debug.Log ("Score Added!");
