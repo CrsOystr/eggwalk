@@ -18,6 +18,11 @@ public class SoundObserver : MonoBehaviour, Observer {
 			{
 				break;
 			}
+			case GameEnumerations.EventCategory.Player_StartedObjective:
+			{
+				SoundSys.playMissionMusicAudio();
+				break;
+			}
 		}
 	}
 }

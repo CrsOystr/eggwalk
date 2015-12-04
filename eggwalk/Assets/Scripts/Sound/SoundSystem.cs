@@ -11,6 +11,11 @@ public class SoundSystem : MonoBehaviour {
 	 */
 
 	[SerializeField] private AudioSource exampleAudio;
+	[SerializeField] private AudioSource missionMusic;
+	[SerializeField] private AudioSource ambientNatureSounds;
+	//	[SerializeField] private AudioSource ambientCitySounds;
+
+
 
 	//example of how to do multiple items I.E. all firetrucks
 	[SerializeField] private AudioSource[] exampleAudioList;
@@ -36,5 +41,11 @@ public class SoundSystem : MonoBehaviour {
 		//exampleAudio.enabled (false);
 		//exampleAudio.Stop ();
 	}
-
+	public void playMissionMusicAudio()
+	{
+		if (!missionMusic.isPlaying) {
+			missionMusic.Play ();
+			ambientNatureSounds.volume = 0.63f;
+		}
+	}
 }
