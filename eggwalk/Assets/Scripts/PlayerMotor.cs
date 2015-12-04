@@ -260,6 +260,20 @@ public class PlayerMotor : MonoBehaviour
             playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, GameEnumerations.EventCategory.Player_IsHurt));
             return;
 		}
+
+
+        if (col.gameObject.tag.Equals("Building"))
+        {
+            if (isAlive)
+            {
+                float dir = Vector3.Dot(col.gameObject.transform.forward, this.transform.forward);
+                if (dir < -0.97)
+                {
+                    playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, GameEnumerations.EventCategory.Player_IsDead));
+                    isAlive = false;
+                }
+            }
+        }
     }
 
     /**
@@ -431,6 +445,7 @@ public class PlayerMotor : MonoBehaviour
     {
         this.arrow.setActive(false);
         this.GetComponent<Rigidbody>().freezeRotation = false;
+        this.GetComponent<Rigidbody>().AddForce(Vector3.right * 1000.0f);
         this.GetComponentsInChildren<MeshRenderer>()[0].enabled = false;
         this.GetComponentsInChildren<MeshRenderer>()[1].enabled = false;
     }

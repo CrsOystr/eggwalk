@@ -1,0 +1,16 @@
+diff a/eggwalk/Assets/Scripts/PlayerMotor.cs b/eggwalk/Assets/Scripts/PlayerMotor.cs	(rejected hunks)
+@@ -385,11 +385,14 @@
+  			HorizontalInput = (t1.position.x < Screen.width / 2) ? -1 : 1;
+  		}
+  
+++<<<<<<< Updated upstream
+ +        if (Input.GetButtonDown("Restart"))
+ +        {
+ +            Application.LoadLevel(Application.loadedLevelName);
+ +        }
+ +
+++=======
+++>>>>>>> Stashed changes
+          if (Input.GetButtonDown("Pause"))
+          {
+              Time.timeScale = (Time.timeScale != 0.0f) ? 0.0f : 1.0f;

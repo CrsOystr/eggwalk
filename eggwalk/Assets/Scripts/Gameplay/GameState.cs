@@ -29,6 +29,12 @@ public class GameState : MonoBehaviour {
 
     void Update()
     {
+        if (Input.GetButtonDown("Restart"))
+        {
+            Application.LoadLevel(Application.loadedLevel);
+        }
+
+
         if (this.HasStartedLevel)
         {
             timeInLevel += Time.deltaTime;
