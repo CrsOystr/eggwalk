@@ -27,7 +27,7 @@ public class PlayerPrefsManager{
 		float tempScore;
 		for (int i = 0; i < numOfScores; i++) {
 			if(!scoreSet) {
-				if(newTime > timeScores[i]) {
+				if(newTime < timeScores[i]) {
 					tempScore = timeScores[i];
 					newTimeScores[i] = newTime;
 					scoreSet = true;
@@ -37,7 +37,7 @@ public class PlayerPrefsManager{
 			} else if(i+1 <= newTimeScores.Length - 1) newTimeScores[i+1] = timeScores[i]; // shift time scores down
 		}
 
-		Debug.Log ("Score Added!");
+		setTimeScores (levelname, newTimeScores);
 	}
 
 	public float[] getTimeScores(string levelname, int numOfScores) {
