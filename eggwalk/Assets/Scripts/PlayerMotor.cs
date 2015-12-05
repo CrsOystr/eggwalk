@@ -254,9 +254,6 @@ public class PlayerMotor : MonoBehaviour
     {
         if (col.gameObject.tag == "Obstacle" && !buffed)
         {
-            this.buffed = true;
-            this.buffedSpeed = true;
-            StartCoroutine(removeBuffer());
             playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, GameEnumerations.EventCategory.Player_IsHurt));
             return;
 		}
@@ -269,8 +266,24 @@ public class PlayerMotor : MonoBehaviour
                 float dir = Vector3.Dot(col.gameObject.transform.forward, this.transform.forward);
                 if (dir < -0.97)
                 {
-                    playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, GameEnumerations.EventCategory.Player_IsDead));
-                    isAlive = false;
+                    //this.transform.localRotation = Quaternion.AngleAxis(this.transform.rotation.eulerAngles.y + 90.0f, Vector3.up);
+                    if (!buffed)
+                    {
+                        isTurning = true;
+
+                        Ray rightRay = new Ray(this.transform.position, this.transform.right);
+                        Ray leftRay = new Ray(this.transform.position, -1.0f * this.transform.right);
+                        RaycastHit rightHit;
+                        RaycastHit leftHit;
+
+                        Physics.Raycast(rightRay, out rightHit, 1 << 8);
+                        Physics.Raycast(leftRay, out leftHit, 1 << 8);
+
+                        isTurningLeft = (leftHit.distance > rightHit.distance);
+
+                        playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, GameEnumerations.EventCategory.Player_IsHurt));
+                    }
+                    //isAlive = false;
                 }
             }
         }
@@ -531,6 +544,9 @@ public class PlayerMotor : MonoBehaviour
      */
     public void RecieveDamage(int damage)
     {
+        this.buffed = true;
+        this.buffedSpeed = true;
         currentLives -= damage;
+        StartCoroutine(removeBuffer());
     }
 }
