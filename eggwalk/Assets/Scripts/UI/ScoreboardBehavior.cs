@@ -17,7 +17,15 @@ public class ScoreboardBehavior : MonoBehaviour {
 		float[] scores = ppm.getTimeScores (levelName, 10);
 
 		for(int i = 0; i < scoreTexts.Length; i++) {
-			scoreTexts[i].text = scores[i].ToString();
+			if(scores[i] != 0f) {
+				int mins = (int) (scores[i] / 60f);
+				int seconds = (int) (scores[i] % 60f);
+				int miliseconds = int.Parse(scores[i].ToString().Split('.')[1].Substring(0, 2));
+				
+				scoreTexts[i].text = (i+1).ToString() + "   " + mins.ToString() + ":" + seconds.ToString() + ":" + miliseconds.ToString();
+			} else {
+				scoreTexts[i].text = (i+1).ToString() + "   --:--:--";
+			}
 		}
 	}
 	

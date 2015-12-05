@@ -1,0 +1,42 @@
+Initialize engine version: 5.1.2f1 (afd2369b692a)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: AMD Radeon HD 7800 Series (ID=0x6818)
+    Vendor:   ATI
+    VRAM:     2026 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: D:\Users\Nathaniel\Documents\GitHub\eggwalk\eggwalk\11_10_2015_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\Users\Nathaniel\Documents\GitHub\eggwalk\eggwalk\11_10_2015_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\Users\Nathaniel\Documents\GitHub\eggwalk\eggwalk\11_10_2015_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading D:\Users\Nathaniel\Documents\GitHub\eggwalk\eggwalk\11_10_2015_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: D:\Users\Nathaniel\Documents\GitHub\eggwalk\eggwalk\11_10_2015_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\Users\Nathaniel\Documents\GitHub\eggwalk\eggwalk\11_10_2015_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\Users\Nathaniel\Documents\GitHub\eggwalk\eggwalk\11_10_2015_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\Users\Nathaniel\Documents\GitHub\eggwalk\eggwalk\11_10_2015_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: D:\Users\Nathaniel\Documents\GitHub\eggwalk\eggwalk\11_10_2015_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\Users\Nathaniel\Documents\GitHub\eggwalk\eggwalk\11_10_2015_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: D:\Users\Nathaniel\Documents\GitHub\eggwalk\eggwalk\11_10_2015_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading D:\Users\Nathaniel\Documents\GitHub\eggwalk\eggwalk\11_10_2015_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+- Completed reload, in  0.215 seconds
+desktop: 1920x1080 60Hz; virtual: 1920x2160 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+Platform assembly: D:\Users\Nathaniel\Documents\GitHub\eggwalk\eggwalk\11_10_2015_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: D:\Users\Nathaniel\Documents\GitHub\eggwalk\eggwalk\11_10_2015_Data\Managed\System.dll (this message is harmless)
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 19e4 -> priority: 1 
+  Thread -> id: 17c4 -> priority: 1 
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.428311 ms
+
+Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 421.
+Total: 0.289911 ms (FindLiveObjects: 0.022488 ms CreateObjectMapping: 0.023466 ms MarkObjects: 0.225377 ms  DeleteObjects: 0.013200 ms)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.642400 ms
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 420.
+Total: 0.311422 ms (FindLiveObjects: 0.022488 ms CreateObjectMapping: 0.024933 ms MarkObjects: 0.248844 ms  DeleteObjects: 0.009288 ms)
+

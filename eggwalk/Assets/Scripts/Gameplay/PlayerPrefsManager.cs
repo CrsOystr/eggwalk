@@ -27,7 +27,7 @@ public class PlayerPrefsManager{
 		float tempScore;
 		for (int i = 0; i < numOfScores; i++) {
 			if(!scoreSet) {
-				if(newTime < timeScores[i]) {
+				if(newTime < timeScores[i] || timeScores[i] <= 0f) {
 					tempScore = timeScores[i];
 					newTimeScores[i] = newTime;
 					scoreSet = true;
@@ -57,7 +57,8 @@ public class PlayerPrefsManager{
 
 	private void setTimeScores(string levelname, float[] timeScores) {
 		for (int i = 0; i < timeScores.Length; i++) {
-			PlayerPrefs.SetFloat(levelname + "_timescore_" + (i+1).ToString(), timeScores[i]);
+			string key = levelname + "_timescore_" + (i+1).ToString();
+			PlayerPrefs.SetFloat(key, timeScores[i]);
 		}
 	}
 
