@@ -11,7 +11,12 @@ public class SoundObserver : MonoBehaviour, Observer {
 		switch (category) {
 			case GameEnumerations.EventCategory.Player_IsHurt:
 			{
-				SoundSys.playExampleAudio();
+				SoundSys.playPlayerHurtSound();
+				break;
+			}
+			case GameEnumerations.EventCategory.Player_ReturnedTarget:
+			{
+				SoundSys.playCompletedObjectiveAudio();
 				break;
 			}
 			case GameEnumerations.EventCategory.Player_IsDead:

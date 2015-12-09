@@ -10,15 +10,17 @@ public class SoundSystem : MonoBehaviour {
 	*	Contact Nic with questions/concerns
 	 */
 
-	[SerializeField] private AudioSource exampleAudio;
 	[SerializeField] private AudioSource missionMusic;
+	//[SerializeField] private AudioSource missionlessMusic;
 	[SerializeField] private AudioSource ambientNatureSounds;
+	[SerializeField] private AudioSource completedObjectiveAudio;
+
 	//	[SerializeField] private AudioSource ambientCitySounds;
 
 
 
 	//example of how to do multiple items I.E. all firetrucks
-	[SerializeField] private AudioSource[] exampleAudioList;
+	[SerializeField] public AudioSource[] playerHurtSounds;
 
 
 
@@ -27,23 +29,31 @@ public class SoundSystem : MonoBehaviour {
 	 * Seperate functions out as much as possible, I.E. make a "turn on all firetrucks" and "turn on waterfountain sound"
 	 * as apposed to "put out the fire sounds"
 	 */
-	public void playExampleAudio()
-	{
-		exampleAudio.Play ();
-		//exampleAudio.enabled (false);
-		//exampleAudio.Stop ();
-	}
 
-	public void playExampleAudioList()
+	int lastHurtSoundPlayed = 0;
+	public void playPlayerHurtSound()
 	{
-		foreach (AudioSource source in exampleAudioList)
-			exampleAudio.Play ();
-		//exampleAudio.enabled (false);
-		//exampleAudio.Stop ();
+		int randy = Random.Range (0, playerHurtSounds.Length);
+		while(randy == lastHurtSoundPlayed)
+			randy = Random.Range (0, playerHurtSounds.Length);
+		for (int i = 0; i < playerHurtSounds.Length; i++) {
+			if(i == randy)
+				playerHurtSounds[i].Play();
+		}
+		lastHurtSoundPlayed = randy;
 	}
-	public void playMissionMusicAudio()
+	public void playCompletedObjectiveAudio()
+	{
+		completedObjectiveAudio.Play ();
+	}
+		public void playMissionMusicAudio()
 	{
 		if (!missionMusic.isPlaying) {
+			/*missionlessMusic.loop = false;
+			while(missionlessMusic.time > 0){
+				print(missionlessMusic.time);
+
+			}*/
 			missionMusic.Play ();
 			ambientNatureSounds.volume = 0.63f;
 		}
