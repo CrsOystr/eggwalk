@@ -1,7 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public interface Obstacle {
+namespace GameEnumerations
+{
+    public enum ObstacleType
+    {
+        Obstacle_Generic,
+        Obstacle_Vehicle
+    }
+}
 
-    void activate();
+public interface Obstacle {
+    void onObstacleCollision();
+    bool hasCollided();
+    GameEnumerations.ObstacleType getObstacleCategory();
 }
