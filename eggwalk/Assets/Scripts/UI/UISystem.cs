@@ -22,7 +22,7 @@ public class UISystem : MonoBehaviour
     [SerializeField] private Text GameOverText;
     [SerializeField] private Text TimeCompletedLabel;
     [SerializeField] private Text TimeCompletedText;
-    [SerializeField] private Compass compass;
+    [SerializeField] private Text ScoreText;
     private bool HurtMaskisVisible;
     private bool DeliveredTextIsVisible;
     private bool TurnRightSignalIsVisible;
@@ -255,8 +255,7 @@ public class UISystem : MonoBehaviour
         TimeCompletedText.text = formattedTime;
     }
 
-    public void moveGague(float pixels)
-    {
-        compass.moveGague(pixels);
-    }
+	public void setScoreText(int score) {
+		this.ScoreText.text = "Score: " + score;
+	}
 }

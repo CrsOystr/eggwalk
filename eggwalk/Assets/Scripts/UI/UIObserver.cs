@@ -19,6 +19,7 @@ public class UIObserver : MonoBehaviour, Observer
                     PlayerMotor player = e.Entity[0].GetComponent<PlayerMotor>();
                     UISys.setCurrentLives(player.getCurrentLives(), player.getTotalLives());
                     UISys.setCountDownText(gameState.InitialTimeToStart + "");
+					UISys.setScoreText(gameState.Score);
                     break;
                 }
             case GameEnumerations.EventCategory.Gameplay_InitializeEvents:
@@ -100,13 +101,11 @@ public class UIObserver : MonoBehaviour, Observer
             case GameEnumerations.EventCategory.Player_IsTurningLeft:
                 {
                     UISys.showRightSignalImage(false);
-                    UISys.moveGague(53.0f);
                     break;
                 }
             case GameEnumerations.EventCategory.Player_IsTurningRight:
                 {
                     UISys.showLeftSignalImage(false);
-                    UISys.moveGague(-53.0f);
                     break;
                 }
             case GameEnumerations.EventCategory.Player_StartedObjective:
@@ -125,6 +124,7 @@ public class UIObserver : MonoBehaviour, Observer
                     GameObject pickup = player.getItemInHand();
                     GameObject collider = e.Entity[1];
                     List<Objective> objList = gameState.getObjectiveList();
+					this.UISys.setScoreText(gameState.Score);
                     if (obj != null)
                     {
                         UISys.setObjectiveListText(obj.GetComponent<Objective>(), objList);

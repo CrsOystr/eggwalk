@@ -8,6 +8,7 @@ public class GameState : MonoBehaviour {
     [SerializeField] private List<GameObject> objectiveList;
     [SerializeField] private int initialTimeToStart = 3;
     private int countdownTime;
+	private int score;
     private GameObject currentObjective;
     private List<string> deliveredItems;
     private bool isGameOver;
@@ -20,6 +21,7 @@ public class GameState : MonoBehaviour {
 	    if (notifier != null)
         {
             this.countdownTime = initialTimeToStart;
+			this.score = 0;
             StartCoroutine(countdown());
             this.notifier.notify(new GameEvent(objectiveList, GameEnumerations.EventCategory.Gameplay_InitializeEvents));
             this.deliveredItems = new List<string>();
@@ -66,6 +68,7 @@ public class GameState : MonoBehaviour {
             {
                 this.currentObjective = null;
                 objectiveList[i].GetComponent<Objective>().completeObjective();
+				score += 1;
                 return true;
             }
         }
@@ -192,4 +195,9 @@ public class GameState : MonoBehaviour {
     {
         get { return this.timeInLevel; }
     }
+
+	public int Score
+	{
+		get { return this.score; }
+	}
 }
