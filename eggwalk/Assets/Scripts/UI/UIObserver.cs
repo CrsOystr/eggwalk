@@ -20,6 +20,7 @@ public class UIObserver : MonoBehaviour, Observer
                     UISys.setCurrentLives(player.getCurrentLives(), player.getTotalLives());
                     UISys.setCountDownText(gameState.TimeToStart + "");
 					UISys.setScoreText(gameState.Score);
+                    UISys.activateWarningLabel(false);
                     break;
                 }
             case GameEnumerations.EventCategory.Gameplay_InitializeEvents:
@@ -106,6 +107,22 @@ public class UIObserver : MonoBehaviour, Observer
             case GameEnumerations.EventCategory.Player_IsTurningRight:
                 {
                     UISys.showLeftSignalImage(false);
+                    break;
+                }
+            case GameEnumerations.EventCategory.Player_TargetApproaching:
+                {
+                    GameObject player = e.Entity[0];
+                    GameObject vehicle = e.Entity[1];
+
+                    if (Vector3.Dot(player.transform.forward, vehicle.transform.forward) > 0.97f)
+                    {
+                        UISys.activateWarningLabel(true);
+                    }
+                    break;
+                }
+            case GameEnumerations.EventCategory.Player_TargetLeaving:
+                {
+                    UISys.activateWarningLabel(false);
                     break;
                 }
             case GameEnumerations.EventCategory.Player_StartedObjective:

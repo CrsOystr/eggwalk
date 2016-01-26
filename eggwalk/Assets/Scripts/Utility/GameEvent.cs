@@ -13,6 +13,8 @@ namespace GameEnumerations {
         Player_IsTurningRight,
         Player_StartedObjective,
         Player_ReturnedTarget,
+        Player_TargetApproaching,
+        Player_TargetLeaving,
         Gameplay_InitializeEvents,
         Gameplay_InitializeHUD,
         Gameplay_Countdown,

@@ -10,6 +10,7 @@ public class UISystem : MonoBehaviour
     [SerializeField] private Text LifeText;
     [SerializeField] private GameObject RestartButton;
     [SerializeField] private BalanceBar Bar;
+    [SerializeField] private GameObject Warning;
     [SerializeField] private Image HurtImageMask;
     [SerializeField] private Image HurtDeathImageMask;
     [SerializeField] private Image TurnRightSignal;
@@ -265,4 +266,10 @@ public class UISystem : MonoBehaviour
 	public void setScoreText(int score) {
 		this.ScoreText.text = "Score: " + score;
 	}
+
+    public void activateWarningLabel(bool status)
+    {
+        this.Warning.GetComponent<WarningLabel>().Active = status;
+        this.Warning.SetActive(status);
+    }
 }

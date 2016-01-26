@@ -44,7 +44,8 @@ public class PlayerMotor : MonoBehaviour
         this.originalPlayerStats = this.activePlayerStats;
         this.arrow.setActive(true);
         List<GameObject> entityMessage = new List<GameObject>{ this.gameObject };
-        this.playerNotifier.notify(new GameEvent(entityMessage, GameEnumerations.EventCategory.Gameplay_InitializeHUD));
+        this.playerNotifier.notify(new GameEvent(entityMessage, 
+            GameEnumerations.EventCategory.Gameplay_InitializeHUD));
 
         this.buffed = true;
         StartCoroutine(initialBuffer());
@@ -61,7 +62,8 @@ public class PlayerMotor : MonoBehaviour
         {
             if (isAlive)
             {
-                playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, GameEnumerations.EventCategory.Player_IsDead));
+                playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, 
+                    GameEnumerations.EventCategory.Player_IsDead));
                 isAlive = false;
             }
         }
@@ -83,7 +85,8 @@ public class PlayerMotor : MonoBehaviour
         // Notify that hands have rotated
         if (playerNotifier != null)
         {
-            playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, GameEnumerations.EventCategory.Player_HasRotatedHands));
+            playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, 
+                GameEnumerations.EventCategory.Player_HasRotatedHands));
         }
     }
 
@@ -207,14 +210,16 @@ public class PlayerMotor : MonoBehaviour
             {
                 isTurning = true;
                 isTurningLeft = false;
-                playerNotifier.notify(new GameEvent(null, GameEnumerations.EventCategory.Player_IsTurningRight));
+                playerNotifier.notify(new GameEvent(null, 
+                    GameEnumerations.EventCategory.Player_IsTurningRight));
             }
 
             if (canTurnLeft && TurnLeftPressed)
             {
                 isTurning = true;
                 isTurningLeft = true;
-                playerNotifier.notify(new GameEvent(null, GameEnumerations.EventCategory.Player_IsTurningLeft));
+                playerNotifier.notify(new GameEvent(null, 
+                    GameEnumerations.EventCategory.Player_IsTurningLeft));
             }
         }
 
@@ -235,7 +240,8 @@ public class PlayerMotor : MonoBehaviour
     {
         if (col.gameObject.tag == "Obstacle" && !buffed)
         {
-            playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, GameEnumerations.EventCategory.Player_IsHurt));
+            playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, 
+                GameEnumerations.EventCategory.Player_IsHurt));
             return;
 		}
 
@@ -262,7 +268,8 @@ public class PlayerMotor : MonoBehaviour
 
                         isTurningLeft = (leftHit.distance > rightHit.distance);
 
-                        playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, GameEnumerations.EventCategory.Player_IsHurt));
+                        playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, 
+                            GameEnumerations.EventCategory.Player_IsHurt));
                     }
                     //isAlive = false;
                 }
@@ -277,6 +284,12 @@ public class PlayerMotor : MonoBehaviour
      */
     void OnTriggerEnter(Collider col)
     {
+        if (col.gameObject.GetComponent<VehicleBehavior>() != null)
+        {
+            playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject, col.gameObject },
+                    GameEnumerations.EventCategory.Player_TargetApproaching));
+        }
+
         if (col.gameObject.GetComponent<TurningVolume>() != null)
         {
             TurningVolume turn = col.gameObject.GetComponent<TurningVolume>();
@@ -284,13 +297,15 @@ public class PlayerMotor : MonoBehaviour
             if (turn.canTurnLeft(this.transform.forward))
             {
                 canTurnLeft = true;
-                playerNotifier.notify(new GameEvent(null, GameEnumerations.EventCategory.Player_CanTurnLeft));
+                playerNotifier.notify(new GameEvent(null, 
+                    GameEnumerations.EventCategory.Player_CanTurnLeft));
             }
 
             if (turn.canTurnRight(this.transform.forward))
             {
                 canTurnRight = true;
-                playerNotifier.notify(new GameEvent(null, GameEnumerations.EventCategory.Player_CanTurnRight));
+                playerNotifier.notify(new GameEvent(null, 
+                    GameEnumerations.EventCategory.Player_CanTurnRight));
             }
 
             this.canTurn = true;
@@ -305,7 +320,8 @@ public class PlayerMotor : MonoBehaviour
             if (this.heldItem != null && trigger.Activated)
             {
                 List<GameObject> entityMessage = new List<GameObject>() { this.gameObject, col.gameObject };
-                playerNotifier.notify(new GameEvent(entityMessage, GameEnumerations.EventCategory.Player_ReturnedTarget));
+                playerNotifier.notify(new GameEvent(entityMessage, 
+                    GameEnumerations.EventCategory.Player_ReturnedTarget));
             }
 
             return;
@@ -319,7 +335,8 @@ public class PlayerMotor : MonoBehaviour
                 List<GameObject> entityMessage = new List<GameObject>() { this.gameObject, pickup };
 
                 //addItemIntoHand(col.gameObject.GetComponent<Pickup>().getTargetItem());
-                playerNotifier.notify(new GameEvent(entityMessage, GameEnumerations.EventCategory.Player_StartedObjective));
+                playerNotifier.notify(new GameEvent(entityMessage, 
+                    GameEnumerations.EventCategory.Player_StartedObjective));
             }
         }
     }
@@ -331,6 +348,12 @@ public class PlayerMotor : MonoBehaviour
      */
     void OnTriggerExit(Collider col)
     {
+        if (col.gameObject.GetComponent<VehicleBehavior>() != null)
+        {
+            playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject, col.gameObject },
+                    GameEnumerations.EventCategory.Player_TargetLeaving));
+        }
+
         if (col.gameObject.GetComponent<TurningVolume>() != null)
         {
             col.gameObject.GetComponent<TurningVolume>().IsPlayerTurning = false;
