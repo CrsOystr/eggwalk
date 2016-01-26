@@ -15,16 +15,11 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private PlayerStats activePlayerStats;
 
     // Important objects used by player
-    [SerializeField]
-    private GameObject playerCamera;
-    [SerializeField]
-    private SphereCollider playerHandParent;
-    [SerializeField]
-    private GameplayNotifier playerNotifier;
-    [SerializeField]
-    private Transform itemLocation;
-    [SerializeField]
-    private Arrow arrow;
+    [SerializeField] private GameObject playerCamera;
+    [SerializeField] private SphereCollider playerHandParent;
+    [SerializeField] private GameplayNotifier playerNotifier;
+    [SerializeField] private Transform itemLocation;
+    [SerializeField] private Arrow arrow;
 
     private PlayerStats originalPlayerStats;
     private bool playerCanStart = false;
@@ -33,11 +28,15 @@ public class PlayerMotor : MonoBehaviour
 	private bool canTurnRight;
 	private bool isTurning = false;
 	private bool isTurningLeft;
+    private bool isTurningAround = false;
     private float turnRadius;
     private bool buffed;
     private bool buffedSpeed;
     private bool isAlive = true;
     private GameObject heldItem;
+
+    private float lastTapTime;
+    private float turnAmount;
 
     void Start()
     {
@@ -73,14 +72,41 @@ public class PlayerMotor : MonoBehaviour
 		float BalanceInput;
         bool TurnRightInput;
         bool TurnLeftInput;
-        getInput (out HorizontalInput, out BalanceInput, out TurnRightInput, out TurnLeftInput);
+        bool TurnAround;
+        getInput (out HorizontalInput, out BalanceInput, 
+            out TurnRightInput, out TurnLeftInput, out TurnAround);
 
         // Move player, add rotation based on inputs and gravity
 		movePlayer(HorizontalInput);
 		addRollingRotationToHand(BalanceInput + (activePlayerStats.RotationDueToGravity * getRollingRotation));
 
+        if (isTurningAround)
+        {
+            float currentAngle = this.transform.rotation.eulerAngles.y;
+            float deltaAngle = 300.0f * Time.deltaTime;
+            float projectedAngle = currentAngle + deltaAngle;
+
+            if (Mathf.Abs(turnRadius + deltaAngle) < 180.0f)
+            {
+                turnRadius += deltaAngle;
+                this.transform.rotation = Quaternion.AngleAxis(projectedAngle, Vector3.up);
+            }
+            else
+            {
+                float remainingAngle = 90 - currentAngle % 90.0f;
+                this.transform.rotation = Quaternion.AngleAxis(Mathf.Round(currentAngle + remainingAngle), Vector3.up);
+                turnRadius = 0.0f;
+                isTurningAround = false;
+            }
+        }
+
         // Turning
         handleTurning(TurnRightInput, TurnLeftInput);
+
+
+        this.playerHandParent.transform.localPosition = 
+            new Vector3(this.playerHandParent.transform.localPosition.x,
+            this.playerHandParent.transform.localPosition.y, 0.0f);
 
         // Notify that hands have rotated
         if (playerNotifier != null)
@@ -251,7 +277,7 @@ public class PlayerMotor : MonoBehaviour
             if (isAlive)
             {
                 float dir = Vector3.Dot(col.gameObject.transform.forward, this.transform.forward);
-                if (dir < -0.97)
+                if (dir < -0.70)
                 {
                     //this.transform.localRotation = Quaternion.AngleAxis(this.transform.rotation.eulerAngles.y + 90.0f, Vector3.up);
                     if (!buffed)
@@ -382,12 +408,22 @@ public class PlayerMotor : MonoBehaviour
      *     getInput (out horizontalInput, out balanceInput, out turnRightInput, out turnLeftInput);
      */
     private void getInput(out float HorizontalInput, out float BalanceInput, 
-                          out bool TurnRightInput, out bool TurnLeftInput) 
+                          out bool TurnRightInput, out bool TurnLeftInput, out bool TurnAround) 
 	{
 		HorizontalInput = Input.GetAxis("Horizontal");
 		BalanceInput = Input.GetAxis("Rotation");
         TurnRightInput = Input.GetButtonDown("TurnRight");
         TurnLeftInput = Input.GetButtonDown("TurnLeft");
+
+        if (TurnAround = Input.GetButtonDown("TurnAround"))
+        {
+            if ((Time.time - lastTapTime) < 0.3f)
+            {
+                this.isTurningAround = true;
+            }
+
+            lastTapTime = Time.time;
+        }
 
         // Gyroscope input
         if (Mathf.Abs (Input.gyro.rotationRate.z) > 0.1f) 

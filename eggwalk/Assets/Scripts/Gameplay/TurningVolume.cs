@@ -37,7 +37,7 @@ public class TurningVolume : MonoBehaviour {
     {
         float flfwDot = Vector3.Dot(localForwardVector, Vector3.forward);
         float flrwDot = Vector3.Dot(localForwardVector, Vector3.right);
-        float epsilon = 0.0001f;
+        float epsilon = 3.0f;
 
         if (southLaneOpen && NearlyEqual(flfwDot, 0.0f, epsilon) && NearlyEqual(flrwDot, 1.0f, epsilon))
         {
@@ -80,7 +80,7 @@ public class TurningVolume : MonoBehaviour {
     {
         float flfwDot = Vector3.Dot(localForwardVector, Vector3.forward);
         float flrwDot = Vector3.Dot(localForwardVector, Vector3.right);
-        float epsilon = 0.0001f;
+        float epsilon = 3.0f;
 
         if (northLaneOpen && NearlyEqual(flfwDot, 0.0f, epsilon) && NearlyEqual(flrwDot, 1.0f, epsilon))
         {
