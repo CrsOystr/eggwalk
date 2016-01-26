@@ -9,7 +9,9 @@ public class ExplodePickup : MonoBehaviour, Pickup {
     [SerializeField] private string pickupName;
     [SerializeField] private int mass;
     [SerializeField] private Transform centerOfMass;
+    [SerializeField] private List<PickupModifier> modifiers;
     [SerializeField] private List<GameObject> fragmentRigidBodies;
+    [SerializeField] private int scoreValue;
 
 	// Use this for initialization
 	void Start () {
@@ -21,8 +23,8 @@ public class ExplodePickup : MonoBehaviour, Pickup {
 
     void FixedUpdate()
     {
-        Vector3 BobbingVector = Vector3.up * 0.01f * 10 * Mathf.Sin(10 * Time.time) * Time.deltaTime;
-        this.transform.Translate(BobbingVector);
+        //Vector3 BobbingVector = Vector3.up * 0.01f * 10 * Mathf.Sin(10 * Time.time) * Time.deltaTime;
+        //this.transform.Translate(BobbingVector);
     }
 
     public int getId()
@@ -61,5 +63,15 @@ public class ExplodePickup : MonoBehaviour, Pickup {
             fragmentRigidBodies[i].GetComponent<BoxCollider>().enabled = true;
             fragmentRigidBodies[i].GetComponent<Rigidbody>().isKinematic = false;
         }
+    }
+
+    public int getScoreValue()
+    {
+        return this.scoreValue;
+    }
+
+    public List<PickupModifier> getModifiers()
+    {
+        return this.modifiers;
     }
 }

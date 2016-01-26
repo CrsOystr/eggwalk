@@ -9,8 +9,7 @@ public class UISystem : MonoBehaviour
     [SerializeField] private GameObject GameOverElements;
     [SerializeField] private Text LifeText;
     [SerializeField] private GameObject RestartButton;
-    [SerializeField] private GameObject BalanceBar;
-    [SerializeField] private GameObject BalanceTriangle;
+    [SerializeField] private BalanceBar Bar;
     [SerializeField] private Image HurtImageMask;
     [SerializeField] private Image HurtDeathImageMask;
     [SerializeField] private Image TurnRightSignal;
@@ -34,7 +33,6 @@ public class UISystem : MonoBehaviour
         HurtMaskisVisible = false;
         TurnRightSignalIsVisible = false;
         TurnLeftSignalIsVisible = false;
-        setVisibilityToBalanceBar(false);
 
         setImageAlpha(ref HurtImageMask, 0.0f);
         setImageAlpha(ref TurnRightSignal, 0.0f);
@@ -126,10 +124,19 @@ public class UISystem : MonoBehaviour
         Application.LoadLevel(level);
     }
 
-    public void setRotationToBalanceBar(float deltaRotation)
+    public void setRotationToBalanceBar(float angle)
     {
-        BalanceTriangle.transform.localEulerAngles = Vector3.forward * deltaRotation;
-    }
+        Bar.IndicatorParent.transform.localEulerAngles = Vector3.forward * angle;
+        Bar.setIndicatorColorFromAngle(angle, 75.0f);
+
+        if (Mathf.Abs(angle) > 55.0f)
+        {
+            Bar.flashGauge();
+        } else
+        {
+            Bar.resetGague();
+        }
+    } 
 
     public void showHurtMask(bool visible)
     {
@@ -217,8 +224,8 @@ public class UISystem : MonoBehaviour
 
     public void setVisibilityToBalanceBar(bool val)
     {
-        BalanceTriangle.SetActive(val);
-        BalanceBar.SetActive(val);
+        //BalanceTriangle.SetActive(val);
+       //BalanceBar.SetActive(val);
     }
 
     public void setDeliveredText(string text)

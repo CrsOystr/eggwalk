@@ -5,41 +5,52 @@ using System.Collections.Generic;
 public class GameState : MonoBehaviour {
 
     [SerializeField] private GameplayNotifier notifier;
+    [SerializeField] private GameMode gameMode;
     [SerializeField] private List<GameObject> objectiveList;
-    [SerializeField] private int initialTimeToStart = 3;
-    private int countdownTime;
-	private int score;
+
+    private int timeToStart;
+    private float timeInLevel;
+    private int score;
     private GameObject currentObjective;
     private List<string> deliveredItems;
     private bool isGameOver;
     private bool hasCompletedLevel;
     private bool hasStartedLevel;
-    private float timeInLevel;
 
-	// Use this for initialization
-	void Start () {
-	    if (notifier != null)
+	void Awake ()
+    {
+        if (notifier == null)
         {
-            this.countdownTime = initialTimeToStart;
-			this.score = 0;
-            StartCoroutine(countdown());
-            this.notifier.notify(new GameEvent(objectiveList, GameEnumerations.EventCategory.Gameplay_InitializeEvents));
-            this.deliveredItems = new List<string>();
-            this.hasStartedLevel = false;
+            return;
         }
+
+		this.score = 0;
+        this.deliveredItems = new List<string>();
+
+        this.timeToStart = gameMode.InitialTimeToStartLevel;
+        this.hasStartedLevel = false;
+        StartCoroutine(countdown());
+
+        this.notifier.notify(new GameEvent(objectiveList, 
+            GameEnumerations.EventCategory.Gameplay_InitializeEvents));
 	}
+
 
     void Update()
     {
-        if (Input.GetButtonDown("Restart"))
+        if (this.hasStartedLevel && !this.isGameOver)
         {
-            Application.LoadLevel(Application.loadedLevel);
+            this.timeInLevel += Time.deltaTime;
         }
 
-
-        if (this.HasStartedLevel)
+        if(gameMode.CanPauseGame && Input.GetButtonDown("Pause"))
         {
-            timeInLevel += Time.deltaTime;
+            Time.timeScale = (Time.timeScale != 0.0f) ? 0.0f : 1.0f;
+        }
+
+        if (Input.GetButtonDown("Restart"))
+        {
+            Application.LoadLevel(Application.loadedLevelName);
         }
     }
 
@@ -66,13 +77,34 @@ public class GameState : MonoBehaviour {
             Objective obj = objectiveList[i].GetComponent<Objective>();
             if (id == obj.getObjectiveID())
             {
-                this.currentObjective = null;
-                objectiveList[i].GetComponent<Objective>().completeObjective();
-				score += 1;
+                if (!gameMode.IsEndless)
+                {
+                    this.currentObjective = null;
+                }
+
+                Objective completedObj = objectiveList[i].GetComponent<Objective>();
+                completedObj.completeObjective();
                 return true;
             }
         }
         return false;
+    }
+
+    public bool restartEndlessObjective(GameObject player)
+    {
+        this.currentObjective = this.objectiveList[0];
+
+        GameObject pickup = this.currentObjective.GetComponent<Objective>().getObjectiveItem();
+
+        if (player != null)
+        {
+            notifier.notify(new GameEvent(new List<GameObject> { player, pickup },
+                GameEnumerations.EventCategory.Player_StartedObjective));
+            return true;
+        } else
+        {
+            return false;
+        }
     }
 
     public GameObject getCurrentObjective()
@@ -100,6 +132,20 @@ public class GameState : MonoBehaviour {
         return gameObject.GetComponent<Objective>();
     }
 
+    public Objective getObjectiveFromId(int id)
+    {
+        for (int i = 0; i < objectiveList.Count; i++)
+        {
+            Objective obj = this.objectiveList[i].GetComponent<Objective>();
+            if (obj != null && obj.getObjectiveID() == id)
+            {
+                return obj;
+            }
+        }
+
+        return null;
+    }
+
     public void addToItemDeliveredList(string item)
     {
         this.deliveredItems.Add(item);
@@ -110,6 +156,24 @@ public class GameState : MonoBehaviour {
         return (deliveredItems.Count > 0) ? deliveredItems[deliveredItems.Count - 1] : "Not Good";
     }
 
+    public void initializeLevel()
+    {
+        if (gameMode.IsEndless)
+        {
+            this.currentObjective = this.objectiveList[0];
+            this.currentObjective.GetComponent<Objective>().initializeObjective();
+
+            GameObject pickup = this.currentObjective.GetComponent<Objective>().getObjectiveItem();
+            GameObject p = GameObject.FindGameObjectWithTag("Player");
+
+            if (p != null)
+            {
+                notifier.notify(new GameEvent(new List<GameObject> { p, pickup }, 
+                    GameEnumerations.EventCategory.Player_StartedObjective));
+            }
+        }
+    }
+
     public void completeLevel()
     {
         this.notifier.notify(new GameEvent(null, GameEnumerations.EventCategory.Gameplay_CompletedLevel));
@@ -118,28 +182,23 @@ public class GameState : MonoBehaviour {
     private IEnumerator countdown()
     {
         yield return new WaitForSeconds(1.0f);
-        if (countdownTime > -1)
+        if (timeToStart > -1)
         {
-            CountdownTime--;
+            TimeToStart--;
             notifier.notify(new GameEvent(null, GameEnumerations.EventCategory.Gameplay_Countdown));
-            if (countdownTime == 0)
+            if (timeToStart == 0)
             {
                 notifier.notify(new GameEvent(null, GameEnumerations.EventCategory.Gameplay_StartLevel));
             }
+
             StartCoroutine(countdown());
         }
     }
 
-    public int CountdownTime
+    public int TimeToStart
     {
-        get { return this.countdownTime; }
-        private set { this.countdownTime = value; }
-    }
-
-    public int InitialTimeToStart
-    {
-        get { return this.initialTimeToStart; }
-        private set { this.initialTimeToStart = value; }
+        get { return this.timeToStart; }
+        private set { this.timeToStart = value; }
     }
 
     public bool HasCompletedLevel
@@ -167,7 +226,7 @@ public class GameState : MonoBehaviour {
 
     public void startGame()
     {
-        GameObject.FindObjectOfType<PlayerMotor>().startPlayer(true);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMotor>().startPlayer(true);
         this.HasStartedLevel = true;
     }
 
@@ -183,6 +242,16 @@ public class GameState : MonoBehaviour {
         }
 
         return null;
+    }
+
+    public void addToScore(int score)
+    {
+        this.score += score;
+    }
+
+    public GameMode getGameMode()
+    {
+        return this.gameMode;
     }
 
     public bool HasStartedLevel

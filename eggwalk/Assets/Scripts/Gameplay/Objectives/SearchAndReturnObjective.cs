@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class SearchAndReturnObjective : MonoBehaviour, Objective {
 
@@ -15,7 +15,7 @@ public class SearchAndReturnObjective : MonoBehaviour, Objective {
     // Use this for initialization
     void Start ()
     {
-        targetTrigger.TargetObject = targetObject;
+        targetTrigger.addTargetObject(targetObject);
         particles.enableEmission = false;
     }
 
@@ -29,9 +29,23 @@ public class SearchAndReturnObjective : MonoBehaviour, Objective {
         return objectiveID;
     }
 
+    public GameEnumerations.ObjectiveType getObjectiveType()
+    {
+        return GameEnumerations.ObjectiveType.Objective_Search_Return;
+    }
+
+    public GameObject getObjectiveItem()
+    {
+        return this.targetObject;
+    }
+
     public Transform getObjectiveDestination()
     {
         return targetTrigger.Destination;
+    }
+
+    public void initializeObjective()
+    {
     }
 
     public void startObjective()

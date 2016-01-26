@@ -12,61 +12,42 @@ using System.Collections.Generic;
 
 public class PlayerMotor : MonoBehaviour
 {
-    [SerializeField] private bool playerCanStart = true;
-    [SerializeField] private float playerForwardSpeed; // the player's run speed (Z direction)
-    [SerializeField] private float playerStrafeSpeed; // the player's strafe speed (X direction)
-    [SerializeField] private float handStrafeSpeed;
+    [SerializeField] private PlayerStats activePlayerStats;
 
-    [SerializeField] private float rotationSpeed;
-    [SerializeField] private float cameraRotationSpeed;
-    [SerializeField] private float rotationDueToStrafing;
-    [SerializeField] private float rotationDueToGravity; // how much 'gravity' pulls the player over (not actually Rigidbody gravity)			
-    [SerializeField] private float dropAtRotation; // how far the player can tip over before dropping the item
+    // Important objects used by player
+    [SerializeField]
+    private GameObject playerCamera;
+    [SerializeField]
+    private SphereCollider playerHandParent;
+    [SerializeField]
+    private GameplayNotifier playerNotifier;
+    [SerializeField]
+    private Transform itemLocation;
+    [SerializeField]
+    private Arrow arrow;
 
-    // Player Bob Values
-    [SerializeField] private float bobbingRate;
-    [SerializeField] private float bobbingAmplitude;
-
-    // Camera Bob Values
-    [SerializeField] private float cameraBobRate;
-    [SerializeField] private float cameraBobAmplitude;
-
-    // Turning
-    [SerializeField] private float turningSpeed;
+    private PlayerStats originalPlayerStats;
+    private bool playerCanStart = false;
 	private bool canTurn = false;
 	private bool canTurnLeft;
 	private bool canTurnRight;
 	private bool isTurning = false;
 	private bool isTurningLeft;
     private float turnRadius;
-
-    // Player life
-    [SerializeField] private int currentLives = 5;
-    [SerializeField] private int playerLives = 5;
-    [SerializeField] private float initialBuffingTime = 10.0f;
-    [SerializeField] private float buffingTime = 2.0f;
     private bool buffed;
     private bool buffedSpeed;
     private bool isAlive = true;
-
-    // Important objects used by player
-    [SerializeField] private GameObject playerCamera;
-    [SerializeField] private SphereCollider playerHandParent;
-    [SerializeField] private GameplayNotifier playerNotifier;
-    [SerializeField] private Transform itemLocation;
-    [SerializeField] private Arrow arrow;
     private GameObject heldItem;
 
     void Start()
     {
+        this.originalPlayerStats = this.activePlayerStats;
         this.arrow.setActive(true);
         List<GameObject> entityMessage = new List<GameObject>{ this.gameObject };
-        playerNotifier.notify(new GameEvent(entityMessage, GameEnumerations.EventCategory.Gameplay_InitializeHUD));
+        this.playerNotifier.notify(new GameEvent(entityMessage, GameEnumerations.EventCategory.Gameplay_InitializeHUD));
 
         this.buffed = true;
         StartCoroutine(initialBuffer());
-
-        this.arrow.setActive(false);
     }
 
     void Update()
@@ -76,7 +57,7 @@ public class PlayerMotor : MonoBehaviour
             return;
         }
 
-        if (currentLives <= 0 || Mathf.Abs(getRollingRotation) > dropAtRotation)
+        if (activePlayerStats.CurrentLives <= 0 || Mathf.Abs(getRollingRotation) > activePlayerStats.DropAtRotation)
         {
             if (isAlive)
             {
@@ -94,7 +75,7 @@ public class PlayerMotor : MonoBehaviour
 
         // Move player, add rotation based on inputs and gravity
 		movePlayer(HorizontalInput);
-		addRollingRotationToHand(BalanceInput + (rotationDueToGravity * getRollingRotation));
+		addRollingRotationToHand(BalanceInput + (activePlayerStats.RotationDueToGravity * getRollingRotation));
 
         // Turning
         handleTurning(TurnRightInput, TurnLeftInput);
@@ -125,7 +106,7 @@ public class PlayerMotor : MonoBehaviour
     {
         float baseSpeed = (this.playerCanStart) ? 1.0f : 0.0f;
 
-        Vector3 WalkingVector = playerHandParent.transform.forward * playerForwardSpeed * Time.deltaTime * baseSpeed;
+        Vector3 WalkingVector = playerHandParent.transform.forward * activePlayerStats.ForwardSpeed * Time.deltaTime * baseSpeed;
 
         if (this.buffedSpeed)
         {
@@ -134,12 +115,12 @@ public class PlayerMotor : MonoBehaviour
 
         // Translation Vector
         Vector3 RightVector = Vector3.Cross(Vector3.up, playerHandParent.transform.forward);
-        Vector3 StrafingVector = RightVector * MovementAxisInput * playerStrafeSpeed * Time.deltaTime * baseSpeed;
+        Vector3 StrafingVector = RightVector * MovementAxisInput * activePlayerStats.StrafeSpeed * Time.deltaTime * baseSpeed;
 
         // Bobbing Vectors
-        Vector3 BobbingVector = playerHandParent.transform.up * bobbingAmplitude * bobbingRate * Mathf.Sin(Time.time * bobbingRate) * Time.deltaTime * baseSpeed;
-		Vector3 CameraBobbingVector = Vector3.up * cameraBobAmplitude * cameraBobRate * Mathf.Sin(Time.time * cameraBobRate) * Time.deltaTime * baseSpeed;
-        Vector3 ShiftingHandsVector = RightVector * handStrafeSpeed * MovementAxisInput * Time.deltaTime * baseSpeed;
+        Vector3 BobbingVector = playerHandParent.transform.up * activePlayerStats.BobbingAmplitude * activePlayerStats.BobbingRate * Mathf.Sin(Time.time * activePlayerStats.BobbingRate) * Time.deltaTime * baseSpeed;
+		Vector3 CameraBobbingVector = Vector3.up * activePlayerStats.CameraBobAmplitude * activePlayerStats.CameraBobRate * Mathf.Sin(Time.time * activePlayerStats.CameraBobRate) * Time.deltaTime * baseSpeed;
+        Vector3 ShiftingHandsVector = RightVector * activePlayerStats.HandStrafeSpeed * MovementAxisInput * Time.deltaTime * baseSpeed;
 
         // Move the player, bob the hand
         playerHandParent.transform.Translate(ShiftingHandsVector + BobbingVector, Space.World);
@@ -149,7 +130,7 @@ public class PlayerMotor : MonoBehaviour
         playerCamera.transform.Translate(CameraBobbingVector);
 
         // Add a small amount of rotation due to strafing
-        addRollingRotationToHand(rotationDueToStrafing * MovementAxisInput);
+        addRollingRotationToHand(activePlayerStats.RotationDueToStrafing * MovementAxisInput);
     }
 
     /**
@@ -169,8 +150,8 @@ public class PlayerMotor : MonoBehaviour
     {
         if (heldItem != null)
         {
-            playerHandParent.transform.Rotate(Vector3.forward * RotationAxisInput * rotationSpeed * Time.deltaTime);
-            playerCamera.transform.Rotate(Vector3.forward * RotationAxisInput * cameraRotationSpeed * Time.deltaTime * -1.0f);
+            playerHandParent.transform.Rotate(Vector3.forward * RotationAxisInput * activePlayerStats.RotationSpeed * Time.deltaTime);
+            playerCamera.transform.Rotate(Vector3.forward * RotationAxisInput * activePlayerStats.CameraRotationSpeed * Time.deltaTime * -1.0f);
         }
     }
 
@@ -240,7 +221,7 @@ public class PlayerMotor : MonoBehaviour
         if (isTurning)
         {
             float direction = (isTurningLeft) ? -1.0f : 1.0f;
-            turnPlayer(direction * turningSpeed);
+            turnPlayer(direction * activePlayerStats.TurningSpeed);
         }
     }
 
@@ -332,13 +313,12 @@ public class PlayerMotor : MonoBehaviour
 
         if (col.gameObject.GetComponent<Pickup>() != null)
         {
-            GameObject pickup = col.gameObject;
-
-            List<GameObject> entityMessage = new List<GameObject>() { this.gameObject, pickup };
-
             if (heldItem == null)
             {
-                addItemIntoHand(col.gameObject.GetComponent<Pickup>().getTargetItem());
+                GameObject pickup = col.gameObject;
+                List<GameObject> entityMessage = new List<GameObject>() { this.gameObject, pickup };
+
+                //addItemIntoHand(col.gameObject.GetComponent<Pickup>().getTargetItem());
                 playerNotifier.notify(new GameEvent(entityMessage, GameEnumerations.EventCategory.Player_StartedObjective));
             }
         }
@@ -398,18 +378,24 @@ public class PlayerMotor : MonoBehaviour
 			Touch t1 = Input.GetTouch (0);
 			HorizontalInput = (t1.position.x < Screen.width / 2) ? -1 : 1;
 		}
-
-        if (Input.GetButtonDown("Restart"))
-        {
-            Application.LoadLevel(Application.loadedLevelName);
-        }
-
-        if (Input.GetButtonDown("Pause"))
-        {
-            Time.timeScale = (Time.timeScale != 0.0f) ? 0.0f : 1.0f;
-        }
     }
 
+    /**
+     * addItemIntoHand - Add a gameObject into the players hand, and set as active item
+     * On Output:
+     *    If the item was successfully added, if there is already an item in hand, false
+     * Call:
+     *    Player player = ...; // Reference to player
+     *    GameObject prefab = ....; // Some prefab provided
+     *    Transform t = ....;
+     *    GameObject newItem = Instantiate(prefab, t.position, t.rotation);
+     *    bool successfullyAdded = player.addItemToHand(newItem);
+     *    if (successfullyAdded) {
+     *      Debug.Log("Player has a new Item!");
+     *    } else {
+     *      Debug.Log("Dummy, you already have an item!");
+     *    }
+     */
     public bool addItemIntoHand(GameObject targetItem)
     {
         if (this.heldItem != null)
@@ -417,6 +403,11 @@ public class PlayerMotor : MonoBehaviour
             return false;
         }
 
+        // Apply effects
+        Pickup pickup = targetItem.GetComponent<Pickup>();
+        modPlayerAttributes(pickup.getModifiers());
+
+        // Reparent item, and reposition into players hand
         this.heldItem = targetItem;
         targetItem.transform.parent = playerHandParent.transform;
         targetItem.transform.localPosition = this.itemLocation.localPosition;
@@ -431,19 +422,21 @@ public class PlayerMotor : MonoBehaviour
             return false;
         }
 
+        revertAllAttributes();
+
         this.heldItem = null;
         return true;
     }
 
     private IEnumerator initialBuffer()
     {
-        yield return new WaitForSeconds(this.initialBuffingTime);
+        yield return new WaitForSeconds(activePlayerStats.InitialBuffingTime);
         this.buffed = false;
     }
 
     private IEnumerator removeBuffer()
     {
-        yield return new WaitForSeconds(this.buffingTime);
+        yield return new WaitForSeconds(activePlayerStats.BuffingTime);
         this.buffed = false;
         this.buffedSpeed = false;
     }
@@ -452,6 +445,18 @@ public class PlayerMotor : MonoBehaviour
     {
         float noise = UnityEngine.Random.Range(-20.0f, 20.0f);
         addRollingRotationToHand(noise);
+    }
+
+    public bool resetLives()
+    {
+        if (!isAlive)
+        {
+            return false;
+        } else
+        {
+            activePlayerStats.CurrentLives = activePlayerStats.PlayerLives;
+            return true;
+        }
     }
 
     public void onDeath()
@@ -478,7 +483,7 @@ public class PlayerMotor : MonoBehaviour
      */
     public int getCurrentLives()
     {
-        return currentLives;
+        return activePlayerStats.CurrentLives;
     }
 
     /**
@@ -486,7 +491,7 @@ public class PlayerMotor : MonoBehaviour
      */
     public int getTotalLives()
     {
-        return playerLives;
+        return activePlayerStats.PlayerLives;
     }
 
     /**
@@ -498,7 +503,7 @@ public class PlayerMotor : MonoBehaviour
     }
 
     /**
-     * getRollingRotation - Get Rolling rotation of player
+     * getRollingRotation - Get Rolling rotation of player hands
      */
     public float getRollingRotation
     {
@@ -526,6 +531,82 @@ public class PlayerMotor : MonoBehaviour
     }
 
     /**
+     * modPlayerAttribute - Modify a players attributes based on a specific modifier
+    */
+    public void modPlayerAttribute(PickupModifier mod)
+    {
+        // Revert first
+        revertPlayerAttribute(mod);
+
+        GameEnumerations.PlayerModifier type = mod.modifier;
+        switch (type)
+        {
+            case GameEnumerations.PlayerModifier.Player_Mod_Speed:
+                {
+                    activePlayerStats.ForwardSpeed *= mod.value;
+                    break;
+                }
+            case GameEnumerations.PlayerModifier.Player_Mod_Balance:
+                {
+                    activePlayerStats.RotationSpeed *= mod.value;
+                    break;
+                }
+        }
+    }
+
+    public void modPlayerAttributes(List<PickupModifier> mods)
+    {
+        for (int i = 0; i < mods.Count; i++)
+        {
+            modPlayerAttribute(mods[i]);
+        }
+    }
+
+    /**
+     * revertPlayerAttribute - Revert the players attributes back to normal 
+     *                         based on a known modifier 
+    */
+    public void revertPlayerAttribute(PickupModifier mod)
+    {
+        GameEnumerations.PlayerModifier type = mod.modifier;
+        switch (type)
+        {
+            case GameEnumerations.PlayerModifier.Player_Mod_Speed:
+                {
+                    activePlayerStats.ForwardSpeed = activePlayerStats.ForwardSpeed / mod.value;
+                    break;
+                }
+            case GameEnumerations.PlayerModifier.Player_Mod_Balance:
+                {
+                    activePlayerStats.RotationSpeed = activePlayerStats.RotationSpeed / mod.value;
+                    break;
+                }
+        }
+    }
+
+    public void revertAllAttributes()
+    {
+        this.activePlayerStats = this.originalPlayerStats;
+    }
+
+    public void revertPlayerAttribute(GameEnumerations.PlayerModifier type)
+    {
+        switch (type)
+        {
+            case GameEnumerations.PlayerModifier.Player_Mod_Speed:
+                {
+                    activePlayerStats.ForwardSpeed = activePlayerStats.ForwardSpeed / originalPlayerStats.ForwardSpeed;
+                    break;
+                }
+            case GameEnumerations.PlayerModifier.Player_Mod_Balance:
+                {
+                    activePlayerStats.RotationSpeed = activePlayerStats.RotationSpeed / originalPlayerStats.RotationSpeed;
+                    break;
+                }
+        }
+    }
+
+    /**
     * NormalizeAngle - Normalizes angles, used for UI balance meter
     */
     private float NormalizeAngle(float angle)
@@ -546,7 +627,123 @@ public class PlayerMotor : MonoBehaviour
     {
         this.buffed = true;
         this.buffedSpeed = true;
-        currentLives -= damage;
+        activePlayerStats.CurrentLives -= damage;
         StartCoroutine(removeBuffer());
+    }
+
+    [System.Serializable]
+    public class PlayerStats
+    {
+        [SerializeField] private float forwardSpeed;
+        [SerializeField] private float strafeSpeed;
+        [SerializeField] private float handStrafeSpeed;
+        [SerializeField] private float rotationSpeed;
+        [SerializeField] private float cameraRotationSpeed;
+        [SerializeField] private float rotationDueToStrafing;
+        [SerializeField] private float rotationDueToGravity;
+        [SerializeField] private float dropAtRotation;
+        [SerializeField] private float bobbingRate;
+        [SerializeField] private float bobbingAmplitude;
+        [SerializeField] private float cameraBobRate;
+        [SerializeField] private float cameraBobAmplitude;
+        [SerializeField] private float turningSpeed;
+        [SerializeField] private int currentLives;
+        [SerializeField] private int playerLives;
+        [SerializeField] private float initialBuffingTime = 10.0f;
+        [SerializeField] private float buffingTime = 2.0f;
+        [SerializeField] private float buffedFactor = 0.5f;
+
+        public float ForwardSpeed
+        {
+            get { return this.forwardSpeed; }
+            set { this.forwardSpeed = value; }
+        }
+
+        public float StrafeSpeed
+        {
+            get { return this.strafeSpeed; }
+        }
+
+        public float HandStrafeSpeed
+        {
+            get { return this.handStrafeSpeed; }
+        }
+
+        public float RotationSpeed
+        {
+            get { return this.rotationSpeed; }
+            set { this.rotationSpeed = value; }
+        }
+
+        public float CameraRotationSpeed
+        {
+            get { return this.cameraRotationSpeed; }
+        }
+
+        public float RotationDueToStrafing
+        {
+            get { return this.rotationDueToStrafing; }
+        }
+
+        public float RotationDueToGravity
+        {
+            get { return this.rotationDueToGravity; }
+        }
+
+        public float DropAtRotation
+        {
+            get { return this.dropAtRotation; }
+        }
+
+        public float BobbingRate
+        {
+            get { return this.bobbingRate; }
+        }
+
+        public float BobbingAmplitude
+        {
+            get { return this.bobbingAmplitude; }
+        }
+
+        public float CameraBobRate
+        {
+            get { return this.cameraBobRate; }
+        }
+
+        public float CameraBobAmplitude
+        {
+            get { return this.cameraBobAmplitude; }
+        }
+
+        public float TurningSpeed
+        {
+            get { return this.turningSpeed; }
+        }
+
+        public int CurrentLives
+        {
+            get { return this.currentLives; }
+            set { this.currentLives = value; }
+        }
+
+        public int PlayerLives
+        {
+            get { return this.playerLives; }
+        }
+
+        public float InitialBuffingTime
+        {
+            get { return this.initialBuffingTime; }
+        }
+
+        public float BuffingTime
+        {
+            get { return this.buffingTime; }
+        }
+
+        public float BuffedFactor
+        {
+            get { return this.buffedFactor; }
+        }
     }
 }

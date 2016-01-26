@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent (typeof (SphereCollider))]
 [RequireComponent(typeof(CapsuleCollider))]
@@ -12,7 +12,8 @@ public class BasicPickup : MonoBehaviour, Pickup {
     [SerializeField] private int mass;
     [SerializeField] private Transform centerOfMass;
     [SerializeField] private GameObject pickupIndicatorObject;
-	public float amplitude;
+    [SerializeField] private List<PickupModifier> modifiers;
+    public float amplitude;
 	public float rate;
     private bool canBob = true;
 
@@ -72,5 +73,15 @@ public class BasicPickup : MonoBehaviour, Pickup {
         this.gameObject.GetComponent<CapsuleCollider>().isTrigger = false;
         this.gameObject.GetComponent<Rigidbody>().isKinematic = false;
         this.canBob = false;
+    }
+
+    public int getScoreValue()
+    {
+        return 0;
+    }
+
+    public List<PickupModifier> getModifiers()
+    {
+        return this.modifiers;
     }
 }

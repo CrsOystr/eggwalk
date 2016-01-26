@@ -18,7 +18,7 @@ public class UIObserver : MonoBehaviour, Observer
                 {
                     PlayerMotor player = e.Entity[0].GetComponent<PlayerMotor>();
                     UISys.setCurrentLives(player.getCurrentLives(), player.getTotalLives());
-                    UISys.setCountDownText(gameState.InitialTimeToStart + "");
+                    UISys.setCountDownText(gameState.TimeToStart + "");
 					UISys.setScoreText(gameState.Score);
                     break;
                 }
@@ -31,10 +31,10 @@ public class UIObserver : MonoBehaviour, Observer
                 }
             case GameEnumerations.EventCategory.Gameplay_Countdown:
                 {
-                    if (gameState.CountdownTime > 0)
+                    if (gameState.TimeToStart > 0)
                     {
-                        UISys.setCountDownText(gameState.CountdownTime + "");
-                    } else if (gameState.CountdownTime == 0)
+                        UISys.setCountDownText(gameState.TimeToStart + "");
+                    } else if (gameState.TimeToStart == 0)
                     {
                         UISys.setCountDownText("GO!");
                     } else
@@ -139,6 +139,12 @@ public class UIObserver : MonoBehaviour, Observer
                     {
                         UISys.setVisibilityToBalanceBar(false);
                     }
+
+                    if (this.gameState.getGameMode().ResetLivesAfterObjectiveComplete)
+                    {
+                        UISys.setCurrentLives(player.getCurrentLives(), player.getTotalLives());
+                    }
+
                     break;
                 }
         }
