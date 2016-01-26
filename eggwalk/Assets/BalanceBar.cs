@@ -16,6 +16,7 @@ public class BalanceBar : MonoBehaviour
     void Start () {
         if (indicatorGradient.colorKeys.Length > 0) {
             indicatorFill.color = indicatorGradient.colorKeys[0].color;
+            this.flashingGague.color = gaugeGradient.Evaluate(0.0f);
         }
 	}
 
@@ -50,7 +51,7 @@ public class BalanceBar : MonoBehaviour
 
     public void resetGague()
     {
-        this.flashingGague.color = gaugeGradient.Evaluate(1.0f);
+        this.flashingGague.color = gaugeGradient.Evaluate(0.0f);
     }
 
     public GameObject IndicatorParent
