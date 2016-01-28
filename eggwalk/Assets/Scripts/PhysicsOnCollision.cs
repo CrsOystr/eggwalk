@@ -29,7 +29,7 @@ public class PhysicsOnCollision : MonoBehaviour {
 				if(!isInsideCameraFrustrum()) {
 					transform.position = _initPosition;
 					transform.rotation = _initRotation;
-					//Debug.Log ("succesful reset!");
+                    _resetCounter = 0;
 				} else {
 					_resetCounter = 0;
 					//Debug.Log ("it was on screen...");
