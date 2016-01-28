@@ -105,8 +105,7 @@ public class PlayerMotor : MonoBehaviour
 
 
         this.playerHandParent.transform.localPosition = 
-            new Vector3(this.playerHandParent.transform.localPosition.x,
-            this.playerHandParent.transform.localPosition.y, 0.0f);
+            new Vector3(0.0f, this.playerHandParent.transform.localPosition.y, 0.0f);
 
         // Notify that hands have rotated
         if (playerNotifier != null)

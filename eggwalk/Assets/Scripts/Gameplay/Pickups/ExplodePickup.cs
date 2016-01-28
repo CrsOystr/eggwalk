@@ -8,6 +8,7 @@ public class ExplodePickup : MonoBehaviour, Pickup {
     [SerializeField] private int id;
     [SerializeField] private string pickupName;
     [SerializeField] private int mass;
+    [SerializeField] private bool destroy;
     [SerializeField] private Transform centerOfMass;
     [SerializeField] private List<PickupModifier> modifiers;
     [SerializeField] private List<GameObject> fragmentRigidBodies;
@@ -17,7 +18,8 @@ public class ExplodePickup : MonoBehaviour, Pickup {
 	void Start () {
         for (int i = 0; i < fragmentRigidBodies.Count; i++)
         {
-            fragmentRigidBodies[i].GetComponent<BoxCollider>().enabled = false;
+            fragmentRigidBodies[i].GetComponent<BoxCollider>().enabled = destroy;
+            fragmentRigidBodies[i].GetComponent<Rigidbody>().isKinematic = !destroy;
         }
     }
 
