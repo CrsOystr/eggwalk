@@ -14,14 +14,19 @@ public class VehicleBehavior : MonoBehaviour {
 	public float acceleration; // force applied to accelerate vehicle
 	public float roadWidth; // (minimum) width of the road this vehicle will drive along
 	public bool driveOnRight; // does this car drive on the left side of the road or the right side?
-	public Transform target; // where is the next point this car is driving too?
 	public float targetDistThreshold; // how close can you get to the target before choosing another?
 	//public float turnSpeed;
 	public DriveDirection direction;
-
+	
+	private GameObject target; // where is the next point this car is driving too?
+	public GameObject Target {
+		get { return target;}
+		set { target = value;}
+	}
 	private Rigidbody rb;
 	private Ray frontRay, backRay, leftRay, rightRay;
 	private bool targetSelected;
+	private float startY;
 
 	// Use this for initialization
 	void Start () {
@@ -33,6 +38,8 @@ public class VehicleBehavior : MonoBehaviour {
 		rightRay = new Ray (transform.position, transform.right);
 
 		targetSelected = true;
+		
+		startY = transform.position.y;
 	}
 	
 	// Update is called once per frame
@@ -49,14 +56,18 @@ public class VehicleBehavior : MonoBehaviour {
 			rb.velocity = newVel;
 		}
 
-		float distToTarget = Vector3.Distance (transform.position, target.position);
+		float distToTarget = Vector3.Distance (transform.position, target.transform.position);
 
 		if (distToTarget < targetDistThreshold) {
 			pickNextTarget ();
 		}
 
 		if (debug) {
-			Debug.DrawLine(transform.position, target.position);
+			Debug.DrawLine(transform.position, target.transform.position);
+		}
+		
+		if(transform.position.y > startY) {
+			rb.AddForce(Vector3.up * -100f);
 		}
 
 	}
@@ -80,7 +91,7 @@ public class VehicleBehavior : MonoBehaviour {
 			case 0: // pick north
 				if(ib.toNorth != null && direction != DriveDirection.SOUTH) {
 					direction = DriveDirection.NORTH;
-					target = ib.toNorth.transform.Find("SouthEast");
+					target = ib.toNorth.transform.Find("SouthEast").gameObject;
 					success = true;
 					return;
 				}
@@ -88,7 +99,7 @@ public class VehicleBehavior : MonoBehaviour {
 			case 1: // pick south
 				if(ib.toSouth != null && direction != DriveDirection.NORTH) {
 					direction = DriveDirection.SOUTH;
-					target = ib.toSouth.transform.Find("NorthWest");
+					target = ib.toSouth.transform.Find("NorthWest").gameObject;
 					success = true;
 					return;
 				}
@@ -96,7 +107,7 @@ public class VehicleBehavior : MonoBehaviour {
 			case 2: // pick east
 				if(ib.toEast != null && direction != DriveDirection.WEST) {
 					direction = DriveDirection.EAST;
-					target = ib.toEast.transform.Find("SouthWest");
+					target = ib.toEast.transform.Find("SouthWest").gameObject;
 					success = true;
 					return;
 				}
@@ -104,7 +115,7 @@ public class VehicleBehavior : MonoBehaviour {
 			case 3: // pick west
 				if(ib.toWest != null && direction != DriveDirection.EAST) {
 					direction = DriveDirection.WEST;
-					target = ib.toWest.transform.Find("NorthEast");
+					target = ib.toWest.transform.Find("NorthEast").gameObject;
 					success = true;
 					return;
 				}
@@ -112,7 +123,7 @@ public class VehicleBehavior : MonoBehaviour {
 			}
 		}
 
-		Vector3 adjTarget = new Vector3 (target.position.x, transform.position.y, target.position.z);
+		Vector3 adjTarget = new Vector3 (target.transform.position.x, transform.position.y, target.transform.position.z);
 		target.transform.position = adjTarget;
 
 	}

@@ -1,95 +1,82 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class VehicleManager : MonoBehaviour {
 
-    [SerializeField] private VehicleBehavior[] _vehicleBehaviors;
-    [SerializeField] private GameObject[] _vehicles;
-    [SerializeField] private float _secondsToRespawn;
-
-    private Transform[] _initTargets;
-    private Vector3[] _initPositions;
-    private Quaternion[] _initRotations;
-    private VehicleBehavior.DriveDirection[] _initDriveDirections;
-    private float[] _respawnCounters;
-    private Vector3[] _previousPositions;
+	[SerializeField] private int _numberOfVehicles;
+	[SerializeField] private float _secondsToRespawn;
+	[SerializeField] private GameObject[] _vehiclesToSpawn;
+	
+	private List<VehicleBehavior> _vehicleBehaviors;
+	private GameObject[] _spawnPoints;
+	private float[] _respawnCounters;
+	private Vector3[] _lastPositions;
 
 	// Use this for initialization
 	void Start () {
-
-        _initTargets = new Transform[_vehicleBehaviors.Length];
-        _initPositions = new Vector3[_vehicleBehaviors.Length];
-        _initRotations = new Quaternion[_vehicleBehaviors.Length];
-        _initDriveDirections = new VehicleBehavior.DriveDirection[_vehicleBehaviors.Length];
-        _respawnCounters = new float[_vehicleBehaviors.Length];
-        _previousPositions = new Vector3[_vehicleBehaviors.Length];
-
-        for (int i = 0; i < _vehicleBehaviors.Length; i++)
-        {
-            _initTargets[i] = _vehicleBehaviors[i].target;
-            _initPositions[i] = new Vector3(_vehicleBehaviors[i].gameObject.transform.position.x,
-                _vehicleBehaviors[i].gameObject.transform.position.y,
-                _vehicleBehaviors[i].gameObject.transform.position.z);
-            _initRotations[i] = Quaternion.Euler(_vehicleBehaviors[i].transform.rotation.eulerAngles);
-            _initDriveDirections[i] = _vehicleBehaviors[i].direction;
-            _previousPositions[i] = new Vector3(_vehicleBehaviors[i].gameObject.transform.position.x,
-                _vehicleBehaviors[i].gameObject.transform.position.y,
-                _vehicleBehaviors[i].gameObject.transform.position.z);
-        }
+		
+		_spawnPoints = GameObject.FindGameObjectsWithTag("Intersection Point");
+		// shuffle spawn points
+		for(int i = 0; i < _spawnPoints.Length; i++) {
+			int r = Random.Range(0, _spawnPoints.Length);
+			GameObject temp = _spawnPoints[i];
+			_spawnPoints[i] = _spawnPoints[r];
+			_spawnPoints[r] = temp;
+		}
+		
+		_vehicleBehaviors = new List<VehicleBehavior>();
+		
+		if(_numberOfVehicles > _spawnPoints.Length) _numberOfVehicles = _spawnPoints.Length;
+		
+		_respawnCounters = new float[_numberOfVehicles];
+		_lastPositions = new Vector3[_numberOfVehicles];
+		
+		for(int i = 0; i < _numberOfVehicles; i++) {
+			spawnVehicle(i);
+		}
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	    
-        for(int i = 0; i < _vehicleBehaviors.Length; i++)
-        {
-            _respawnCounters[i] += Time.deltaTime;
-
-            float distanceToLastPosition = Vector3.Distance(transform.position, _previousPositions[i]);
-
-            if (_respawnCounters[i] >= _secondsToRespawn && distanceToLastPosition < 0.1f)
-            {
-                Collider col = _vehicleBehaviors[i].GetComponent<Collider>();
-                if(!isInsideCameraFrustrum(col))
-                {
-                    spawnNewVehicle(i);
-                    _respawnCounters[i] -= _secondsToRespawn;
-                }
-                else
-                {
-                    _respawnCounters[i] -= _secondsToRespawn;
-                }
-            }
-
-            _previousPositions[i] = new Vector3(_vehicleBehaviors[i].gameObject.transform.position.x,
-                _vehicleBehaviors[i].gameObject.transform.position.y,
-                _vehicleBehaviors[i].gameObject.transform.position.z);
-        }
-
+		for(int i = 0; i < _vehicleBehaviors.Count; i++) {
+			_respawnCounters[i] += Time.deltaTime;
+			
+			if(_respawnCounters[i] > _secondsToRespawn && 
+				Vector3.Distance(_vehicleBehaviors[i].transform.position, _lastPositions[i]) < 1f) {
+			
+				if(!isInsideCameraFrustrum(_vehicleBehaviors[i].gameObject.GetComponent<Collider>())) {
+					Destroy(_vehicleBehaviors[i].gameObject);
+					spawnVehicle(i);
+					Debug.Log("respawn!");
+				}
+			
+			} else {
+				_respawnCounters[i] -= _secondsToRespawn;
+			}
+			
+			_lastPositions[i] = new Vector3(_vehicleBehaviors[i].transform.position.x,
+				_vehicleBehaviors[i].transform.position.y,
+				_vehicleBehaviors[i].transform.position.z);
+		}
+	}
+	
+	private void spawnVehicle(int index) {
+		
+		int r1 = Random.Range(0, _vehiclesToSpawn.Length);
+		_vehicleBehaviors.Add(Instantiate(_vehiclesToSpawn[r1]).GetComponent<VehicleBehavior>());
+		_vehicleBehaviors[index].Target = _spawnPoints[index];
+		_vehicleBehaviors[index].gameObject.transform.position = _spawnPoints[index].transform.position;
+		_vehicleBehaviors[index].gameObject.transform.SetParent(transform.parent);
+		
+		_respawnCounters[index] = 0f;
+		_lastPositions[index] = _vehicleBehaviors[index].gameObject.transform.position;
+	
 	}
 
     private bool isInsideCameraFrustrum(Collider col)
-    {
-        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
-        return GeometryUtility.TestPlanesAABB(planes, col.bounds);
-    }
-
-    private void spawnNewVehicle(int index)
-    {
-        int r = Random.Range(0, _vehicles.Length);
-        GameObject newVehicle = Instantiate(_vehicles[r]);
-        VehicleBehavior newVehicleBehaviour = newVehicle.GetComponent<VehicleBehavior>();
-
-        newVehicle.gameObject.transform.position = _initPositions[index];
-        newVehicle.gameObject.transform.rotation = _initRotations[index];
-        newVehicleBehaviour.target = _initTargets[index];
-        newVehicleBehaviour.direction = _initDriveDirections[index];
-
-        Destroy(_vehicleBehaviors[index].gameObject);
-        _vehicleBehaviors[index] = newVehicleBehaviour;
-
-        Debug.Log("Vehicle at [" + index + "] has been respawned");
-
+	{
+		Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+		return GeometryUtility.TestPlanesAABB(planes, col.bounds);
     }
 }

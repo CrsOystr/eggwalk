@@ -30,6 +30,7 @@ public class PhysicsOnCollision : MonoBehaviour {
 					transform.position = _initPosition;
 					transform.rotation = _initRotation;
                     _resetCounter = 0;
+					_rb.isKinematic = true;
 				} else {
 					_resetCounter = 0;
 					//Debug.Log ("it was on screen...");
