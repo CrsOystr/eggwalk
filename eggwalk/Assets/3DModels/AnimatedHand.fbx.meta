@@ -1,0 +1,265 @@
+fileFormatVersion: 2
+guid: c7cfe2728dba9c044b1ba03c7e48bad0
+timeCreated: 1454310487
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: LHandControl
+    100004: LLingBottom
+    100006: LLingMiddle
+    100008: LLingTop
+    100010: LMiddleBottom
+    100012: LMiddleMiddle
+    100014: LMiddleTop
+    100016: LPinkieBottom
+    100018: LPinkieMiddle
+    100020: LPinkieTop
+    100022: LPointerBottom
+    100024: LPointerMiddle
+    100026: LPointerTop
+    100028: LThumbBottom
+    100030: LThumbMiddle
+    100032: LThumbTop
+    100034: LWrist1
+    100036: LWrist2
+    100038: polySurface3
+    100040: polySurface4
+    100042: RHandControl
+    100044: RightHand
+    100046: RightHand 1
+    100048: RMiddleBottom
+    100050: RMiddleMiddle
+    100052: RMiddleTop
+    100054: RPinkieBottom
+    100056: RPinkieMiddle
+    100058: RPinkieTop
+    100060: RPointerBottom
+    100062: RPointerMiddle
+    100064: RPointerTop
+    100066: RRingBottom
+    100068: RRingMiddle
+    100070: RRingTop
+    100072: RThumbBottom
+    100074: RThumbMiddle
+    100076: RThumbTop
+    100078: RWrist1
+    100080: RWrist2
+    400000: //RootNode
+    400002: LHandControl
+    400004: LLingBottom
+    400006: LLingMiddle
+    400008: LLingTop
+    400010: LMiddleBottom
+    400012: LMiddleMiddle
+    400014: LMiddleTop
+    400016: LPinkieBottom
+    400018: LPinkieMiddle
+    400020: LPinkieTop
+    400022: LPointerBottom
+    400024: LPointerMiddle
+    400026: LPointerTop
+    400028: LThumbBottom
+    400030: LThumbMiddle
+    400032: LThumbTop
+    400034: LWrist1
+    400036: LWrist2
+    400038: polySurface3
+    400040: polySurface4
+    400042: RHandControl
+    400044: RightHand
+    400046: RightHand 1
+    400048: RMiddleBottom
+    400050: RMiddleMiddle
+    400052: RMiddleTop
+    400054: RPinkieBottom
+    400056: RPinkieMiddle
+    400058: RPinkieTop
+    400060: RPointerBottom
+    400062: RPointerMiddle
+    400064: RPointerTop
+    400066: RRingBottom
+    400068: RRingMiddle
+    400070: RRingTop
+    400072: RThumbBottom
+    400074: RThumbMiddle
+    400076: RThumbTop
+    400078: RWrist1
+    400080: RWrist2
+    4300000: polySurface3
+    4300002: polySurface4
+    7400000: Idle
+    9500000: //RootNode
+    13700000: polySurface3
+    13700002: polySurface4
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 143
+      lastFrame: 295
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: LHandControl
+        weight: 1
+      - path: LWrist1
+        weight: 1
+      - path: LWrist1/LWrist2
+        weight: 1
+      - path: LWrist1/LWrist2/LLingBottom
+        weight: 1
+      - path: LWrist1/LWrist2/LLingBottom/LLingMiddle
+        weight: 1
+      - path: LWrist1/LWrist2/LLingBottom/LLingMiddle/LLingTop
+        weight: 1
+      - path: LWrist1/LWrist2/LMiddleBottom
+        weight: 1
+      - path: LWrist1/LWrist2/LMiddleBottom/LMiddleMiddle
+        weight: 1
+      - path: LWrist1/LWrist2/LMiddleBottom/LMiddleMiddle/LMiddleTop
+        weight: 1
+      - path: LWrist1/LWrist2/LPinkieBottom
+        weight: 1
+      - path: LWrist1/LWrist2/LPinkieBottom/LPinkieMiddle
+        weight: 1
+      - path: LWrist1/LWrist2/LPinkieBottom/LPinkieMiddle/LPinkieTop
+        weight: 1
+      - path: LWrist1/LWrist2/LPointerBottom
+        weight: 1
+      - path: LWrist1/LWrist2/LPointerBottom/LPointerMiddle
+        weight: 1
+      - path: LWrist1/LWrist2/LPointerBottom/LPointerMiddle/LPointerTop
+        weight: 1
+      - path: LWrist1/LWrist2/LThumbBottom
+        weight: 1
+      - path: LWrist1/LWrist2/LThumbBottom/LThumbMiddle
+        weight: 1
+      - path: LWrist1/LWrist2/LThumbBottom/LThumbMiddle/LThumbTop
+        weight: 1
+      - path: RHandControl
+        weight: 1
+      - path: RightHand
+        weight: 1
+      - path: RightHand/RightHand 1
+        weight: 1
+      - path: RightHand/RightHand 1/polySurface3
+        weight: 1
+      - path: RightHand/RightHand 1/polySurface4
+        weight: 1
+      - path: RWrist1
+        weight: 1
+      - path: RWrist1/RWrist2
+        weight: 1
+      - path: RWrist1/RWrist2/RMiddleBottom
+        weight: 1
+      - path: RWrist1/RWrist2/RMiddleBottom/RMiddleMiddle
+        weight: 1
+      - path: RWrist1/RWrist2/RMiddleBottom/RMiddleMiddle/RMiddleTop
+        weight: 1
+      - path: RWrist1/RWrist2/RPinkieBottom
+        weight: 1
+      - path: RWrist1/RWrist2/RPinkieBottom/RPinkieMiddle
+        weight: 1
+      - path: RWrist1/RWrist2/RPinkieBottom/RPinkieMiddle/RPinkieTop
+        weight: 1
+      - path: RWrist1/RWrist2/RPointerBottom
+        weight: 1
+      - path: RWrist1/RWrist2/RPointerBottom/RPointerMiddle
+        weight: 1
+      - path: RWrist1/RWrist2/RPointerBottom/RPointerMiddle/RPointerTop
+        weight: 1
+      - path: RWrist1/RWrist2/RRingBottom
+        weight: 1
+      - path: RWrist1/RWrist2/RRingBottom/RRingMiddle
+        weight: 1
+      - path: RWrist1/RWrist2/RRingBottom/RRingMiddle/RRingTop
+        weight: 1
+      - path: RWrist1/RWrist2/RThumbBottom
+        weight: 1
+      - path: RWrist1/RWrist2/RThumbBottom/RThumbMiddle
+        weight: 1
+      - path: RWrist1/RWrist2/RThumbBottom/RThumbMiddle/RThumbTop
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 35
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
