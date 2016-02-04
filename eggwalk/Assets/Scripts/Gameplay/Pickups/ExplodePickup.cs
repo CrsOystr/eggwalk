@@ -14,6 +14,10 @@ public class ExplodePickup : MonoBehaviour, Pickup {
     [SerializeField] private List<GameObject> fragmentRigidBodies;
     [SerializeField] private int scoreValue;
 
+    private float amplitude = 0.1f;
+    private float frequency = 0.5f;
+    private float initalPhase = Mathf.PI / 2.0f;
+
 	// Use this for initialization
 	void Start () {
         for (int i = 0; i < fragmentRigidBodies.Count; i++)
@@ -25,8 +29,9 @@ public class ExplodePickup : MonoBehaviour, Pickup {
 
     void FixedUpdate()
     {
-        Vector3 BobbingVector = Vector3.up * 0.2f * 10 * Mathf.Sin(10 * Time.time) * Time.deltaTime;
-        this.transform.Translate(BobbingVector);
+        float roll = amplitude * Mathf.Sin(2.0f * Mathf.PI * frequency * Time.time + initalPhase);
+        this.transform.Rotate(Vector3.forward, roll, Space.World);
+        //this.transform.Translate(BobbingVector);
     }
 
     public int getId()
@@ -52,6 +57,12 @@ public class ExplodePickup : MonoBehaviour, Pickup {
     public GameObject getTargetItem()
     {
         return this.gameObject;
+    }
+
+    public void onRotateAction(float rotation)
+    {
+        float speedup = frequency * Mathf.Abs(rotation) / 2 < 0.5f ? Mathf.Abs(rotation) / 2 : 0.5f;
+        this.frequency = speedup;
     }
 
     public void onPickupAction()

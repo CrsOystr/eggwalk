@@ -25,6 +25,26 @@ public class GameplayObserver : MonoBehaviour, Observer
 
                     break;
                 }
+            case GameEnumerations.EventCategory.Player_HasRotatedHands:
+                {
+                    PlayerMotor player = e.Entity[0].GetComponent<PlayerMotor>();
+                    if (player == null)
+                    {
+                        break;
+                    }
+
+                    Objective obj = gameState.getCurrentObjective().GetComponent<Objective>();
+                    if (obj != null)
+                    {
+                        Pickup p = obj.getObjectiveItem().GetComponent<Pickup>();
+                        if (p != null)
+                        {
+                            p.onRotateAction(player.getRollingRotation);
+                        }
+                    }
+
+                    break;
+                }
             case GameEnumerations.EventCategory.Player_IsHurt:
                 {
                     PlayerMotor player = e.Entity[0].GetComponent<PlayerMotor>();

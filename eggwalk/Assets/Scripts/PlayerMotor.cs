@@ -17,6 +17,8 @@ public class PlayerMotor : MonoBehaviour
     // Important objects used by player
     [SerializeField] private GameObject playerCamera;
     [SerializeField] private SphereCollider playerHandParent;
+    [SerializeField] private GameObject leftArm;
+    [SerializeField] private GameObject rightArm;
     [SerializeField] private GameplayNotifier playerNotifier;
     [SerializeField] private Transform itemLocation;
     [SerializeField] private Arrow arrow;
@@ -522,8 +524,8 @@ public class PlayerMotor : MonoBehaviour
         this.arrow.setActive(false);
         this.GetComponent<Rigidbody>().freezeRotation = false;
         this.GetComponent<Rigidbody>().AddForce(Vector3.right * 1000.0f);
-        this.GetComponentsInChildren<MeshRenderer>()[0].enabled = false;
-        this.GetComponentsInChildren<MeshRenderer>()[1].enabled = false;
+        this.leftArm.SetActive(false);
+        this.rightArm.SetActive(false);
     }
 
     public void enableArrow(bool val)

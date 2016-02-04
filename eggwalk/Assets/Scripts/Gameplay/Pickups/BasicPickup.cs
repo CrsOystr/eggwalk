@@ -63,6 +63,11 @@ public class BasicPickup : MonoBehaviour, Pickup {
         return this.gameObject;
     }
 
+    public void onRotateAction(float rotation)
+    {
+
+    }
+
     public void onPickupAction()
     {
         Destroy(this.pickupIndicatorObject);
