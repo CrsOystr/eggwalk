@@ -25,8 +25,8 @@ public class ExplodePickup : MonoBehaviour, Pickup {
 
     void FixedUpdate()
     {
-        //Vector3 BobbingVector = Vector3.up * 0.01f * 10 * Mathf.Sin(10 * Time.time) * Time.deltaTime;
-        //this.transform.Translate(BobbingVector);
+        Vector3 BobbingVector = Vector3.up * 0.2f * 10 * Mathf.Sin(10 * Time.time) * Time.deltaTime;
+        this.transform.Translate(BobbingVector);
     }
 
     public int getId()
