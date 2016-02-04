@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Xml;
 
 /*
  * This is a class intended to make the process of extracting data from PlayerPrefs easier.
@@ -8,13 +9,27 @@ using System.Collections;
  * ------------
  * 
  * Time Scores (index starts at 1, with 1 being the best score):
- * [levelname]_timescore_[index]
- * 
+ * key: "[levelname]_timescore_[index]"
+ * value: [time in seconds as float]
+ * example: "CitySmall_timescore_1" --> 35.03939f
+ *
+ * Succesful egg deliveries are stored as ints, with 0 for false (not yet delivered succesfully, and 1 for delivered)
+ * key: "[index]_[eggname]"
+ * value: [success]
+ * example: "1_Common Egg" --> 1
  */
+using System.Collections.Generic;
 
 public class PlayerPrefsManager{
 
 	// RIGHT NOW this might not be generic enough, maybe eventually create a method that looks like addScore(string levelname, string scoreType, float newScore) ?
+
+	[SerializeField] private TextAsset _eggDataXML;
+
+	public const int SUCCESSFUL = 1;
+	public const int UNSUCCESSFUL = 0;
+	
+	private List<EggData> _allEggsInGame;
 
 	public void addTimeScore(string levelname, float newTime) {
 
@@ -60,6 +75,20 @@ public class PlayerPrefsManager{
 			string key = levelname + "_timescore_" + (i+1).ToString();
 			PlayerPrefs.SetFloat(key, timeScores[i]);
 		}
+	}
+	
+	public void recordSetEggDelivery(int eggIndex, string eggName, int success) {
+		PlayerPrefs.SetInt(eggIndex.ToString() + "_" + eggName, success);
+	}
+	
+	private void loadAllEggData() {
+		//TODO: parse xml file into list of EggData objects
+	}
+	
+	public class EggData {
+		public int index;
+		public string name;
+		public bool hasBeenSuccesfullyDelivered;
 	}
 
 }
