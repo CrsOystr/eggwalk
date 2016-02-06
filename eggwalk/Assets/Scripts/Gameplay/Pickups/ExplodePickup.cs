@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent (typeof (SphereCollider))]
@@ -13,25 +14,48 @@ public class ExplodePickup : MonoBehaviour, Pickup {
     [SerializeField] private List<PickupModifier> modifiers;
     [SerializeField] private List<GameObject> fragmentRigidBodies;
     [SerializeField] private int scoreValue;
+    [SerializeField] private GameObject explosionEffect;
 
-    private float amplitude = 0.1f;
-    private float frequency = 0.5f;
+    private float amplitude = 0.5f;
+    private float frequency = 1.0f;
+    private float speedup = 0.0f;
     private float initalPhase = Mathf.PI / 2.0f;
+    private float noiseInfluence = 0.01f;
+    private bool hasExploded = false;
+    private bool glidingDown = false;
+    private Transform target;
+    private float speed = 2.5f;
+    private float dampening;
 
 	// Use this for initialization
 	void Start () {
+        if (this.explosionEffect != null)
+        {
+            explosionEffect.SetActive(false);
+        }
+
         for (int i = 0; i < fragmentRigidBodies.Count; i++)
         {
-            fragmentRigidBodies[i].GetComponent<BoxCollider>().enabled = destroy;
+            fragmentRigidBodies[i].GetComponent<Collider>().enabled = destroy;
             fragmentRigidBodies[i].GetComponent<Rigidbody>().isKinematic = !destroy;
         }
     }
 
     void FixedUpdate()
     {
-        float roll = amplitude * Mathf.Sin(2.0f * Mathf.PI * frequency * Time.time + initalPhase);
-        this.transform.Rotate(Vector3.forward, roll, Space.World);
-        //this.transform.Translate(BobbingVector);
+        if (glidingDown)
+        {
+            dampening += Time.deltaTime;
+            this.transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime / dampening);
+            return;
+        }
+
+        if (!hasExploded)
+        {
+            float noise = 2 * noiseInfluence * Random.Range(0.0f, 1.0f) - noiseInfluence;
+            float roll = amplitude * (1) * Mathf.Sin(1.0f * Mathf.PI * frequency * (1 + speedup) * Time.time + initalPhase);
+            this.transform.Rotate(Vector3.forward, roll + noise);
+        }
     }
 
     public int getId()
@@ -61,20 +85,31 @@ public class ExplodePickup : MonoBehaviour, Pickup {
 
     public void onRotateAction(float rotation)
     {
-        float speedup = frequency * Mathf.Abs(rotation) / 2 < 0.5f ? Mathf.Abs(rotation) / 2 : 0.5f;
-        this.frequency = speedup;
+        this.speedup = Mathf.Abs(rotation) / 90.0f;
     }
 
-    public void onPickupAction()
+    public void onPickupAction(Transform target)
     {
+        glidingDown = true;
+        this.target = target;
+        StartCoroutine(dropDown(2.0f));
     }
 
     public void onDropAction()
     {
+        this.hasExploded = true;
+
+        if (this.explosionEffect != null)
+        {
+            explosionEffect.SetActive(true);
+            this.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        }
+
         for (int i = 0; i < fragmentRigidBodies.Count; i++)
         {
-            fragmentRigidBodies[i].GetComponent<BoxCollider>().enabled = true;
+            fragmentRigidBodies[i].GetComponent<Collider>().enabled = true;
             fragmentRigidBodies[i].GetComponent<Rigidbody>().isKinematic = false;
+            fragmentRigidBodies[i].GetComponent<Rigidbody>().useGravity = true;
         }
     }
 
@@ -86,5 +121,11 @@ public class ExplodePickup : MonoBehaviour, Pickup {
     public List<PickupModifier> getModifiers()
     {
         return this.modifiers;
+    }
+
+    private IEnumerator dropDown(float time)
+    {
+        yield return new WaitForSeconds(time);
+        this.glidingDown = false;
     }
 }

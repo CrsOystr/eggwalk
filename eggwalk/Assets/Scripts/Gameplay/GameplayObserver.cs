@@ -71,7 +71,7 @@ public class GameplayObserver : MonoBehaviour, Observer
                     PlayerMotor player = e.Entity[0].GetComponent<PlayerMotor>();
 
                     Pickup pickup = e.Entity[1].GetComponent<Pickup>();
-                    pickup.onPickupAction();
+                    pickup.onPickupAction(player.ItemLocation);
 
                     gameState.startObjective(pickup.getId());
 

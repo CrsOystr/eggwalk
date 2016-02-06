@@ -21,6 +21,7 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private GameObject rightArm;
     [SerializeField] private GameplayNotifier playerNotifier;
     [SerializeField] private Transform itemLocation;
+    [SerializeField] private Transform itemOrigin;
     [SerializeField] private Arrow arrow;
 
     private PlayerStats originalPlayerStats;
@@ -36,9 +37,11 @@ public class PlayerMotor : MonoBehaviour
     private bool buffedSpeed;
     private bool isAlive = true;
     private GameObject heldItem;
+    private bool lockRotation = true;
 
     private float lastTapTime;
     private float turnAmount;
+    private bool returnedTarget;
 
     void Start()
     {
@@ -49,6 +52,7 @@ public class PlayerMotor : MonoBehaviour
             GameEnumerations.EventCategory.Gameplay_InitializeHUD));
 
         this.buffed = true;
+        this.returnedTarget = false;
         StartCoroutine(initialBuffer());
     }
 
@@ -148,8 +152,18 @@ public class PlayerMotor : MonoBehaviour
         Vector3 StrafingVector = RightVector * MovementAxisInput * activePlayerStats.StrafeSpeed * Time.deltaTime * baseSpeed;
 
         // Bobbing Vectors
-        Vector3 BobbingVector = playerHandParent.transform.up * activePlayerStats.BobbingAmplitude * activePlayerStats.BobbingRate * Mathf.Sin(Time.time * activePlayerStats.BobbingRate) * Time.deltaTime * baseSpeed;
-		Vector3 CameraBobbingVector = Vector3.up * activePlayerStats.CameraBobAmplitude * activePlayerStats.CameraBobRate * Mathf.Sin(Time.time * activePlayerStats.CameraBobRate) * Time.deltaTime * baseSpeed;
+        Vector3 BobbingVector = playerHandParent.transform.up * activePlayerStats.BobbingAmplitude * 
+            activePlayerStats.BobbingRate * Mathf.Sin(Time.time * activePlayerStats.BobbingRate) * Time.deltaTime * baseSpeed;
+
+        // 
+        float Noise = activePlayerStats.CameraBobAmplitude * UnityEngine.Random.Range(-0.1f, 0.1f);
+		float CameraBobbingVector1 = activePlayerStats.CameraBobAmplitude * Time.deltaTime * baseSpeed
+            * Mathf.Sin(2 * Mathf.PI * Time.time * activePlayerStats.CameraBobRate + Mathf.PI / 2);
+        float CameraBobbingVector2 = activePlayerStats.CameraBobAmplitude * Time.deltaTime * baseSpeed
+            * Mathf.Sin(2 * Mathf.PI * (Time.time + Time.deltaTime) * activePlayerStats.CameraBobRate + Mathf.PI / 2);
+        float camIntrp = cosineInterpolation(CameraBobbingVector1, CameraBobbingVector2, 0.5f);
+        print(camIntrp);
+
         Vector3 ShiftingHandsVector = RightVector * activePlayerStats.HandStrafeSpeed * MovementAxisInput * Time.deltaTime * baseSpeed;
 
         // Move the player, bob the hand
@@ -157,10 +171,18 @@ public class PlayerMotor : MonoBehaviour
         this.transform.Translate(WalkingVector + StrafingVector, Space.World);
 
         // Camera Bob
-        playerCamera.transform.Translate(CameraBobbingVector);
+        playerCamera.transform.Translate(Vector3.up * camIntrp);
 
         // Add a small amount of rotation due to strafing
         addRollingRotationToHand(activePlayerStats.RotationDueToStrafing * MovementAxisInput);
+    }
+
+    public float cosineInterpolation(float a, float b, float x)
+    {
+        float ft = x * Mathf.PI;
+        float f = (1 - Mathf.Cos(ft)) * 0.5f;
+
+        return a * (1 - f) + b * f;
     }
 
     /**
@@ -415,6 +437,18 @@ public class PlayerMotor : MonoBehaviour
 		BalanceInput = Input.GetAxis("Rotation");
         TurnRightInput = Input.GetButtonDown("TurnRight");
         TurnLeftInput = Input.GetButtonDown("TurnLeft");
+        float AltTurnRightInput = Input.GetAxis("TurnRight");
+        float AltTurnLeftInput = Input.GetAxis("TurnLeft");
+
+        if (AltTurnRightInput > 0.0f)
+        {
+            TurnRightInput = true;
+        }
+
+        if (AltTurnLeftInput < 0.0f)
+        {
+            TurnLeftInput = true;
+        }
 
         if (TurnAround = Input.GetButtonDown("TurnAround"))
         {
@@ -438,6 +472,11 @@ public class PlayerMotor : MonoBehaviour
 			Touch t1 = Input.GetTouch (0);
 			HorizontalInput = (t1.position.x < Screen.width / 2) ? -1 : 1;
 		}
+
+        if (lockRotation)
+        {
+            BalanceInput = 0.0f;
+        }
     }
 
     /**
@@ -470,9 +509,14 @@ public class PlayerMotor : MonoBehaviour
         // Reparent item, and reposition into players hand
         this.heldItem = targetItem;
         targetItem.transform.parent = playerHandParent.transform;
-        targetItem.transform.localPosition = this.itemLocation.localPosition;
+        targetItem.transform.localPosition = this.itemOrigin.localPosition;
         targetItem.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
         return true;
+    }
+
+    private void dropSequence(float speed)
+    {
+        transform.Translate(-1.0f * this.playerHandParent.transform.localPosition * speed);
     }
 
     public bool removeItemFromHand()
@@ -523,7 +567,7 @@ public class PlayerMotor : MonoBehaviour
     {
         this.arrow.setActive(false);
         this.GetComponent<Rigidbody>().freezeRotation = false;
-        this.GetComponent<Rigidbody>().AddForce(Vector3.right * 1000.0f);
+        this.GetComponent<Rigidbody>().AddForce(Vector3.right * 10000.0f);
         this.leftArm.SetActive(false);
         this.rightArm.SetActive(false);
     }
@@ -577,12 +621,14 @@ public class PlayerMotor : MonoBehaviour
     public void startPlayer(bool val)
     {
         this.playerCanStart = val;
+        this.lockRotation = false;
     }
 
     public void returnToNeutral()
     {
         playerCamera.transform.localRotation = Quaternion.AngleAxis(0.0f, playerCamera.transform.up);
         playerHandParent.transform.localRotation = Quaternion.AngleAxis(0.0f, playerHandParent.transform.up);
+        this.returnedTarget = true;
     }
 
     public void setTarget(Transform newDestination)
@@ -689,6 +735,11 @@ public class PlayerMotor : MonoBehaviour
         this.buffedSpeed = true;
         activePlayerStats.CurrentLives -= damage;
         StartCoroutine(removeBuffer());
+    }
+
+    public Transform ItemLocation
+    {
+        get { return this.itemLocation; }
     }
 
     [System.Serializable]

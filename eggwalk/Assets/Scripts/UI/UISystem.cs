@@ -6,9 +6,8 @@ using System.Collections.Generic;
 public class UISystem : MonoBehaviour
 {
     [SerializeField] private GameObject HUDElements;
-    [SerializeField] private GameObject GameOverElements;
+    [SerializeField] private GameOverScreen GameOverElements;
     [SerializeField] private Text LifeText;
-    [SerializeField] private GameObject RestartButton;
     [SerializeField] private BalanceBar Bar;
     [SerializeField] private GameObject Warning;
     [SerializeField] private Image HurtImageMask;
@@ -19,10 +18,10 @@ public class UISystem : MonoBehaviour
     [SerializeField] private Text ObjectiveListTextBox;
     [SerializeField] private Text DeliveredTextBox;
     [SerializeField] private Text CountdownText;
-    [SerializeField] private Text GameOverText;
-    [SerializeField] private Text TimeCompletedLabel;
-    [SerializeField] private Text TimeCompletedText;
     [SerializeField] private Text ScoreText;
+    [SerializeField] private Text FinalScoreLabel;
+    [SerializeField] private List<string> deliveredMessages;
+
     private bool HurtMaskisVisible;
     private bool DeliveredTextIsVisible;
     private bool TurnRightSignalIsVisible;
@@ -42,7 +41,7 @@ public class UISystem : MonoBehaviour
                     DeliveredTextBox.color.g,
                     DeliveredTextBox.color.b,
                     0.0f);
-        GameOverElements.SetActive(false);
+        GameOverElements.gameObject.SetActive(false);
     }
 
     void Update()
@@ -198,11 +197,6 @@ public class UISystem : MonoBehaviour
         ObjectiveListTextBox.text = text;
     }
 
-    public void setVisibilityToRestart(bool isVisible)
-    {
-        RestartButton.SetActive(true);
-    }
-
     public void setVisibilityToLives(bool visible)
     {
         LifeText.color = (visible) ? new Color(1.0f, 1.0f, 1.0f, 1.0f) :
@@ -226,29 +220,40 @@ public class UISystem : MonoBehaviour
     public void setVisibilityToBalanceBar(bool val)
     {
         //BalanceTriangle.SetActive(val);
-       //BalanceBar.SetActive(val);
+        //BalanceBar.SetActive(val);
     }
 
     public void setDeliveredText(string text)
     {
-        DeliveredTextBox.text = "Delivered\n" + text;
+        if (deliveredMessages != null)
+        {
+            if (deliveredMessages.Count > 0)
+            {
+                int index = UnityEngine.Random.Range(0, deliveredMessages.Count);
+                text = deliveredMessages[index].ToUpper();
+            }
+        }
+
+        DeliveredTextBox.text = text;
     }
 
-    public void goToGameOverScreen()
+    public void setFinalScore(int score)
     {
+        this.FinalScoreLabel.text = "SCORE: " + score;
+    }
+
+    public void goToGameOverScreen(int finalScore)
+    {
+        setFinalScore(finalScore);
         HUDElements.SetActive(false);
-        GameOverElements.SetActive(true);
-        TimeCompletedLabel.enabled = false;
-        TimeCompletedText.enabled = false;
-        GameOverText.text = "GAME OVER";
+        GameOverElements.gameObject.SetActive(true);
     }
 
     public void goToNextLevelScreen()
     {
         HUDElements.SetActive(false);
-        GameOverElements.SetActive(true);
+        GameOverElements.gameObject.SetActive(true);
         HurtDeathImageMask.enabled = false;
-        GameOverText.text = "SUCCESS!";
     }
 
     public void setCountDownText(string text)
@@ -258,13 +263,11 @@ public class UISystem : MonoBehaviour
 
     public void setTimeText(float timeInSeconds)
     {
-        TimeSpan t = TimeSpan.FromSeconds(timeInSeconds);
-        string formattedTime = string.Format("{0:D2}h:{1:D2}m:{2:D2}s", t.Hours, t.Minutes, t.Seconds);
-        TimeCompletedText.text = formattedTime;
+        this.GameOverElements.setTimeText(timeInSeconds);
     }
 
 	public void setScoreText(int score) {
-		this.ScoreText.text = "Score: " + score;
+		this.ScoreText.text = "" + score;
 	}
 
     public void activateWarningLabel(bool status)

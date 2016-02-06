@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class UIObserver : MonoBehaviour, Observer
@@ -79,7 +80,7 @@ public class UIObserver : MonoBehaviour, Observer
                 }
             case GameEnumerations.EventCategory.Player_IsDead:
                 {
-                    UISys.goToGameOverScreen();
+                    UISys.goToGameOverScreen(gameState.Score);
                     break;
                 }
             case GameEnumerations.EventCategory.Player_HasRotatedHands:
@@ -141,14 +142,16 @@ public class UIObserver : MonoBehaviour, Observer
                     GameObject pickup = player.getItemInHand();
                     GameObject collider = e.Entity[1];
                     List<Objective> objList = gameState.getObjectiveList();
-					this.UISys.setScoreText(gameState.Score);
+
+                    this.UISys.setScoreText(gameState.Score);
+                    UISys.setDeliveredText(gameState.getLastDeliveredItem());
+
                     if (obj != null)
                     {
                         UISys.setObjectiveListText(obj.GetComponent<Objective>(), objList);
+                        UISys.setVisiblilityToDeliveredText(true);
                     } else
                     {
-                        UISys.setDeliveredText(gameState.getLastDeliveredItem());
-                        UISys.setVisiblilityToDeliveredText(true);
                         UISys.setObjectiveListText(objList);
                     }
 

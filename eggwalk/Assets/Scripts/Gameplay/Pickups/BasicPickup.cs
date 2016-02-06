@@ -68,7 +68,7 @@ public class BasicPickup : MonoBehaviour, Pickup {
 
     }
 
-    public void onPickupAction()
+    public void onPickupAction(Transform target)
     {
         Destroy(this.pickupIndicatorObject);
     }
