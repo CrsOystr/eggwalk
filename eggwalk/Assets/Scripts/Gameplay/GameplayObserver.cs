@@ -3,7 +3,8 @@ using System.Collections;
 
 public class GameplayObserver : MonoBehaviour, Observer
 {
-    [SerializeField] private GameState gameState;
+    [SerializeField]
+    private GameState gameState;
 
     public void onNotify(GameEvent e)
     {
@@ -62,8 +63,8 @@ public class GameplayObserver : MonoBehaviour, Observer
                     GameObject pickup = player.getItemInHand();
                     if (pickup != null)
                     {
-		                pickup.GetComponent<Pickup>().onDropAction();
-					}
+                        pickup.GetComponent<Pickup>().onDropAction();
+                    }
                     break;
                 }
             case GameEnumerations.EventCategory.Player_StartedObjective:
