@@ -4,16 +4,11 @@ using System.Collections.Generic;
 public class ReturnObjective : MonoBehaviour, Objective
 {
 
-    [SerializeField]
-    private string objectiveName;
-    [SerializeField]
-    private int objectiveId;
-    [SerializeField]
-    private TriggerBox triggerBox;
-    [SerializeField]
-    private List<Transform> returnLocations;
-    [SerializeField]
-    private PlayerPrefsManager playerPrefsManager;
+    [SerializeField] private string objectiveName;
+    [SerializeField] private int objectiveId;
+    [SerializeField] private TriggerBox triggerBox;
+    [SerializeField] private List<Transform> returnLocations;
+    [SerializeField] private PlayerPrefsManager playerPrefsManager;
 
     private GameObject currentItem;
     private bool hasStarted;

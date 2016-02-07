@@ -30,8 +30,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
     // RIGHT NOW this might not be generic enough, maybe eventually create a method that looks like addScore(string levelname, string scoreType, float newScore) ?
 
-    [SerializeField]
-    private TextAsset _eggDataXML;
+    [SerializeField] private TextAsset _eggDataXML;
 
     public const int SUCCESSFUL = 1;
     public const int UNSUCCESSFUL = 0;

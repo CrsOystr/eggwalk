@@ -9,8 +9,6 @@ public class SunBehavior : MonoBehaviour {
 	public float hours, minutes; // enter time (24-hour time, i.e. 13:00 instead of 1:00PM)
 	public float minAmbient, maxAmbient; // min/max ambient intentsity
 
-    // comment
-
 	private Quaternion noonRotationQ; // x = 50, y = 330, z = 0
 	private Light sun;
 
