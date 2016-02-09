@@ -111,7 +111,9 @@ public class PlayerPrefsManager : MonoBehaviour
     public Object LoadRandomEgg()
     {
         int r = Random.Range(0, AllEggsInGame.Count);
+        Debug.Log(r + ", " + AllEggsInGame[r].name);
         Object egg = Resources.Load(AllEggsInGame[r].name);
+        if (egg == null) Debug.Log("egg resource is null!");
         return egg;
     }
 
@@ -130,7 +132,7 @@ public class PlayerPrefsManager : MonoBehaviour
         for (int i = 0; i < indexList.Count; i++)
         {
             EggData newData = new EggData();
-            newData.name = nameList[0].FirstChild.Value;
+            newData.name = nameList[i].FirstChild.Value;
             newData.index = int.Parse(indexList[0].FirstChild.Value);
 
             eggList.Add(newData);

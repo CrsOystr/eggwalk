@@ -45,7 +45,6 @@ public class ReturnObjective : MonoBehaviour, Objective
         int rl = Random.Range(0, returnLocations.Count);
 
         GameObject item = Instantiate(playerPrefsManager.LoadRandomEgg(), this.transform.position, this.transform.rotation) as GameObject;
-        if (item == null) Debug.Log("The item is null!");
         this.currentItem = item;
 
         this.triggerBox.transform.position = returnLocations[rl].position;
