@@ -36,10 +36,17 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
 <<<<<<< HEAD
+<<<<<<< HEAD
     globalScale: 0.0024
 =======
     globalScale: 0.2
 >>>>>>> parent of 0a2d922... attempting merge
+=======
+    globalScale: 0.2
+=======
+    globalScale: 0.0024
+>>>>>>> egg_collection_fix
+>>>>>>> parent of 91f44dd... attempting cleanup
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
