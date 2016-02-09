@@ -1,0 +1,603 @@
+fileFormatVersion: 2
+guid: 3fe0709200d51cb4daf8c0ff94c41d41
+timeCreated: 1454951819
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: LLingBottom
+    100004: LLingMiddle
+    100006: LLingTop
+    100008: LMiddleBottom
+    100010: LMiddleMiddle
+    100012: LMiddleTop
+    100014: LPinkieBottom
+    100016: LPinkieMiddle
+    100018: LPinkieTop
+    100020: LPointerBottom
+    100022: LPointerMiddle
+    100024: LPointerTop
+    100026: LShoulder
+    100028: LThumbBottom
+    100030: LThumbMiddle
+    100032: LThumbTop
+    100034: LWrist1
+    100036: LWrist2
+    100038: polySurface3
+    100040: polySurface4
+    100042: RightHand
+    100044: RightHand 1
+    100046: RMiddleBottom
+    100048: RMiddleMiddle
+    100050: RMiddleTop
+    100052: RPinkieBottom
+    100054: RPinkieMiddle
+    100056: RPinkieTop
+    100058: RPointerBottom
+    100060: RPointerMiddle
+    100062: RPointerTop
+    100064: RRingBottom
+    100066: RRingMiddle
+    100068: RRingTop
+    100070: RShoulder
+    100072: RThumbBottom
+    100074: RThumbMiddle
+    100076: RThumbTop
+    100078: RWrist1
+    100080: RWrist2
+    400000: //RootNode
+    400002: LLingBottom
+    400004: LLingMiddle
+    400006: LLingTop
+    400008: LMiddleBottom
+    400010: LMiddleMiddle
+    400012: LMiddleTop
+    400014: LPinkieBottom
+    400016: LPinkieMiddle
+    400018: LPinkieTop
+    400020: LPointerBottom
+    400022: LPointerMiddle
+    400024: LPointerTop
+    400026: LShoulder
+    400028: LThumbBottom
+    400030: LThumbMiddle
+    400032: LThumbTop
+    400034: LWrist1
+    400036: LWrist2
+    400038: polySurface3
+    400040: polySurface4
+    400042: RightHand
+    400044: RightHand 1
+    400046: RMiddleBottom
+    400048: RMiddleMiddle
+    400050: RMiddleTop
+    400052: RPinkieBottom
+    400054: RPinkieMiddle
+    400056: RPinkieTop
+    400058: RPointerBottom
+    400060: RPointerMiddle
+    400062: RPointerTop
+    400064: RRingBottom
+    400066: RRingMiddle
+    400068: RRingTop
+    400070: RShoulder
+    400072: RThumbBottom
+    400074: RThumbMiddle
+    400076: RThumbTop
+    400078: RWrist1
+    400080: RWrist2
+    4300000: polySurface3
+    4300002: polySurface4
+    7400000: Idle
+    7400002: RightArmSlide-In
+    7400004: LeftArmSlide-Out
+    7400006: RightArmSlide-Out
+    7400008: LeftArmSlide-In
+    9500000: //RootNode
+    13700000: polySurface3
+    13700002: polySurface4
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 50
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: LShoulder
+        weight: 1
+      - path: LShoulder/LWrist1
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LLingBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LLingBottom/LLingMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LLingBottom/LLingMiddle/LLingTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LMiddleBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LMiddleBottom/LMiddleMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LMiddleBottom/LMiddleMiddle/LMiddleTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPinkieBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPinkieBottom/LPinkieMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPinkieBottom/LPinkieMiddle/LPinkieTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPointerBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPointerBottom/LPointerMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPointerBottom/LPointerMiddle/LPointerTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LThumbBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LThumbBottom/LThumbMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LThumbBottom/LThumbMiddle/LThumbTop
+        weight: 1
+      - path: RightHand
+        weight: 1
+      - path: RightHand/RightHand 1
+        weight: 1
+      - path: RightHand/RightHand 1/polySurface3
+        weight: 1
+      - path: RightHand/RightHand 1/polySurface4
+        weight: 1
+      - path: RShoulder
+        weight: 1
+      - path: RShoulder/RWrist1
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RMiddleBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RMiddleBottom/RMiddleMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RMiddleBottom/RMiddleMiddle/RMiddleTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPinkieBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPinkieBottom/RPinkieMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPinkieBottom/RPinkieMiddle/RPinkieTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPointerBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPointerBottom/RPointerMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPointerBottom/RPointerMiddle/RPointerTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RRingBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RRingBottom/RRingMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RRingBottom/RRingMiddle/RRingTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RThumbBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RThumbBottom/RThumbMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RThumbBottom/RThumbMiddle/RThumbTop
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: RightArmSlide-In
+      takeName: Take 001
+      firstFrame: 85
+      lastFrame: 124
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: LShoulder
+        weight: 1
+      - path: LShoulder/LWrist1
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LLingBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LLingBottom/LLingMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LLingBottom/LLingMiddle/LLingTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LMiddleBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LMiddleBottom/LMiddleMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LMiddleBottom/LMiddleMiddle/LMiddleTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPinkieBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPinkieBottom/LPinkieMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPinkieBottom/LPinkieMiddle/LPinkieTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPointerBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPointerBottom/LPointerMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPointerBottom/LPointerMiddle/LPointerTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LThumbBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LThumbBottom/LThumbMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LThumbBottom/LThumbMiddle/LThumbTop
+        weight: 1
+      - path: RightHand
+        weight: 1
+      - path: RightHand/RightHand 1
+        weight: 1
+      - path: RightHand/RightHand 1/polySurface3
+        weight: 1
+      - path: RightHand/RightHand 1/polySurface4
+        weight: 1
+      - path: RShoulder
+        weight: 1
+      - path: RShoulder/RWrist1
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RMiddleBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RMiddleBottom/RMiddleMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RMiddleBottom/RMiddleMiddle/RMiddleTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPinkieBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPinkieBottom/RPinkieMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPinkieBottom/RPinkieMiddle/RPinkieTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPointerBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPointerBottom/RPointerMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPointerBottom/RPointerMiddle/RPointerTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RRingBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RRingBottom/RRingMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RRingBottom/RRingMiddle/RRingTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RThumbBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RThumbBottom/RThumbMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RThumbBottom/RThumbMiddle/RThumbTop
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: LeftArmSlide-Out
+      takeName: Take 001
+      firstFrame: 124
+      lastFrame: 165
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: LShoulder
+        weight: 1
+      - path: LShoulder/LWrist1
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LLingBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LLingBottom/LLingMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LLingBottom/LLingMiddle/LLingTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LMiddleBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LMiddleBottom/LMiddleMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LMiddleBottom/LMiddleMiddle/LMiddleTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPinkieBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPinkieBottom/LPinkieMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPinkieBottom/LPinkieMiddle/LPinkieTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPointerBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPointerBottom/LPointerMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPointerBottom/LPointerMiddle/LPointerTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LThumbBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LThumbBottom/LThumbMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LThumbBottom/LThumbMiddle/LThumbTop
+        weight: 1
+      - path: RightHand
+        weight: 1
+      - path: RightHand/RightHand 1
+        weight: 1
+      - path: RightHand/RightHand 1/polySurface3
+        weight: 1
+      - path: RightHand/RightHand 1/polySurface4
+        weight: 1
+      - path: RShoulder
+        weight: 1
+      - path: RShoulder/RWrist1
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RMiddleBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RMiddleBottom/RMiddleMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RMiddleBottom/RMiddleMiddle/RMiddleTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPinkieBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPinkieBottom/RPinkieMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPinkieBottom/RPinkieMiddle/RPinkieTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPointerBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPointerBottom/RPointerMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPointerBottom/RPointerMiddle/RPointerTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RRingBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RRingBottom/RRingMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RRingBottom/RRingMiddle/RRingTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RThumbBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RThumbBottom/RThumbMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RThumbBottom/RThumbMiddle/RThumbTop
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: RightArmSlide-Out
+      takeName: Take 001
+      firstFrame: 49
+      lastFrame: 85
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: LShoulder
+        weight: 1
+      - path: LShoulder/LWrist1
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LLingBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LLingBottom/LLingMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LLingBottom/LLingMiddle/LLingTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LMiddleBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LMiddleBottom/LMiddleMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LMiddleBottom/LMiddleMiddle/LMiddleTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPinkieBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPinkieBottom/LPinkieMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPinkieBottom/LPinkieMiddle/LPinkieTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPointerBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPointerBottom/LPointerMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPointerBottom/LPointerMiddle/LPointerTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LThumbBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LThumbBottom/LThumbMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LThumbBottom/LThumbMiddle/LThumbTop
+        weight: 1
+      - path: RightHand
+        weight: 1
+      - path: RightHand/RightHand 1
+        weight: 1
+      - path: RightHand/RightHand 1/polySurface3
+        weight: 1
+      - path: RightHand/RightHand 1/polySurface4
+        weight: 1
+      - path: RShoulder
+        weight: 1
+      - path: RShoulder/RWrist1
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RMiddleBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RMiddleBottom/RMiddleMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RMiddleBottom/RMiddleMiddle/RMiddleTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPinkieBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPinkieBottom/RPinkieMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPinkieBottom/RPinkieMiddle/RPinkieTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPointerBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPointerBottom/RPointerMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPointerBottom/RPointerMiddle/RPointerTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RRingBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RRingBottom/RRingMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RRingBottom/RRingMiddle/RRingTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RThumbBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RThumbBottom/RThumbMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RThumbBottom/RThumbMiddle/RThumbTop
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 35
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

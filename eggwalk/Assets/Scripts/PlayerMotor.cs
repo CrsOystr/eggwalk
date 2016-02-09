@@ -19,10 +19,14 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private SphereCollider playerHandParent;
     [SerializeField] private GameObject leftArm;
     [SerializeField] private GameObject rightArm;
+    [SerializeField] private Transform leftHand;
+    [SerializeField] private Transform rightHand;
     [SerializeField] private GameplayNotifier playerNotifier;
     [SerializeField] private Transform itemLocation;
     [SerializeField] private Transform itemOrigin;
     [SerializeField] private Arrow arrow;
+    [SerializeField] private Animator anim;
+    [SerializeField] private bool incAnim;
 
     private PlayerStats originalPlayerStats;
     private bool playerCanStart = false;
@@ -32,6 +36,7 @@ public class PlayerMotor : MonoBehaviour
 	private bool isTurning = false;
 	private bool isTurningLeft;
     private bool isTurningAround = false;
+    private bool isItemInLeftHand = false;
     private float turnRadius;
     private bool buffed;
     private bool buffedSpeed;
@@ -83,7 +88,7 @@ public class PlayerMotor : MonoBehaviour
             out TurnRightInput, out TurnLeftInput, out TurnAround);
 
         // Move player, add rotation based on inputs and gravity
-		movePlayer(HorizontalInput);
+        movePlayer(HorizontalInput);
 		addRollingRotationToHand(BalanceInput + (activePlayerStats.RotationDueToGravity * getRollingRotation));
 
         if (isTurningAround)
@@ -111,7 +116,7 @@ public class PlayerMotor : MonoBehaviour
 
 
         this.playerHandParent.transform.localPosition = 
-            new Vector3(0.0f, this.playerHandParent.transform.localPosition.y, 0.0f);
+            new Vector3(0.0f, this.playerHandParent.transform.localPosition.y, 6.0f);
 
         // Notify that hands have rotated
         if (playerNotifier != null)
@@ -162,7 +167,6 @@ public class PlayerMotor : MonoBehaviour
         float CameraBobbingVector2 = activePlayerStats.CameraBobAmplitude * Time.deltaTime * baseSpeed
             * Mathf.Sin(2 * Mathf.PI * (Time.time + Time.deltaTime) * activePlayerStats.CameraBobRate + Mathf.PI / 2);
         float camIntrp = cosineInterpolation(CameraBobbingVector1, CameraBobbingVector2, 0.5f);
-        print(camIntrp);
 
         Vector3 ShiftingHandsVector = RightVector * activePlayerStats.HandStrafeSpeed * MovementAxisInput * Time.deltaTime * baseSpeed;
 
@@ -202,8 +206,21 @@ public class PlayerMotor : MonoBehaviour
     {
         if (heldItem != null)
         {
+            /*float a = -1.0f * Mathf.Clamp(this.anim.GetFloat("ArmDirection") + RotationAxisInput * 
+                activePlayerStats.RotationSpeed * Time.deltaTime * activePlayerStats.RotationDueToGravity, -1.0f, 1.0f);
+
+            if (a < 0)
+            {
+                this.getItemInHand().transform.parent = this.leftHand.transform;
+            } else
+            {
+                this.getItemInHand().transform.parent = this.rightHand.transform;
+            }
+            anim.SetFloat("ArmDirection", a);
+            */
+
             playerHandParent.transform.Rotate(Vector3.forward * RotationAxisInput * activePlayerStats.RotationSpeed * Time.deltaTime);
-            playerCamera.transform.Rotate(Vector3.forward * RotationAxisInput * activePlayerStats.CameraRotationSpeed * Time.deltaTime * -1.0f);
+            playerCamera.transform.Rotate(-1.0f * Vector3.forward * RotationAxisInput * activePlayerStats.CameraRotationSpeed * Time.deltaTime);
         }
     }
 
@@ -509,8 +526,9 @@ public class PlayerMotor : MonoBehaviour
         // Reparent item, and reposition into players hand
         this.heldItem = targetItem;
         targetItem.transform.parent = playerHandParent.transform;
+        //targetItem.transform.parent = rightHand.transform;
         targetItem.transform.localPosition = this.itemOrigin.localPosition;
-        targetItem.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
+        targetItem.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
         return true;
     }
 
@@ -568,6 +586,12 @@ public class PlayerMotor : MonoBehaviour
         this.arrow.setActive(false);
         this.GetComponent<Rigidbody>().freezeRotation = false;
         this.GetComponent<Rigidbody>().AddForce(Vector3.right * 10000.0f);
+
+        if (this.getItemInHand() != null)
+        {
+            this.getItemInHand().transform.parent = transform.root;
+        }
+
         this.leftArm.SetActive(false);
         this.rightArm.SetActive(false);
     }
@@ -615,6 +639,7 @@ public class PlayerMotor : MonoBehaviour
         {
             return (Mathf.Abs(playerHandParent.transform.eulerAngles.z) < 0.0001f) ? 0  : 
                 NormalizeAngle(playerHandParent.transform.eulerAngles.z);
+            //return this.anim.GetFloat("ArmDirection") * 100.0f;
         }
     }
 

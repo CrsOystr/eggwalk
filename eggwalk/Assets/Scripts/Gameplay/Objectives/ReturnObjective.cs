@@ -6,6 +6,7 @@ public class ReturnObjective : MonoBehaviour, Objective {
     [SerializeField] private string objectiveName;
     [SerializeField] private int objectiveId;
     [SerializeField] private TriggerBox triggerBox;
+    [SerializeField] private Transform spawnLocation;
     [SerializeField] private List<GameObject> items;
     [SerializeField] private List<Transform> returnLocations;
 
@@ -43,7 +44,7 @@ public class ReturnObjective : MonoBehaviour, Objective {
         int r = Random.Range(0, items.Count);
         int rl = Random.Range(0, returnLocations.Count);
 
-        GameObject item = Instantiate(items[r], this.transform.position, this.transform.rotation) as GameObject;
+        GameObject item = Instantiate(items[r], this.spawnLocation.position, this.spawnLocation.rotation) as GameObject;
         this.currentItem = item;
 
         this.triggerBox.transform.position = returnLocations[rl].position;
