@@ -35,11 +35,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-<<<<<<< HEAD
-    globalScale: 0.2
-=======
-    globalScale: 0.0024
->>>>>>> egg_collection_fix
+    globalScale: 0.05
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

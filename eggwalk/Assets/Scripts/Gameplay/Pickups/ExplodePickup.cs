@@ -24,7 +24,7 @@ public class ExplodePickup : MonoBehaviour, Pickup {
     private bool hasExploded = false;
     private bool glidingDown = false;
     private Transform target;
-    private float speed = 3.5f;
+    private float speed = 2.5f;
     private float dampening;
 
 	// Use this for initialization
@@ -46,17 +46,15 @@ public class ExplodePickup : MonoBehaviour, Pickup {
         if (glidingDown)
         {
             dampening += Time.deltaTime;
-            this.transform.position = 
-                Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime / dampening);
+            this.transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime / dampening);
             return;
         }
 
         if (!hasExploded)
         {
             float noise = 2 * noiseInfluence * Random.Range(0.0f, 1.0f) - noiseInfluence;
-            float roll = amplitude * (1) * Mathf.Sin(1.0f * Mathf.PI * frequency * Time.time + initalPhase);
+            float roll = amplitude * (1) * Mathf.Sin(1.0f * Mathf.PI * frequency * (1 + speedup) * Time.time + initalPhase);
             this.transform.Rotate(Vector3.forward, roll + noise);
-            this.transform.Translate(Vector3.up * 0.05f * Mathf.Sin(2.0f * Mathf.PI * 1.1f * Time.time + Mathf.PI / 2.0f));
         }
     }
 
@@ -94,7 +92,7 @@ public class ExplodePickup : MonoBehaviour, Pickup {
     {
         glidingDown = true;
         this.target = target;
-        StartCoroutine(dropDown(3.0f));
+        StartCoroutine(dropDown(2.0f));
     }
 
     public void onDropAction()
@@ -104,6 +102,7 @@ public class ExplodePickup : MonoBehaviour, Pickup {
         if (this.explosionEffect != null)
         {
             explosionEffect.SetActive(true);
+            this.gameObject.GetComponent<MeshRenderer>().enabled = false;
         }
 
         for (int i = 0; i < fragmentRigidBodies.Count; i++)
