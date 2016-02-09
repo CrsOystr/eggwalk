@@ -58,6 +58,7 @@ public class ReturnObjective : MonoBehaviour, Objective
 
     public void completeObjective()
     {
+        playerPrefsManager.RecordSuccessfulDelivery(playerPrefsManager.LastEggInstantiated);
         initializeObjective();
     }
 

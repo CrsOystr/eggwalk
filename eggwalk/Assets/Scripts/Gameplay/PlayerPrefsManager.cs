@@ -28,6 +28,13 @@ using System.Collections.Generic;
 public class PlayerPrefsManager : MonoBehaviour
 {
 
+    public class EggData
+    {
+        public int index;
+        public string name;
+        public bool hasBeenSuccesfullyDelivered;
+    }
+
     // RIGHT NOW this might not be generic enough, maybe eventually create a method that looks like addScore(string levelname, string scoreType, float newScore) ?
 
     [SerializeField] private TextAsset _eggDataXML;
@@ -36,6 +43,12 @@ public class PlayerPrefsManager : MonoBehaviour
     public const int UNSUCCESSFUL = 0;
 
     private List<EggData> _allEggsInGame;
+    private EggData _lastEggInstantiated;
+
+    public EggData LastEggInstantiated
+    {
+        get { return _lastEggInstantiated; }
+    }
 
     public List<EggData> AllEggsInGame
     {
@@ -112,6 +125,7 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         int r = Random.Range(0, AllEggsInGame.Count);
         Debug.Log(r + ", " + AllEggsInGame[r].name);
+        _lastEggInstantiated = AllEggsInGame[r];
         Object egg = Resources.Load(AllEggsInGame[r].name);
         if (egg == null) Debug.Log("egg resource is null!");
         return egg;
@@ -165,11 +179,10 @@ public class PlayerPrefsManager : MonoBehaviour
 
     }
 
-    public class EggData
+    public void RecordSuccessfulDelivery(EggData eggData)
     {
-        public int index;
-        public string name;
-        public bool hasBeenSuccesfullyDelivered;
+        string key = eggData.index + "_" + eggData.name;
+        PlayerPrefs.SetInt(key, 1);
     }
 
 }
