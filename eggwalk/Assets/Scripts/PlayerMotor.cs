@@ -23,6 +23,11 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private Transform itemLocation;
     [SerializeField] private Transform itemOrigin;
     [SerializeField] private Arrow arrow;
+<<<<<<< HEAD
+=======
+    [SerializeField] private Animator anim;
+    [SerializeField] private bool incAnim;
+>>>>>>> parent of 0a2d922... attempting merge
 
     private PlayerStats originalPlayerStats;
     private bool playerCanStart = false;
@@ -83,7 +88,11 @@ public class PlayerMotor : MonoBehaviour
             out TurnRightInput, out TurnLeftInput, out TurnAround);
 
         // Move player, add rotation based on inputs and gravity
+<<<<<<< HEAD
 		movePlayer(HorizontalInput);
+=======
+        movePlayer(HorizontalInput);
+>>>>>>> parent of 0a2d922... attempting merge
 		addRollingRotationToHand(BalanceInput + (activePlayerStats.RotationDueToGravity * getRollingRotation));
 
         if (isTurningAround)
@@ -111,7 +120,11 @@ public class PlayerMotor : MonoBehaviour
 
 
         this.playerHandParent.transform.localPosition = 
+<<<<<<< HEAD
             new Vector3(0.0f, this.playerHandParent.transform.localPosition.y, 0.0f);
+=======
+            new Vector3(0.0f, this.playerHandParent.transform.localPosition.y, 6.0f);
+>>>>>>> parent of 0a2d922... attempting merge
 
         // Notify that hands have rotated
         if (playerNotifier != null)
