@@ -3,4 +3,24 @@
 		<Index>1</Index>
 		<Name>Common Egg</Name>
 	</Egg>
+	<Egg>
+		<Index>2</Index>
+		<Name>Tiger Egg</Name>
+	</Egg>
+	<Egg>
+		<Index>3</Index>
+		<Name>Cow Egg</Name>
+	</Egg>
+	<Egg>
+		<Index>4</Index>
+		<Name>Rainbow Egg</Name>
+	</Egg>
+	<Egg>
+		<Index>5</Index>
+		<Name>Nuclear Egg (Green)</Name>
+	</Egg>
+	<Egg>
+		<Index>6</Index>
+		<Name>Nuclear Egg (Yellow)</Name>
+	</Egg>
 </EggCollection>
