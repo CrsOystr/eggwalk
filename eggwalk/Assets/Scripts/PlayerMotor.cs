@@ -15,6 +15,10 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private PlayerStats activePlayerStats;
 
     // Important objects used by player
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> master
     [SerializeField] private GameObject playerCamera;
     [SerializeField] private SphereCollider playerHandParent;
     [SerializeField] private GameObject leftArm;
@@ -25,8 +29,35 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private Transform itemLocation;
     [SerializeField] private Transform itemOrigin;
     [SerializeField] private Arrow arrow;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
     [SerializeField] private Animator anim;
     [SerializeField] private bool incAnim;
+>>>>>>> parent of 0a2d922... attempting merge
+=======
+    [SerializeField] private Animator anim;
+    [SerializeField] private bool incAnim;
+<<<<<<< HEAD
+=======
+=======
+    [SerializeField]
+    private GameObject playerCamera;
+    [SerializeField]
+    private SphereCollider playerHandParent;
+    [SerializeField]
+    private GameObject leftArm;
+    [SerializeField]
+    private GameObject rightArm;
+    [SerializeField]
+    private GameplayNotifier playerNotifier;
+    [SerializeField]
+    private Transform itemLocation;
+    [SerializeField]
+    private Arrow arrow;
+>>>>>>> egg_collection_fix
+>>>>>>> parent of 91f44dd... attempting cleanup
+>>>>>>> master
 
     private PlayerStats originalPlayerStats;
     private bool playerCanStart = false;
@@ -88,8 +119,24 @@ public class PlayerMotor : MonoBehaviour
             out TurnRightInput, out TurnLeftInput, out TurnAround);
 
         // Move player, add rotation based on inputs and gravity
+<<<<<<< HEAD
+<<<<<<< HEAD
+		movePlayer(HorizontalInput);
+=======
         movePlayer(HorizontalInput);
+<<<<<<< HEAD
 		addRollingRotationToHand(BalanceInput + (activePlayerStats.RotationDueToGravity * getRollingRotation));
+=======
+>>>>>>> parent of 0a2d922... attempting merge
+=======
+        movePlayer(HorizontalInput);
+<<<<<<< HEAD
+>>>>>>> parent of 91f44dd... attempting cleanup
+		addRollingRotationToHand(BalanceInput + (activePlayerStats.RotationDueToGravity * getRollingRotation));
+=======
+        addRollingRotationToHand(BalanceInput + (activePlayerStats.RotationDueToGravity * getRollingRotation));
+>>>>>>> egg_collection_fix
+>>>>>>> master
 
         if (isTurningAround)
         {
@@ -115,8 +162,27 @@ public class PlayerMotor : MonoBehaviour
         handleTurning(TurnRightInput, TurnLeftInput);
 
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> master
         this.playerHandParent.transform.localPosition = 
+<<<<<<< HEAD
+<<<<<<< HEAD
+            new Vector3(0.0f, this.playerHandParent.transform.localPosition.y, 0.0f);
+=======
             new Vector3(0.0f, this.playerHandParent.transform.localPosition.y, 6.0f);
+>>>>>>> parent of 0a2d922... attempting merge
+=======
+            new Vector3(0.0f, this.playerHandParent.transform.localPosition.y, 6.0f);
+<<<<<<< HEAD
+=======
+=======
+        this.playerHandParent.transform.localPosition =
+            new Vector3(0.0f, this.playerHandParent.transform.localPosition.y, 0.0f);
+>>>>>>> egg_collection_fix
+>>>>>>> parent of 91f44dd... attempting cleanup
+>>>>>>> master
 
         // Notify that hands have rotated
         if (playerNotifier != null)
@@ -157,6 +223,10 @@ public class PlayerMotor : MonoBehaviour
         Vector3 StrafingVector = RightVector * MovementAxisInput * activePlayerStats.StrafeSpeed * Time.deltaTime * baseSpeed;
 
         // Bobbing Vectors
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> master
         Vector3 BobbingVector = playerHandParent.transform.up * activePlayerStats.BobbingAmplitude * 
             activePlayerStats.BobbingRate * Mathf.Sin(Time.time * activePlayerStats.BobbingRate) * Time.deltaTime * baseSpeed;
 
@@ -168,6 +238,13 @@ public class PlayerMotor : MonoBehaviour
             * Mathf.Sin(2 * Mathf.PI * (Time.time + Time.deltaTime) * activePlayerStats.CameraBobRate + Mathf.PI / 2);
         float camIntrp = cosineInterpolation(CameraBobbingVector1, CameraBobbingVector2, 0.5f);
 
+<<<<<<< HEAD
+=======
+=======
+        Vector3 BobbingVector = playerHandParent.transform.up * activePlayerStats.BobbingAmplitude * activePlayerStats.BobbingRate * Mathf.Sin(Time.time * activePlayerStats.BobbingRate) * Time.deltaTime * baseSpeed;
+        Vector3 CameraBobbingVector = Vector3.up * activePlayerStats.CameraBobAmplitude * activePlayerStats.CameraBobRate * Mathf.Sin(Time.time * activePlayerStats.CameraBobRate) * Time.deltaTime * baseSpeed;
+>>>>>>> egg_collection_fix
+>>>>>>> master
         Vector3 ShiftingHandsVector = RightVector * activePlayerStats.HandStrafeSpeed * MovementAxisInput * Time.deltaTime * baseSpeed;
 
         // Move the player, bob the hand
@@ -478,6 +555,10 @@ public class PlayerMotor : MonoBehaviour
         }
 
         // Gyroscope input
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> master
         if (Mathf.Abs (Input.gyro.rotationRate.z) > 0.1f) 
 		{
 			BalanceInput = -1.0f * Input.gyro.rotationRate.z * 2.5f;
@@ -493,6 +574,21 @@ public class PlayerMotor : MonoBehaviour
         if (lockRotation)
         {
             BalanceInput = 0.0f;
+<<<<<<< HEAD
+=======
+=======
+        if (Mathf.Abs(Input.gyro.rotationRate.z) > 0.1f)
+        {
+            BalanceInput = -1.0f * Input.gyro.rotationRate.z * 2.5f;
+        }
+
+        // Touch
+        if (Input.touches.Length == 1)
+        {
+            Touch t1 = Input.GetTouch(0);
+            HorizontalInput = (t1.position.x < Screen.width / 2) ? -1 : 1;
+>>>>>>> egg_collection_fix
+>>>>>>> master
         }
     }
 
