@@ -7,18 +7,8 @@ public class ReturnObjective : MonoBehaviour, Objective
     [SerializeField] private string objectiveName;
     [SerializeField] private int objectiveId;
     [SerializeField] private TriggerBox triggerBox;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     [SerializeField] private Transform spawnLocation;
     [SerializeField] private List<GameObject> items;
->>>>>>> parent of 0a2d922... attempting merge
-=======
-    [SerializeField] private Transform spawnLocation;
-    [SerializeField] private List<GameObject> items;
-=======
->>>>>>> egg_collection_fix
->>>>>>> parent of 91f44dd... attempting cleanup
     [SerializeField] private List<Transform> returnLocations;
     [SerializeField] private PlayerPrefsManager playerPrefsManager;
 
@@ -56,18 +46,7 @@ public class ReturnObjective : MonoBehaviour, Objective
         int r = Random.Range(0, playerPrefsManager.AllEggsInGame.Count);
         int rl = Random.Range(0, returnLocations.Count);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         GameObject item = Instantiate(playerPrefsManager.LoadRandomEgg(), this.transform.position, this.transform.rotation) as GameObject;
-=======
-        GameObject item = Instantiate(items[r], this.spawnLocation.position, this.spawnLocation.rotation) as GameObject;
->>>>>>> parent of 0a2d922... attempting merge
-=======
-        GameObject item = Instantiate(items[r], this.spawnLocation.position, this.spawnLocation.rotation) as GameObject;
-=======
-        GameObject item = Instantiate(playerPrefsManager.LoadRandomEgg(), this.transform.position, this.transform.rotation) as GameObject;
->>>>>>> egg_collection_fix
->>>>>>> parent of 91f44dd... attempting cleanup
         this.currentItem = item;
 
         this.triggerBox.transform.position = returnLocations[rl].position;
