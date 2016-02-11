@@ -39,6 +39,8 @@ public class ExplodePickup : MonoBehaviour, Pickup {
             fragmentRigidBodies[i].GetComponent<Collider>().enabled = destroy;
             fragmentRigidBodies[i].GetComponent<Rigidbody>().isKinematic = !destroy;
         }
+
+        this.gameObject.GetComponent<Renderer>().material.SetInt("_CrackingLevel", 3);
     }
 
     void FixedUpdate()
