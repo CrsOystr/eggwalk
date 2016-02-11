@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 26a87db4b0a5ce7468c8a94c353e83b3
+timeCreated: 1455178191
+licenseType: Free
+ShaderImporter:
+  defaultTextures:
+  - _MaskLevel1: {fileID: 2800000, guid: eaff7b082659aa145817525c94a84586, type: 3}
+  - _Diffuse: {fileID: 2800000, guid: dcf0905854d7ec647a889bacb4eb9727, type: 3}
+  - _NormalLevel1: {fileID: 2800000, guid: 4bb951f4b40ca434aab8a86b32e40e98, type: 3}
+  - _SpecularLevel1: {fileID: 2800000, guid: 19fa1d08a3b21ef42a5cd5d3c4e861a1, type: 3}
+  - _MaskLevel2: {fileID: 2800000, guid: aca412df43472834b87f906685f7c1ad, type: 3}
+  - _MaskLevel3: {fileID: 2800000, guid: 9d40a2a4529085e4bb0cf96ce4f68133, type: 3}
+  - _NormalLevel2: {fileID: 2800000, guid: aab93ecdde22ef845857089b89deb318, type: 3}
+  - _NormalLevel3: {fileID: 2800000, guid: 4f2a2a0af56b2c94eae36c84b9aa0c07, type: 3}
+  - _SpecularLevel2: {fileID: 2800000, guid: 689523670b8baf64483c2b8a8d048de0, type: 3}
+  - _SpecularLevel3: {fileID: 2800000, guid: 28264c14dbeba9c40ab3b6864e97f2c5, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
