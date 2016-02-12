@@ -16,24 +16,36 @@ public class VehicleManager : MonoBehaviour {
 	void Start () {
 		
 		_spawnPoints = GameObject.FindGameObjectsWithTag("Intersection Point");
+
+        Debug.Log(_spawnPoints.Length);
+
 		// shuffle spawn points
 		for(int i = 0; i < _spawnPoints.Length; i++) {
 			int r = Random.Range(0, _spawnPoints.Length);
 			GameObject temp = _spawnPoints[i];
 			_spawnPoints[i] = _spawnPoints[r];
 			_spawnPoints[r] = temp;
-		}
+        }
+
+        Debug.Log("spawn points have been shuffled");
+
+        _vehicleBehaviors = new List<VehicleBehavior>();
 		
-		_vehicleBehaviors = new List<VehicleBehavior>();
-		
+        // can't have more vehicles than intersection points
 		if(_numberOfVehicles > _spawnPoints.Length) _numberOfVehicles = _spawnPoints.Length;
 		
 		_respawnCounters = new float[_numberOfVehicles];
 		_lastPositions = new Vector3[_numberOfVehicles];
-		
-		for(int i = 0; i < _numberOfVehicles; i++) {
+
+
+
+        Debug.Log("attempting to spawn vehicles...");
+
+        for (int i = 0; i < _numberOfVehicles; i++) {
 			spawnVehicle(i);
-		}
+
+            Debug.Log("spawned vehicle #" + i);
+        }
 
 	}
 	
