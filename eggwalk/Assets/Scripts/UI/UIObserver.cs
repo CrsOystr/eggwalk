@@ -50,6 +50,11 @@ public class UIObserver : MonoBehaviour, Observer
                 {
                     break;
                 }
+            case GameEnumerations.EventCategory.Gameplay_Paused:
+                {
+                    UISys.goToPauseScreen();
+                    break;
+                }
             case GameEnumerations.EventCategory.Gameplay_CompletedLevel:
                 {
                     UISys.goToNextLevelScreen();

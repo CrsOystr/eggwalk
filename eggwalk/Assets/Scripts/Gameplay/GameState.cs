@@ -45,6 +45,9 @@ public class GameState : MonoBehaviour {
 
         if(gameMode.CanPauseGame && Input.GetButtonDown("Pause"))
         {
+            this.notifier.notify(new GameEvent(new List<GameObject> { },
+                GameEnumerations.EventCategory.Gameplay_Paused));
+            
             Time.timeScale = (Time.timeScale != 0.0f) ? 0.0f : 1.0f;
         }
 

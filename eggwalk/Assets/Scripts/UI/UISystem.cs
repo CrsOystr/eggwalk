@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class UISystem : MonoBehaviour
 {
     [SerializeField] private GameObject HUDElements;
+    [SerializeField] private GameObject PauseElements;
     [SerializeField] private GameOverScreen GameOverElements;
     [SerializeField] private Text LifeText;
     [SerializeField] private BalanceBar Bar;
@@ -249,6 +250,19 @@ public class UISystem : MonoBehaviour
         GameOverElements.gameObject.SetActive(true);
     }
 
+    public void goToPauseScreen()
+    {
+        if (!PauseElements.activeSelf)
+        {
+            HUDElements.SetActive(false);
+            PauseElements.SetActive(true);
+        }
+        else
+        {
+            HUDElements.SetActive(true);
+            PauseElements.SetActive(false);
+        }
+    }
     public void goToNextLevelScreen()
     {
         HUDElements.SetActive(false);

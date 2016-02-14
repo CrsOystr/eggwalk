@@ -19,6 +19,7 @@ namespace GameEnumerations {
         Gameplay_InitializeHUD,
         Gameplay_Countdown,
         Gameplay_StartLevel,
+        Gameplay_Paused,
         Gameplay_CompletedLevel
     };
 }
