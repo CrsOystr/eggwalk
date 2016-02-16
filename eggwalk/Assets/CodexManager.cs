@@ -6,12 +6,11 @@ using System.Collections;
 public class CodexManager : MonoBehaviour {
 
     [SerializeField] private GameObject _eggUIPrefab;
-    [SerializeField] private int _totalNumberOfEggs;
+    [SerializeField] private PlayerPrefsManager _playerPrefsManager;
     [SerializeField] private float _rowSpacing;
     [SerializeField] private float _columnSpacing;
     [SerializeField] private int _eggsPerRow;
 
-    private PlayerPrefsManager _playerPrefsManager;
     private List<GameObject> _eggUIElements;
     private RectTransform _thisRect;
     private ScrollRect _scrollRect;
@@ -20,18 +19,39 @@ public class CodexManager : MonoBehaviour {
     {
         _eggUIElements = new List<GameObject>();
         RectTransform rectTransform = _eggUIPrefab.GetComponent<RectTransform>();
-        for (int i = 0; i < _totalNumberOfEggs; i++)
+
+        List<PlayerPrefsManager.EggData> eggList = _playerPrefsManager.AllEggsInGame;
+
+        for (int i = 0; i < eggList.Count; i++)
         {
             Vector3 rectPos = new Vector3(
-                (i % _eggsPerRow) * (rectTransform.rect.width + _columnSpacing) + rectTransform.rect.width/2, // place along x axis
-                -Mathf.Floor((i) / _eggsPerRow) * (rectTransform.rect.height + _rowSpacing) - rectTransform.rect.height/2, // place along y axis
+                (i % _eggsPerRow) * (rectTransform.rect.width + _columnSpacing) + rectTransform.rect.width / 2, // place along x axis
+                -Mathf.Floor((i) / _eggsPerRow) * (rectTransform.rect.height + _rowSpacing) - rectTransform.rect.height / 2, // place along y axis
                 0f);
-            _eggUIElements.Add(Instantiate(_eggUIPrefab, rectPos, Quaternion.identity) as GameObject);
-            _eggUIElements[i].transform.SetParent(transform, false);
+            GameObject _eggUIElement = Instantiate(_eggUIPrefab, rectPos, Quaternion.identity) as GameObject;
+
+            if (eggList[i].hasBeenSuccesfullyDelivered)
+            {
+                _eggUIElement.GetComponentInChildren<Text>().text = eggList[i].name;
+                foreach (Transform t in transform)
+                {
+                    if (t.name == "Egg Sprite")
+                    {
+                        t.gameObject.SetActive(false);
+                    }
+                }
+            }
+            else
+            {
+                _eggUIElement.GetComponentInChildren<Text>().text = "???";
+            }
+
+            _eggUIElement.transform.SetParent(transform, false);
+            _eggUIElements.Add(_eggUIElement);
         }
 
         _thisRect = GetComponent<RectTransform>();
-        _thisRect.sizeDelta = new Vector2(-50, _eggUIPrefab.GetComponent<RectTransform>().rect.height * (_totalNumberOfEggs / _eggsPerRow));
+        _thisRect.sizeDelta = new Vector2(-50, _eggUIPrefab.GetComponent<RectTransform>().rect.height * (eggList.Count / _eggsPerRow));
 
         _scrollRect = GetComponentInParent<ScrollRect>();
 

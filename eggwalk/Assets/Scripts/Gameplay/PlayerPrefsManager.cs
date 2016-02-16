@@ -132,6 +132,12 @@ public class PlayerPrefsManager : MonoBehaviour
         return egg;
     }
 
+    public Object LoadEggWithName(string name)
+    {
+        Object egg = Resources.Load(name);
+        return egg;
+    }
+
     private List<EggData> loadAllEggData()
     {
 
