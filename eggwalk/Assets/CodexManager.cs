@@ -5,19 +5,22 @@ using System.Collections;
 
 public class CodexManager : MonoBehaviour {
 
-    [SerializeField] private GameObject _eggUIPrefab;
+    [SerializeField] private EggCodexUIElement _eggUIPrefab;
     [SerializeField] private PlayerPrefsManager _playerPrefsManager;
     [SerializeField] private float _rowSpacing;
     [SerializeField] private float _columnSpacing;
     [SerializeField] private int _eggsPerRow;
 
-    private List<GameObject> _eggUIElements;
+    private List<EggCodexUIElement> _eggUIElements;
     private RectTransform _thisRect;
     private ScrollRect _scrollRect;
+    private bool _hasBeenLoaded;
 
     void OnEnable()
     {
-        _eggUIElements = new List<GameObject>();
+        if (_hasBeenLoaded) return;
+
+        _eggUIElements = new List<EggCodexUIElement>();
         RectTransform rectTransform = _eggUIPrefab.GetComponent<RectTransform>();
 
         List<PlayerPrefsManager.EggData> eggList = _playerPrefsManager.AllEggsInGame;
@@ -28,18 +31,19 @@ public class CodexManager : MonoBehaviour {
                 (i % _eggsPerRow) * (rectTransform.rect.width + _columnSpacing) + rectTransform.rect.width / 2, // place along x axis
                 -Mathf.Floor((i) / _eggsPerRow) * (rectTransform.rect.height + _rowSpacing) - rectTransform.rect.height / 2, // place along y axis
                 0f);
-            GameObject _eggUIElement = Instantiate(_eggUIPrefab, rectPos, Quaternion.identity) as GameObject;
+            EggCodexUIElement _eggUIElement = Instantiate(_eggUIPrefab, rectPos, Quaternion.identity) as EggCodexUIElement;
 
             if (eggList[i].hasBeenSuccesfullyDelivered)
             {
-                _eggUIElement.GetComponentInChildren<Text>().text = eggList[i].name;
-                foreach (Transform t in transform)
-                {
-                    if (t.name == "Egg Sprite")
-                    {
-                        t.gameObject.SetActive(false);
-                    }
-                }
+                _eggUIElement.eggName.text = eggList[i].name;
+                _eggUIElement.eggSprite.enabled = false;
+
+                GameObject egg = Instantiate(_playerPrefsManager.LoadEggWithName(eggList[i].name), _eggUIElement.transform.position, Quaternion.identity) as GameObject;
+                egg.transform.SetParent(_eggUIElement.transform);
+                egg.layer = LayerMask.NameToLayer("UI");
+                egg.GetComponent<ExplodePickup>().enabled = false;
+                egg.transform.localScale = new Vector3(10f, 10f, 10f);
+                _eggUIElement.eggObject = egg;
             }
             else
             {
@@ -55,8 +59,9 @@ public class CodexManager : MonoBehaviour {
 
         _scrollRect = GetComponentInParent<ScrollRect>();
 
-        StartCoroutine(ScrollToTop());
+        _hasBeenLoaded = true;
 
+        StartCoroutine(ScrollToTop());
     }
 
     private IEnumerator ScrollToTop()

@@ -33,6 +33,7 @@ public class PlayerPrefsManager : MonoBehaviour
         public int index;
         public string name;
         public bool hasBeenSuccesfullyDelivered;
+        public int spawnWeight;
     }
 
     // RIGHT NOW this might not be generic enough, maybe eventually create a method that looks like addScore(string levelname, string scoreType, float newScore) ?
@@ -44,6 +45,7 @@ public class PlayerPrefsManager : MonoBehaviour
     public const int UNSUCCESSFUL = 0;
 
     private List<EggData> _allEggsInGame;
+    private List<EggData> _weightedList;
     private EggData _lastEggInstantiated;
 
     public EggData LastEggInstantiated
@@ -124,10 +126,22 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public Object LoadRandomEgg()
     {
-        int r = Random.Range(0, AllEggsInGame.Count);
-        Debug.Log(r + ", " + AllEggsInGame[r].name);
-        _lastEggInstantiated = AllEggsInGame[r];
-        Object egg = Resources.Load(AllEggsInGame[r].name);
+        if(_weightedList == null)
+        {
+            _weightedList = new List<EggData>();
+            foreach(EggData e in AllEggsInGame)
+            {
+                for(int i = 0; i < e.spawnWeight; i++)
+                {
+                    _weightedList.Add(e);
+                }
+            }
+        }
+
+        int r = Random.Range(0, _weightedList.Count);
+        Debug.Log(r + ", " + _weightedList[r].name);
+        _lastEggInstantiated = _weightedList[r];
+        Object egg = Resources.Load(_weightedList[r].name);
         if (egg == null) Debug.Log("egg resource is null!");
         return egg;
     }
@@ -148,6 +162,7 @@ public class PlayerPrefsManager : MonoBehaviour
         xmlDoc.LoadXml(_eggDataXML.text);
         XmlNodeList indexList = xmlDoc.GetElementsByTagName("Index");
         XmlNodeList nameList = xmlDoc.GetElementsByTagName("Name");
+        XmlNodeList spawnWeightList = xmlDoc.GetElementsByTagName("SpawnWeight");
 
         // load names and indexes
         for (int i = 0; i < indexList.Count; i++)
@@ -155,6 +170,7 @@ public class PlayerPrefsManager : MonoBehaviour
             EggData newData = new EggData();
             newData.name = nameList[i].FirstChild.Value;
             newData.index = int.Parse(indexList[0].FirstChild.Value);
+            newData.spawnWeight = int.Parse(spawnWeightList[0].FirstChild.Value);
 
             eggList.Add(newData);
         }
