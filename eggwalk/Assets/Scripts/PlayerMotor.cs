@@ -206,20 +206,19 @@ public class PlayerMotor : MonoBehaviour
     {
         if (heldItem != null)
         {
-            float a = -1.0f * Mathf.Clamp(this.anim.GetFloat("ArmDirection") + RotationAxisInput * 
-                activePlayerStats.RotationSpeed * Time.deltaTime * activePlayerStats.RotationDueToGravity, -1.0f, 1.0f);
+            //float a = -1.0f * Mathf.Clamp(this.anim.GetFloat("ArmDirection") + RotationAxisInput * 
+            //    activePlayerStats.RotationSpeed * Time.deltaTime * activePlayerStats.RotationDueToGravity, -1.0f, 1.0f);
 
-            if (a < 0)
+            /*if (a < 0)
             {
                 this.getItemInHand().transform.parent = this.leftHand.transform;
             } else
             {
                 this.getItemInHand().transform.parent = this.rightHand.transform;
-            }
-            anim.SetFloat("ArmDirection", a);
-            
+            }*/
+            //anim.SetFloat("ArmDirection", a);
 
-            //playerHandParent.transform.Rotate(Vector3.forward * RotationAxisInput * activePlayerStats.RotationSpeed * Time.deltaTime);
+            playerHandParent.transform.Rotate(Vector3.forward * RotationAxisInput * activePlayerStats.RotationSpeed * Time.deltaTime);
             playerCamera.transform.Rotate(-1.0f * Vector3.forward * RotationAxisInput * activePlayerStats.CameraRotationSpeed * Time.deltaTime);
         }
     }
@@ -527,6 +526,7 @@ public class PlayerMotor : MonoBehaviour
         this.heldItem = targetItem;
         targetItem.transform.parent = playerHandParent.transform;
         //targetItem.transform.parent = rightHand.transform;
+        targetItem.transform.localRotation = Quaternion.AngleAxis(180.0f, Vector3.up);
         targetItem.transform.localPosition = this.itemOrigin.localPosition;
         targetItem.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
         return true;
@@ -606,6 +606,11 @@ public class PlayerMotor : MonoBehaviour
         return heldItem;
     }
 
+    public Transform PlayerHandParent
+    {
+        get { return this.playerHandParent.gameObject.transform; }
+    }
+
     /**
      * getCurrentLives - Get Current Lives
      */
@@ -637,9 +642,9 @@ public class PlayerMotor : MonoBehaviour
     {
         get
         {
-            //return (Mathf.Abs(playerHandParent.transform.eulerAngles.z) < 0.0001f) ? 0  : 
-            //    NormalizeAngle(playerHandParent.transform.eulerAngles.z);
-            return this.anim.GetFloat("ArmDirection") * 100.0f;
+            return (Mathf.Abs(playerHandParent.transform.eulerAngles.z) < 0.0001f) ? 0  : 
+                NormalizeAngle(playerHandParent.transform.eulerAngles.z);
+            //return this.anim.GetFloat("ArmDirection") * 100.0f;
         }
     }
 

@@ -163,11 +163,11 @@ public class GameState : MonoBehaviour {
     {
         if (gameMode.IsEndless)
         {
+            GameObject p = GameObject.FindGameObjectWithTag("Player");
             this.currentObjective = this.objectiveList[0];
             this.currentObjective.GetComponent<Objective>().initializeObjective();
 
             GameObject pickup = this.currentObjective.GetComponent<Objective>().getObjectiveItem();
-            GameObject p = GameObject.FindGameObjectWithTag("Player");
 
             if (p != null)
             {

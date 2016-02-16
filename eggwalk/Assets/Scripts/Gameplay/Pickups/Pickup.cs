@@ -19,6 +19,7 @@ public interface Pickup {
     GameObject getTargetItem();
     void onRotateAction(float rotation);
     void onPickupAction(Transform target);
+    void onHurtAction();
     void onDropAction();
     int getScoreValue();
     List<PickupModifier> getModifiers();

@@ -73,6 +73,11 @@ public class BasicPickup : MonoBehaviour, Pickup {
         Destroy(this.pickupIndicatorObject);
     }
 
+    public void onHurtAction()
+    {
+
+    }
+
     public void onDropAction()
     {
         this.gameObject.GetComponent<CapsuleCollider>().isTrigger = false;

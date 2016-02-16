@@ -49,6 +49,15 @@ public class GameplayObserver : MonoBehaviour, Observer
             case GameEnumerations.EventCategory.Player_IsHurt:
                 {
                     PlayerMotor player = e.Entity[0].GetComponent<PlayerMotor>();
+                    GameObject p = player.getItemInHand();
+                    if (p != null)
+                    {
+                        Pickup pickup = p.GetComponent<Pickup>();
+                        if (pickup != null)
+                        {
+                            pickup.onHurtAction();
+                        }
+                    }
                     player.bumpPlayer();
                     player.RecieveDamage(1);
                     break;

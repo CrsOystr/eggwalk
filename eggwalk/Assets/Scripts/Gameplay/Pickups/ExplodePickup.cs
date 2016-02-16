@@ -26,6 +26,7 @@ public class ExplodePickup : MonoBehaviour, Pickup {
     private Transform target;
     private float speed = 3.5f;
     private float dampening;
+    private int crackLevel = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -40,7 +41,7 @@ public class ExplodePickup : MonoBehaviour, Pickup {
             fragmentRigidBodies[i].GetComponent<Rigidbody>().isKinematic = !destroy;
         }
 
-        this.gameObject.GetComponent<Renderer>().material.SetInt("_CrackingLevel", 3);
+        this.gameObject.GetComponent<Renderer>().material.SetInt("_CrackingLevel", crackLevel);
     }
 
     void FixedUpdate()
@@ -97,6 +98,12 @@ public class ExplodePickup : MonoBehaviour, Pickup {
         glidingDown = true;
         this.target = target;
         StartCoroutine(dropDown(3.0f));
+    }
+
+    public void onHurtAction()
+    {
+        this.crackLevel += 1;
+        this.gameObject.GetComponent<Renderer>().material.SetInt("_CrackingLevel", crackLevel);
     }
 
     public void onDropAction()
