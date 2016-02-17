@@ -60,7 +60,9 @@ public class ReturnObjective : MonoBehaviour, Objective
 
     public void completeObjective()
     {
+        // record player info
         playerPrefsManager.RecordSuccessfulDelivery(playerPrefsManager.LastEggInstantiated);
+
         initializeObjective();
     }
 

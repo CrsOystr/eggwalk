@@ -60,13 +60,14 @@ public class UIObserver : MonoBehaviour, Observer
                     UISys.goToNextLevelScreen();
                     UISys.setTimeText(gameState.TimeInLevel);
 
-					/*
+                    /*
 					 * RECORD LEVEL SCORE
 					 * 
 					 * There's a possibility that in the future we might only use one scene (since each level takes place in the same city, right?), and the different objects would be loaded 
 					 * dynamically based on the level the player selected, then we might need some unique level ID rather than just calling 'Application.loadedLevelName'
 					 */
-					ppm.addTimeScore(Application.loadedLevelName, gameState.TimeInLevel);
+                    ppm.addTimeScore(SceneManager.GetActiveScene().name, gameState.TimeInLevel);
+                    ppm.SetEggsDeliveredScore(ppm.LastEggInstantiated.index, ppm.LastEggInstantiated.name, gameState.Score);
 
                     break;
                 }

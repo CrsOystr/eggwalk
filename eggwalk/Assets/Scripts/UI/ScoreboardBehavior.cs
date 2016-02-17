@@ -1,32 +1,22 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
+﻿using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ScoreboardBehavior : MonoBehaviour {
 
-	public string levelName;
-	public Text[] scoreTexts;
+    [SerializeField] int _numOfScores;
+    [SerializeField] PlayerPrefsManager _playerPrefsManager;
 
-	private PlayerPrefsManager ppm = new PlayerPrefsManager();
+    private int[] _scores;
 
-	void Start() {
-		loadScores ();
-	}
-
-	private void loadScores() {
-		float[] scores = ppm.getTimeScores (levelName, 10);
-
-		for(int i = 0; i < scoreTexts.Length; i++) {
-			if(scores[i] != 0f) {
-				int mins = (int) (scores[i] / 60f);
-				int seconds = (int) (scores[i] % 60f);
-				int miliseconds = int.Parse(scores[i].ToString().Split('.')[1].Substring(0, 2));
-				
-				scoreTexts[i].text = (i+1).ToString() + "   " + mins.ToString() + ":" + seconds.ToString() + ":" + miliseconds.ToString();
-			} else {
-				scoreTexts[i].text = (i+1).ToString() + "   --:--:--";
-			}
-		}
-	}
+	void OnEnable()
+    {
+        // TODO: add the ability to actually record eggs delivered score
+        _scores = _playerPrefsManager.GetEggsDeliveredScore(SceneManager.GetActiveScene().name, _numOfScores);
+        for(int i = 0; i < _scores.Length; i++)
+        {
+            Debug.Log("Eggs Delivered score: " + _scores[i]);
+        }
+    }
 	
 }

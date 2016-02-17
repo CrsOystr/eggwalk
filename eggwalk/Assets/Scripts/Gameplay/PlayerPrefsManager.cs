@@ -119,9 +119,24 @@ public class PlayerPrefsManager : MonoBehaviour
         }
     }
 
-    public void recordSetEggDelivery(int eggIndex, string eggName, int success)
+    public void SetEggsDeliveredScore(int eggIndex, string eggName, int score)
     {
-        PlayerPrefs.SetInt(eggIndex.ToString() + "_" + eggName, success);
+        PlayerPrefs.SetInt(eggIndex.ToString() + "_" + eggName, score);
+    }
+
+    public int[] GetEggsDeliveredScore(string levelname, int numOfScores)
+    {
+        int[] scores = new int[numOfScores];
+
+        for(int i = 0; i < numOfScores; i++)
+        {
+            if (PlayerPrefs.HasKey(levelname + "_eggs_delivered"))
+                scores[i] = PlayerPrefs.GetInt(levelname + "_eggs_delivered");
+            else
+                scores[i] = 0;
+        }
+
+        return scores;
     }
 
     public Object LoadRandomEgg()
