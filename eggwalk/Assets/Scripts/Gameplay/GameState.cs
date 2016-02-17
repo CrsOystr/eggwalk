@@ -43,7 +43,7 @@ public class GameState : MonoBehaviour {
             this.timeInLevel += Time.deltaTime;
         }
 
-        if(gameMode.CanPauseGame && Input.GetButtonDown("Pause"))
+		if(gameMode.CanPauseGame && Input.GetButtonDown("Pause") && !isGameOver)
         {
             this.notifier.notify(new GameEvent(new List<GameObject> { },
                 GameEnumerations.EventCategory.Gameplay_Paused));
