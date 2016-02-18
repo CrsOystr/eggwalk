@@ -10,7 +10,7 @@ public class VehicleManager : MonoBehaviour {
 	private List<VehicleBehavior> _vehicleBehaviors;
 	private GameObject[] _spawnPoints;
 	private float[] _respawnCounters;
-	private Vector3[] _lastPositions;
+    private Vector3[] _lastPositions;
 
 	// Use this for initialization
 	void Start () {
@@ -76,13 +76,16 @@ public class VehicleManager : MonoBehaviour {
 	private void spawnVehicle(int index) {
 		
 		int r1 = Random.Range(0, _vehiclesToSpawn.Length);
-		_vehicleBehaviors.Add(Instantiate(_vehiclesToSpawn[r1]).GetComponent<VehicleBehavior>());
-		_vehicleBehaviors[index].Target = _spawnPoints[index];
-		_vehicleBehaviors[index].gameObject.transform.position = _spawnPoints[index].transform.position;
-		_vehicleBehaviors[index].gameObject.transform.SetParent(transform.parent);
-		
-		_respawnCounters[index] = 0f;
-		_lastPositions[index] = _vehicleBehaviors[index].gameObject.transform.position;
+        VehicleBehavior vehicle = Instantiate(_vehiclesToSpawn[r1]).GetComponent<VehicleBehavior>();
+        _vehicleBehaviors.Add(vehicle);
+
+        float initY = vehicle.transform.position.y;
+        vehicle.transform.position = new Vector3(
+            _spawnPoints[index].transform.position.x,
+            initY,
+            _spawnPoints[index].transform.position.z);
+
+        vehicle.Target = _spawnPoints[index].GetComponentInParent<IntersectionBehavior>().transform;
 	
 	}
 
@@ -91,4 +94,6 @@ public class VehicleManager : MonoBehaviour {
 		Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
 		return GeometryUtility.TestPlanesAABB(planes, col.bounds);
     }
+
+
 }

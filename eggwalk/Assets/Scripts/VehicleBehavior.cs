@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
-[RequireComponent(typeof(Rigidbody))]
+using System.Collections.Generic;
 
 public class VehicleBehavior : MonoBehaviour {
 
@@ -9,124 +8,147 @@ public class VehicleBehavior : MonoBehaviour {
 		NORTH, SOUTH, EAST, WEST
 	}
 
-	public bool debug;
-	public float driveSpeed; // target drive speed
-	public float acceleration; // force applied to accelerate vehicle
-	public float roadWidth; // (minimum) width of the road this vehicle will drive along
-	public bool driveOnRight; // does this car drive on the left side of the road or the right side?
-	public float targetDistThreshold; // how close can you get to the target before choosing another?
-	//public float turnSpeed;
-	public DriveDirection direction;
-	
-	private GameObject target; // where is the next point this car is driving too?
-	public GameObject Target {
-		get { return target;}
-		set { target = value;}
-	}
-	private Rigidbody rb;
-	private Ray frontRay, backRay, leftRay, rightRay;
-	private bool targetSelected;
-	private float startY;
+    public bool debug;
 
-	// Use this for initialization
-	void Start () {
-		rb = GetComponent<Rigidbody> ();
+    [SerializeField] private Transform _target;
+    [SerializeField] private float _speed;
+    [SerializeField] private DriveDirection _driveDirection;
+    [SerializeField] private float _distanceThreshold;
+    
+    private Rigidbody _rigidBody;
 
-		frontRay = new Ray (transform.position, transform.forward);
-		backRay = new Ray (transform.position, -transform.forward);
-		leftRay = new Ray (transform.position, -transform.right);
-		rightRay = new Ray (transform.position, transform.right);
+    public DriveDirection Direction
+    {
+        get { return _driveDirection; }
+        set { _driveDirection = value; }
+    }
 
-		targetSelected = true;
-		
-		startY = transform.position.y;
-	}
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+    public Transform Target {
+        get { return _target; }
+        set { _target = value; }
+    }
 
-		// turn toward target
-		turnTowardTarget ();
+    void OnEnable()
+    {
+        _rigidBody = GetComponent<Rigidbody>();
+    }
 
-		// accelerate to desired speed
-		
-		rb.AddForce(transform.forward * acceleration, ForceMode.Force);
-		if (rb.velocity.magnitude > driveSpeed) {
-			Vector3 newVel = rb.velocity.normalized * driveSpeed;
-			rb.velocity = newVel;
-		}
+    void Update()
+    {
+        Vector3 toTarget = _target.position - transform.position;
+        //_rigidBody.velocity = toTarget.normalized * _speed * Time.deltaTime;
 
-		float distToTarget = Vector3.Distance (transform.position, target.transform.position);
+        Vector3 force = toTarget.normalized * _speed;
+        _rigidBody.AddForce(force);
 
-		if (distToTarget < targetDistThreshold) {
-			pickNextTarget ();
-		}
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(toTarget), 0.1f);
 
-		if (debug) {
-			Debug.DrawLine(transform.position, target.transform.position);
-		}
-		
-		if(transform.position.y > startY) {
-			rb.AddForce(Vector3.up * -100f);
-		}
+        float distanceToTarget = Vector3.Distance(transform.position, _target.position);
+        if (distanceToTarget <= _distanceThreshold)
+        {
+            ChooseNextTarget();
+        }
 
-	}
+        /*
+        Vector3 newPos = Vector3.MoveTowards(transform.position, _target.position, _speed * Time.deltaTime);
+        transform.position = newPos;
 
-	private void turnTowardTarget () {
-		Quaternion targetRotation = Quaternion.LookRotation (target.transform.position - transform.position);
+        if(transform.position == _target.position)
+        {
+            ChooseNextTarget();
+        }
+        */
+    }
 
-		transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, 0.1f);
-	}
+    public void ChooseNextTarget()
+    {
+        // we're going to add our choices to a list and pick one at random
+        List<Transform> choices = new List<Transform>();
+        List<DriveDirection> potentialDir = new List<DriveDirection>();
+        IntersectionBehavior ib = _target.GetComponentInParent<IntersectionBehavior>();
 
-	private void pickNextTarget() {
-		bool success = false;
-		int choose;
-		IntersectionBehavior ib = target.GetComponentInParent<IntersectionBehavior> ();
+        switch (_driveDirection)
+        {
+            case VehicleBehavior.DriveDirection.NORTH: // can't choose South
+                if (ib.toNorth != null)
+                {
+                    choices.Add(ib.toNorth.SouthEast);
+                    potentialDir.Add(DriveDirection.NORTH);
+                }
+                if (ib.toEast != null)
+                {
+                    choices.Add(ib.toEast.SouthWest);
+                    potentialDir.Add(DriveDirection.EAST);
+                }
+                if (ib.toWest != null)
+                {
+                    choices.Add(ib.toWest.NorthEast);
+                    potentialDir.Add(DriveDirection.WEST);
+                }
+                break;
+            case VehicleBehavior.DriveDirection.SOUTH: // can't choose North
+                if (ib.toSouth != null)
+                {
+                    choices.Add(ib.toSouth.NorthWest);
+                    potentialDir.Add(DriveDirection.SOUTH);
+                }
+                if (ib.toEast != null)
+                {
+                    choices.Add(ib.toEast.SouthWest);
+                    potentialDir.Add(DriveDirection.EAST);
+                }
+                if (ib.toWest != null)
+                {
+                    choices.Add(ib.toWest.NorthEast);
+                    potentialDir.Add(DriveDirection.WEST);
+                }
+                break;
+            case VehicleBehavior.DriveDirection.EAST: // can't choose West
+                if (ib.toNorth != null)
+                {
+                    choices.Add(ib.toNorth.SouthEast);
+                    potentialDir.Add(DriveDirection.NORTH);
+                }
+                if (ib.toSouth != null)
+                {
+                    choices.Add(ib.toSouth.NorthWest);
+                    potentialDir.Add(DriveDirection.SOUTH);
+                }
 
-		// randomly pick the next direction
-		while (!success) {
-			choose = Random.Range(0, 4);
+                if (ib.toEast != null)
+                {
+                    choices.Add(ib.toEast.SouthWest);
+                    potentialDir.Add(DriveDirection.EAST);
+                }
+                break;
+            case VehicleBehavior.DriveDirection.WEST: // can't choose East
+                if (ib.toNorth != null)
+                {
+                    choices.Add(ib.toNorth.SouthEast);
+                    potentialDir.Add(DriveDirection.NORTH);
+                }
+                if (ib.toSouth != null)
+                {
+                    choices.Add(ib.toSouth.NorthWest);
+                    potentialDir.Add(DriveDirection.SOUTH);
+                }
+                if (ib.toWest != null)
+                {
+                    choices.Add(ib.toWest.NorthEast);
+                    potentialDir.Add(DriveDirection.WEST);
+                }
+                break;
+        }
 
-			switch(choose) {
-			case 0: // pick north
-				if(ib.toNorth != null && direction != DriveDirection.SOUTH) {
-					direction = DriveDirection.NORTH;
-					target = ib.toNorth.transform.Find("SouthEast").gameObject;
-					success = true;
-					return;
-				}
-				break;
-			case 1: // pick south
-				if(ib.toSouth != null && direction != DriveDirection.NORTH) {
-					direction = DriveDirection.SOUTH;
-					target = ib.toSouth.transform.Find("NorthWest").gameObject;
-					success = true;
-					return;
-				}
-				break;
-			case 2: // pick east
-				if(ib.toEast != null && direction != DriveDirection.WEST) {
-					direction = DriveDirection.EAST;
-					target = ib.toEast.transform.Find("SouthWest").gameObject;
-					success = true;
-					return;
-				}
-				break;
-			case 3: // pick west
-				if(ib.toWest != null && direction != DriveDirection.EAST) {
-					direction = DriveDirection.WEST;
-					target = ib.toWest.transform.Find("NorthEast").gameObject;
-					success = true;
-					return;
-				}
-				break;
-			}
-		}
-
-		Vector3 adjTarget = new Vector3 (target.transform.position.x, transform.position.y, target.transform.position.z);
-		target.transform.position = adjTarget;
-
-	}
-
+        // pick a random choice if possible
+        if (choices.Count != 0)
+        {
+            int r = Random.Range(0, choices.Count);
+            // both choices and potential dir will have the same length
+            _driveDirection = potentialDir[r];
+            _target = choices[r];
+            _target.position = new Vector3(_target.transform.position.x, transform.position.y, _target.transform.position.z);
+        }
+    }
 
 }

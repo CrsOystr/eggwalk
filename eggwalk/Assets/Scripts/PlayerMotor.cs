@@ -143,7 +143,7 @@ public class PlayerMotor : MonoBehaviour
      */
     private void movePlayer(float MovementAxisInput)
     {
-        float baseSpeed = (this.playerCanStart) ? 1.0f : 0.0f;
+        float baseSpeed = (this.playerCanStart) ? 0.1f : 0.0f;
 
         Vector3 WalkingVector = playerHandParent.transform.forward * activePlayerStats.ForwardSpeed * Time.deltaTime * baseSpeed;
 
