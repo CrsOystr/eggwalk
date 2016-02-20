@@ -26,6 +26,7 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private Transform itemOrigin;
     [SerializeField] private Arrow arrow;
     [SerializeField] private Animator anim;
+    [SerializeField] private float relativeItemScale;
     [SerializeField] private bool incAnim;
 
     private PlayerStats originalPlayerStats;
@@ -47,6 +48,8 @@ public class PlayerMotor : MonoBehaviour
     private float lastTapTime;
     private float turnAmount;
     private bool returnedTarget;
+    private Transform originalHandTransform;
+    
 
     void Start()
     {
@@ -58,6 +61,7 @@ public class PlayerMotor : MonoBehaviour
 
         this.buffed = true;
         this.returnedTarget = false;
+        this.originalHandTransform = this.PlayerHandParent;
         StartCoroutine(initialBuffer());
     }
 
@@ -113,10 +117,8 @@ public class PlayerMotor : MonoBehaviour
 
         // Turning
         handleTurning(TurnRightInput, TurnLeftInput);
-
-
-        this.playerHandParent.transform.localPosition = 
-            new Vector3(0.0f, this.playerHandParent.transform.localPosition.y, 6.0f);
+        
+        this.playerHandParent.transform.localPosition = this.originalHandTransform.localPosition;
 
         // Notify that hands have rotated
         if (playerNotifier != null)
@@ -528,7 +530,7 @@ public class PlayerMotor : MonoBehaviour
         //targetItem.transform.parent = rightHand.transform;
         targetItem.transform.localRotation = Quaternion.AngleAxis(180.0f, Vector3.up);
         targetItem.transform.localPosition = this.itemOrigin.localPosition;
-        targetItem.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+        targetItem.transform.localScale = new Vector3(this.relativeItemScale, this.relativeItemScale, this.relativeItemScale);
         return true;
     }
 

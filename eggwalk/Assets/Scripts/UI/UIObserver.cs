@@ -82,7 +82,7 @@ public class UIObserver : MonoBehaviour, Observer
                     /*
 					 * RECORD LEVEL SCORE
 					 */
-                    ppm.SetEggsDeliveredScore(ppm.LastEggInstantiated.index, ppm.LastEggInstantiated.name, gameState.Score);
+                    //ppm.SetEggsDeliveredScore(ppm.LastEggInstantiated.index, ppm.LastEggInstantiated.name, gameState.Score);
 
                     UISys.goToGameOverScreen(gameState.Score);
                     break;

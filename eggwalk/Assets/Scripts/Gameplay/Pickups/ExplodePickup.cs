@@ -16,15 +16,15 @@ public class ExplodePickup : MonoBehaviour, Pickup {
     [SerializeField] private int scoreValue;
     [SerializeField] private GameObject explosionEffect;
 
-    private float amplitude = 0.5f;
+    private float amplitude = 0.1f;
     private float frequency = 1.0f;
     private float speedup = 0.0f;
     private float initalPhase = Mathf.PI / 2.0f;
-    private float noiseInfluence = 0.01f;
+    private float noiseInfluence = 0.001f;
     private bool hasExploded = false;
     private bool glidingDown = false;
     private Transform target;
-    private float speed = 3.5f;
+    private float speed = 2.0f;
     private float dampening;
     private int crackLevel = 0;
 
@@ -57,9 +57,9 @@ public class ExplodePickup : MonoBehaviour, Pickup {
         if (!hasExploded)
         {
             float noise = 2 * noiseInfluence * Random.Range(0.0f, 1.0f) - noiseInfluence;
-            float roll = amplitude * (1) * Mathf.Sin(1.0f * Mathf.PI * frequency * Time.time + initalPhase);
+            float roll = amplitude * Mathf.Sin(1.0f * Mathf.PI * frequency * Time.time + initalPhase);
             this.transform.Rotate(Vector3.forward, roll + noise);
-            this.transform.Translate(Vector3.up * 0.05f * Mathf.Sin(2.0f * Mathf.PI * 1.1f * Time.time + Mathf.PI / 2.0f));
+            this.transform.Translate(Vector3.up * 0.001f * Mathf.Sin(2.0f * Mathf.PI * 1.1f * Time.time + Mathf.PI / 2.0f));
         }
     }
 
