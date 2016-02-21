@@ -35,6 +35,14 @@ public class ExplodePickup : MonoBehaviour, Pickup {
             explosionEffect.SetActive(false);
         }
 
+        fragmentRigidBodies = new List<GameObject>();
+        BoxCollider[] col = GetComponentsInChildren<BoxCollider>();
+
+        for (int i = 0; i < col.Length; i++)
+        {
+            fragmentRigidBodies.Add(col[i].gameObject);
+        }
+
         for (int i = 0; i < fragmentRigidBodies.Count; i++)
         {
             fragmentRigidBodies[i].GetComponent<Collider>().enabled = destroy;
@@ -109,6 +117,8 @@ public class ExplodePickup : MonoBehaviour, Pickup {
     public void onDropAction()
     {
         this.hasExploded = true;
+
+        this.GetComponent<MeshRenderer>().enabled = false;
 
         if (this.explosionEffect != null)
         {
