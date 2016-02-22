@@ -131,6 +131,7 @@ ModelImporter:
     2300074: pasted__polySurface239
     2300076: pasted__polySurface240
     2300078: pasted__polySurface241
+    2300080: //RootNode
     3300000: pasted__polySurface202
     3300002: pasted__polySurface203
     3300004: pasted__polySurface204
@@ -171,6 +172,7 @@ ModelImporter:
     3300074: pasted__polySurface239
     3300076: pasted__polySurface240
     3300078: pasted__polySurface241
+    3300080: //RootNode
     4300000: pasted__polySurface202
     4300002: pasted__polySurface203
     4300004: pasted__polySurface204
@@ -211,6 +213,7 @@ ModelImporter:
     4300074: pasted__polySurface239
     4300076: pasted__polySurface240
     4300078: pasted__polySurface241
+    4300080: polySurface163
     9500000: //RootNode
   materials:
     importMaterials: 1
