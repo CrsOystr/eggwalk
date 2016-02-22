@@ -345,6 +345,11 @@ public class PlayerMotor : MonoBehaviour
         }
     }
 
+    public void signalCollisionEnter(Collision col)
+    {
+        OnCollisionEnter(col);
+    }
+
     /**
      * OnTriggerEnter - Handle trigger events when first entered
      * On Output:
