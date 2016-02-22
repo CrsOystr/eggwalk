@@ -12,6 +12,11 @@ public class VehicleManager : MonoBehaviour {
 	private float[] _respawnCounters;
     private Vector3[] _lastPositions;
 
+    public GameObject[] SpawnPoints
+    {
+        get { return _spawnPoints; }
+    }
+
 	// Use this for initialization
 	void Start () {
 		
@@ -32,7 +37,7 @@ public class VehicleManager : MonoBehaviour {
         _vehicleBehaviors = new List<VehicleBehavior>();
 		
         // can't have more vehicles than intersection points
-		if(_numberOfVehicles > _spawnPoints.Length) _numberOfVehicles = _spawnPoints.Length;
+		if(_numberOfVehicles > _spawnPoints.Length/4) _numberOfVehicles = _spawnPoints.Length/4;
 		
 		_respawnCounters = new float[_numberOfVehicles];
 		_lastPositions = new Vector3[_numberOfVehicles];
@@ -86,6 +91,8 @@ public class VehicleManager : MonoBehaviour {
             _spawnPoints[index].transform.position.z);
 
         vehicle.Target = _spawnPoints[index].GetComponentInParent<IntersectionBehavior>().transform;
+        vehicle.transform.SetParent(transform.parent);
+        vehicle.VehicleManager = this;
 	
 	}
 

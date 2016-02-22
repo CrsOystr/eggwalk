@@ -11,11 +11,19 @@ public class VehicleBehavior : MonoBehaviour {
     public bool debug;
 
     [SerializeField] private Transform _target;
-    [SerializeField] private float _speed;
+    [SerializeField] private float _minSpeed, _maxSpeed, _force;
     [SerializeField] private DriveDirection _driveDirection;
     [SerializeField] private float _distanceThreshold;
-    
+
     private Rigidbody _rigidBody;
+    private Transform _prevTarget;
+    private VehicleManager _vehicleManager;
+
+    public VehicleManager VehicleManager
+    {
+        get { return _vehicleManager; }
+        set { _vehicleManager = value; }
+    }
 
     public DriveDirection Direction
     {
@@ -35,17 +43,31 @@ public class VehicleBehavior : MonoBehaviour {
 
     void Update()
     {
+        if (_target == null) return;
+
         Vector3 toTarget = _target.position - transform.position;
         //_rigidBody.velocity = toTarget.normalized * _speed * Time.deltaTime;
 
-        Vector3 force = toTarget.normalized * _speed;
+        Vector3 force = toTarget.normalized * _force;
         _rigidBody.AddForce(force);
+
+        if (_rigidBody.velocity.magnitude < _minSpeed)
+        {
+            Vector3 adjVelocity = _rigidBody.velocity.normalized * _minSpeed;
+            _rigidBody.velocity = adjVelocity;
+        }
+        else if (_rigidBody.velocity.magnitude > _maxSpeed)
+        {
+            Vector3 adjVelocity = _rigidBody.velocity.normalized * _maxSpeed;
+            _rigidBody.velocity = adjVelocity;
+        }
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(toTarget), 0.1f);
 
         float distanceToTarget = Vector3.Distance(transform.position, _target.position);
         if (distanceToTarget <= _distanceThreshold)
         {
+            _prevTarget = _target;
             ChooseNextTarget();
         }
 
