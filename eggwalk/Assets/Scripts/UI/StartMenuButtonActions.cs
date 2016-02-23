@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class StartMenuButtonActions : MonoBehaviour {
@@ -12,7 +13,7 @@ public class StartMenuButtonActions : MonoBehaviour {
 
     public void SelectLevel(string level)
     {
-        Application.LoadLevel(level);
+        SceneManager.LoadScene(level);
     }
 
     public void ExitGame()

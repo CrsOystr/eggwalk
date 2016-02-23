@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -24,7 +25,8 @@ public class GameState : MonoBehaviour {
             return;
         }
 
-		this.score = 0;
+        Time.timeScale = 1.0f;
+        this.score = 0;
         this.deliveredItems = new List<string>();
 
         this.timeToStart = gameMode.InitialTimeToStartLevel;
@@ -53,7 +55,7 @@ public class GameState : MonoBehaviour {
 
         if (Input.GetButtonDown("Restart"))
         {
-            Application.LoadLevel(Application.loadedLevelName);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
@@ -122,7 +123,7 @@ public class UISystem : MonoBehaviour
 
     public void returnButtonAction(string level)
     {
-        Application.LoadLevel(level);
+        SceneManager.LoadScene(level);
     }
 
     public void setRotationToBalanceBar(float angle)

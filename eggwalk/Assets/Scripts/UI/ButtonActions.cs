@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 
@@ -7,7 +8,7 @@ using System.Collections;
 public class ButtonActions : MonoBehaviour {
 
 	public void loadScene(string scene) {
-		Application.LoadLevel(scene);
+        SceneManager.LoadScene(scene);
 	}
 
 	public void exitGame() {
