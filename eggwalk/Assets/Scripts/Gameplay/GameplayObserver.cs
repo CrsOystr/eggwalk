@@ -107,6 +107,7 @@ public class GameplayObserver : MonoBehaviour, Observer
                     // Reset player to not contain any items
                     player.returnToNeutral();
                     player.removeItemFromHand();
+                    player.lockPlayerRotation(2.0f);
                     Destroy(p);
 
                     // Play Particles

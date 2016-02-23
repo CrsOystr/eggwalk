@@ -687,6 +687,18 @@ public class PlayerMotor : MonoBehaviour
         this.returnedTarget = true;
     }
 
+    public void lockPlayerRotation(float time)
+    {
+        lockRotation = true;
+        StartCoroutine(unlockPlayerRotation(time));
+    }
+
+    private IEnumerator unlockPlayerRotation(float time)
+    {
+        yield return new WaitForSeconds(time);
+        lockRotation = false;
+    }
+
     public void setTarget(Transform newDestination)
     {
         this.arrow.WorldDestination = newDestination;
