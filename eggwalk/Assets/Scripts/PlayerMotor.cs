@@ -27,6 +27,7 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private Arrow arrow;
     [SerializeField] private Animator anim;
     [SerializeField] private float relativeItemScale;
+    [SerializeField] private Transform safePoint;
     [SerializeField] private bool incAnim;
 
     private PlayerStats originalPlayerStats;
@@ -436,6 +437,11 @@ public class PlayerMotor : MonoBehaviour
             this.canTurnLeft = false;
             return;
         }
+    }
+
+    public void warpToSafePoint()
+    {
+        this.transform.position = this.safePoint.position;
     }
 
     /**
