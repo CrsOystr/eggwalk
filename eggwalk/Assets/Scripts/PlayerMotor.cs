@@ -28,6 +28,7 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private float relativeItemScale;
     [SerializeField] private Transform safePoint;
+    [SerializeField] private ParticleSystem particles;
     [SerializeField] private bool incAnim;
 
     private PlayerStats originalPlayerStats;
@@ -442,6 +443,17 @@ public class PlayerMotor : MonoBehaviour
     public void warpToSafePoint()
     {
         this.transform.position = this.safePoint.position;
+    }
+
+    public void startParticleSystem()
+    {
+        if (particles != null)
+        {
+            particles.Play();
+        } else
+        {
+            print("Particles in Player Prefab has not been set");
+        }
     }
 
     /**

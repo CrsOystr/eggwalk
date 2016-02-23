@@ -109,6 +109,9 @@ public class GameplayObserver : MonoBehaviour, Observer
                     player.removeItemFromHand();
                     Destroy(p);
 
+                    // Play Particles
+                    player.startParticleSystem();
+
                     // Affect game state by adding to a score and adding
                     // to a collection of returned items by the player
                     gameState.addToScore(pickup.getScoreValue());
