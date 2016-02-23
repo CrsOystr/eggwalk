@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ public class UISystem : MonoBehaviour
 {
     [SerializeField] private GameObject HUDElements;
     [SerializeField] private GameObject PauseElements;
+    [SerializeField] private GameObject SelectionEventSystem;
     [SerializeField] private GameOverScreen GameOverElements;
     [SerializeField] private Text LifeText;
     [SerializeField] private BalanceBar Bar;
