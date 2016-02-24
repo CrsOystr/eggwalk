@@ -11,9 +11,11 @@ public class SoundSystem : MonoBehaviour {
 	 */
 
 	[SerializeField] private AudioSource missionMusic;
-	//[SerializeField] private AudioSource missionlessMusic;
+	[SerializeField] private AudioSource deathSound;
 	[SerializeField] private AudioSource ambientNatureSounds;
 	[SerializeField] private AudioSource completedObjectiveAudio;
+	[SerializeField] private AudioSource eggDropSound;
+	[SerializeField] private AudioSource eggCrackSound;
 
 	//	[SerializeField] private AudioSource ambientCitySounds;
 
@@ -29,31 +31,38 @@ public class SoundSystem : MonoBehaviour {
 	 * Seperate functions out as much as possible, I.E. make a "turn on all firetrucks" and "turn on waterfountain sound"
 	 * as apposed to "put out the fire sounds"
 	 */
-
+	bool dead = false;
 	int lastHurtSoundPlayed = 0;
 	public void playPlayerHurtSound()
 	{
-		int randy = Random.Range (0, playerHurtSounds.Length);
-		while(randy == lastHurtSoundPlayed)
-			randy = Random.Range (0, playerHurtSounds.Length);
-		for (int i = 0; i < playerHurtSounds.Length; i++) {
-			if(i == randy)
-				playerHurtSounds[i].Play();
+		if (dead == false) {
+			eggCrackSound.Play ();
+			int randy = Random.Range (0, playerHurtSounds.Length);
+			while (randy == lastHurtSoundPlayed)
+				randy = Random.Range (0, playerHurtSounds.Length);
+			for (int i = 0; i < playerHurtSounds.Length; i++) {
+				if (i == randy)
+					playerHurtSounds [i].Play ();
+			}
+			lastHurtSoundPlayed = randy;
 		}
-		lastHurtSoundPlayed = randy;
 	}
 	public void playCompletedObjectiveAudio()
 	{
 		completedObjectiveAudio.Play ();
+		eggDropSound.Play ();
 	}
-		public void playMissionMusicAudio()
+	public void playDeathCryAudio()
+	{
+		dead = true;
+		for (int i = 0; i < playerHurtSounds.Length; i++) {
+			playerHurtSounds [i].Stop ();
+		}
+		deathSound.Play ();
+	}
+	public void playMissionMusicAudio()
 	{
 		if (!missionMusic.isPlaying) {
-			/*missionlessMusic.loop = false;
-			while(missionlessMusic.time > 0){
-				print(missionlessMusic.time);
-
-			}*/
 			missionMusic.Play ();
 			ambientNatureSounds.volume = 0.63f;
 		}
