@@ -16,6 +16,7 @@ public class SoundSystem : MonoBehaviour {
 	[SerializeField] private AudioSource completedObjectiveAudio;
 	[SerializeField] private AudioSource eggDropSound;
 	[SerializeField] private AudioSource eggCrackSound;
+	[SerializeField] private AudioSource childrenLaughingSound;
 
 	//	[SerializeField] private AudioSource ambientCitySounds;
 
@@ -23,6 +24,8 @@ public class SoundSystem : MonoBehaviour {
 
 	//example of how to do multiple items I.E. all firetrucks
 	[SerializeField] public AudioSource[] playerHurtSounds;
+	[SerializeField] public AudioSource[] playerCrySounds;
+
 
 
 
@@ -33,7 +36,9 @@ public class SoundSystem : MonoBehaviour {
 	 */
 	bool dead = false;
 	int lastHurtSoundPlayed = 0;
-	public void playPlayerHurtSound()
+	int lastCrySoundPlayed = 0;
+
+	public void playPlayerHitSound()
 	{
 		if (dead == false) {
 			eggCrackSound.Play ();
@@ -45,13 +50,27 @@ public class SoundSystem : MonoBehaviour {
 					playerHurtSounds [i].Play ();
 			}
 			lastHurtSoundPlayed = randy;
+		} else {
+			if (childrenLaughingSound.isPlaying == false)
+				childrenLaughingSound.Play ();
+			int randy = Random.Range (0, playerCrySounds.Length);
+			while (randy == lastCrySoundPlayed)
+				randy = Random.Range (0, playerCrySounds.Length);
+			for (int i = 0; i < playerCrySounds.Length; i++) {
+				if (i == randy)
+					playerCrySounds [i].Play ();
+			}
+			lastCrySoundPlayed = randy;
+		
 		}
 	}
+
 	public void playCompletedObjectiveAudio()
 	{
 		completedObjectiveAudio.Play ();
 		eggDropSound.Play ();
 	}
+
 	public void playDeathCryAudio()
 	{
 		dead = true;
@@ -60,6 +79,7 @@ public class SoundSystem : MonoBehaviour {
 		}
 		deathSound.Play ();
 	}
+
 	public void playMissionMusicAudio()
 	{
 		if (!missionMusic.isPlaying) {

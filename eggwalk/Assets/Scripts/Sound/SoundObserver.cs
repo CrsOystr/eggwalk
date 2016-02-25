@@ -11,13 +11,12 @@ public class SoundObserver : MonoBehaviour, Observer {
 		switch (category) {
 			case GameEnumerations.EventCategory.Player_IsDead:
 			{
-				
 				SoundSys.playDeathCryAudio();
 				break;
 			}
 			case GameEnumerations.EventCategory.Player_IsHurt:
 			{
-				SoundSys.playPlayerHurtSound();
+				SoundSys.playPlayerHitSound();
 				break;
 			}
 			case GameEnumerations.EventCategory.Player_ReturnedTarget:
