@@ -21,7 +21,7 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private GameObject rightArm;
     [SerializeField] private Transform leftHand;
     [SerializeField] private Transform rightHand;
-    [SerializeField] private GameplayNotifier playerNotifier;
+    private GameplayNotifier playerNotifier;
     [SerializeField] private Transform itemLocation;
     [SerializeField] private Transform itemOrigin;
     [SerializeField] private Arrow arrow;
@@ -52,6 +52,17 @@ public class PlayerMotor : MonoBehaviour
     private bool returnedTarget;
     private Transform originalHandTransform;
     
+    void Awake()
+    {
+        if (this.playerNotifier == null)
+        {
+            GameObject notifier = GameObject.FindGameObjectWithTag("PlayerNotifier");
+            if (notifier.GetComponent<GameplayNotifier>() != null)
+            {
+                this.playerNotifier = notifier.GetComponent<GameplayNotifier>();
+            }
+        }
+    }
 
     void Start()
     {
