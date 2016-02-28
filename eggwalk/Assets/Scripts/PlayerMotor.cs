@@ -46,6 +46,7 @@ public class PlayerMotor : MonoBehaviour
     private bool isAlive = true;
     private GameObject heldItem;
     private bool lockRotation = true;
+    private TurningVolume lastTurn;
 
     private float lastTapTime;
     private float turnAmount;
@@ -89,9 +90,9 @@ public class PlayerMotor : MonoBehaviour
         {
             if (isAlive)
             {
+                this.isAlive = false;
                 playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, 
                     GameEnumerations.EventCategory.Player_IsDead));
-                isAlive = false;
             }
         }
 
@@ -132,7 +133,9 @@ public class PlayerMotor : MonoBehaviour
         handleTurning(TurnRightInput, TurnLeftInput);
         
         // 8
-        this.playerHandParent.transform.localPosition = new Vector3(0.0f, this.playerHandParent.transform.localPosition.y, 0.0f);
+        this.playerHandParent.transform.localPosition = new Vector3(0.0f, 
+            this.playerHandParent.transform.localPosition.y, 
+            this.originalHandTransform.localPosition.z);
 
         // Notify that hands have rotated
         if (playerNotifier != null)
@@ -289,18 +292,26 @@ public class PlayerMotor : MonoBehaviour
         {
             if (canTurnRight && TurnRightPressed)
             {
-                isTurning = true;
-                isTurningLeft = false;
-                playerNotifier.notify(new GameEvent(null, 
-                    GameEnumerations.EventCategory.Player_IsTurningRight));
+                if (!lastTurn.HasPlayerTurned)
+                {
+                    isTurning = true;
+                    isTurningLeft = false;
+                    lastTurn.HasPlayerTurned = true;
+                    playerNotifier.notify(new GameEvent(null,
+                        GameEnumerations.EventCategory.Player_IsTurningRight));
+                }
             }
 
             if (canTurnLeft && TurnLeftPressed)
             {
-                isTurning = true;
-                isTurningLeft = true;
-                playerNotifier.notify(new GameEvent(null, 
-                    GameEnumerations.EventCategory.Player_IsTurningLeft));
+                if (!lastTurn.HasPlayerTurned)
+                {
+                    isTurning = true;
+                    isTurningLeft = true;
+                    lastTurn.HasPlayerTurned = true;
+                    playerNotifier.notify(new GameEvent(null,
+                        GameEnumerations.EventCategory.Player_IsTurningLeft));
+                }
             }
         }
 
@@ -380,6 +391,11 @@ public class PlayerMotor : MonoBehaviour
         {
             TurningVolume turn = col.gameObject.GetComponent<TurningVolume>();
 
+            if (turn.HasPlayerTurned)
+            {
+                return;
+            }
+
             if (turn.canTurnLeft(this.transform.forward))
             {
                 canTurnLeft = true;
@@ -395,6 +411,7 @@ public class PlayerMotor : MonoBehaviour
             }
 
             this.canTurn = true;
+            this.lastTurn = turn;
             col.gameObject.GetComponent<TurningVolume>().IsPlayerTurning = true;
 
             return;
@@ -443,6 +460,7 @@ public class PlayerMotor : MonoBehaviour
         if (col.gameObject.GetComponent<TurningVolume>() != null)
         {
             col.gameObject.GetComponent<TurningVolume>().IsPlayerTurning = false;
+            this.lastTurn = null;
 
             this.canTurn = false;
             this.canTurnRight = false;
@@ -622,7 +640,7 @@ public class PlayerMotor : MonoBehaviour
     {
         this.arrow.setActive(false);
         this.GetComponent<Rigidbody>().freezeRotation = false;
-        this.GetComponent<Rigidbody>().AddForce(Vector3.right * 10000.0f);
+        this.GetComponent<Rigidbody>().AddForce(Vector3.right * 500.0f);
 
         if (this.getItemInHand() != null)
         {

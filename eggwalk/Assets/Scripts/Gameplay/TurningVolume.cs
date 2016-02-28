@@ -13,11 +13,20 @@ public class TurningVolume : MonoBehaviour {
     public bool westLaneOpen;
 
     private bool isPlayerTurning;
+    private bool hasPlayerTurned;
 
 	// Use this for initialization
 	void Start () {
 		boxCollider = this.gameObject.GetComponent<BoxCollider> ();
 	}
+
+    void OnTriggerExit(Collider col)
+    {
+        if (col.gameObject.GetComponent<PlayerMotor>() != null)
+        {
+            HasPlayerTurned = false;
+        }
+    }
 
     /**
      * canTurnRight - Determine based on the open lanes, if the player is allowed to turn right
@@ -129,5 +138,11 @@ public class TurningVolume : MonoBehaviour {
     {
         get { return isPlayerTurning; }
         set { isPlayerTurning = value; }
+    }
+
+    public bool HasPlayerTurned
+    {
+        get { return hasPlayerTurned; }
+        set { hasPlayerTurned = value; }
     }
 }

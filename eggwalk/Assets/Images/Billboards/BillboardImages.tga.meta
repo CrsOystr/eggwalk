@@ -1,0 +1,153 @@
+fileFormatVersion: 2
+guid: e1fe16278ea238a4c9622f5897ba9827
+timeCreated: 1456637647
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Billboard_Senpai
+    21300002: Billboard-Satan
+    21300004: Billboard-Curtains
+    21300006: Billboard-Jesus
+    21300008: Billboard-Prestine
+    21300010: Billboard-Fruit
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 1545, z: 1032, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Billboard_Senpai
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 1547
+        width: 1018
+        height: 500
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -509, y: 250}
+        - {x: -509, y: -250}
+        - {x: 509, y: -250}
+        - {x: 509, y: 250}
+    - name: Billboard-Satan
+      rect:
+        serializedVersion: 2
+        x: 1019
+        y: 1545
+        width: 1029
+        height: 503
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 2, z: 0, w: 0}
+      outline:
+      - - {x: -514.5, y: 251.5}
+        - {x: -514.5, y: -251.5}
+        - {x: 514.5, y: -251.5}
+        - {x: 514.5, y: 251.5}
+    - name: Billboard-Curtains
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1037
+        width: 1015
+        height: 511
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -507.5, y: 255.5}
+        - {x: -507.5, y: -255.5}
+        - {x: 507.5, y: -255.5}
+        - {x: 507.5, y: 255.5}
+    - name: Billboard-Jesus
+      rect:
+        serializedVersion: 2
+        x: 1019
+        y: 1040
+        width: 1029
+        height: 504
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -514.5, y: 252}
+        - {x: -514.5, y: -252}
+        - {x: 514.5, y: -252}
+        - {x: 514.5, y: 252}
+    - name: Billboard-Prestine
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 524
+        width: 1016
+        height: 513
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -508, y: 256.5}
+        - {x: -508, y: -256.5}
+        - {x: 508, y: -256.5}
+        - {x: 508, y: 256.5}
+    - name: Billboard-Fruit
+      rect:
+        serializedVersion: 2
+        x: 1016
+        y: 524
+        width: 1032
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -516, y: 256}
+        - {x: -516, y: -256}
+        - {x: 516, y: -256}
+        - {x: 516, y: 256}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
