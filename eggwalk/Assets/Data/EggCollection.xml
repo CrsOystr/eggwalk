@@ -29,4 +29,14 @@
     <Name>Nuclear Egg (Yellow)</Name>
     <SpawnWeight>5</SpawnWeight>
   </Egg>
+  <Egg>
+    <Index>7</Index>
+    <Name>Dino Egg</Name>
+    <SpawnWeight>10</SpawnWeight>
+  </Egg>
+  <Egg>
+    <Index>8</Index>
+    <Name>Baby On Board Egg</Name>
+    <SpawnWeight>5</SpawnWeight>
+  </Egg>
 </EggCollection>
