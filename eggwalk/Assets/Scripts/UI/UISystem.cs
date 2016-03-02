@@ -45,6 +45,7 @@ public class UISystem : MonoBehaviour
                     DeliveredTextBox.color.g,
                     DeliveredTextBox.color.b,
                     0.0f);
+        HUDElements.gameObject.SetActive(true);
         GameOverElements.gameObject.SetActive(false);
     }
 

@@ -36,7 +36,9 @@ public class PlayerMotor : MonoBehaviour
 	private bool canTurn = false;
 	private bool canTurnLeft;
 	private bool canTurnRight;
-	private bool isTurning = false;
+    private bool canMoveRight;
+    private bool canMoveLeft;
+    private bool isTurning = false;
 	private bool isTurningLeft;
     private bool isTurningAround = false;
     private bool isItemInLeftHand = false;
@@ -340,12 +342,17 @@ public class PlayerMotor : MonoBehaviour
 
         if (col.gameObject.tag.Equals("Building"))
         {
+            float d = Vector3.Dot(col.gameObject.transform.forward, transform.right);
+            if (d > 0.95f)
+            {
+
+            }
+
             if (isAlive)
             {
                 float dir = Vector3.Dot(col.gameObject.transform.forward, this.transform.forward);
-                if (dir < -0.70)
+                if (dir < -0.90)
                 {
-                    //this.transform.localRotation = Quaternion.AngleAxis(this.transform.rotation.eulerAngles.y + 90.0f, Vector3.up);
                     if (!buffed)
                     {
                         isTurning = true;
@@ -363,9 +370,16 @@ public class PlayerMotor : MonoBehaviour
                         playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, 
                             GameEnumerations.EventCategory.Player_IsHurt));
                     }
-                    //isAlive = false;
                 }
             }
+        }
+    }
+
+    void OnParticleCollision(GameObject other)
+    {
+        if (other.GetComponentInParent<FireHydrant>() != null)
+        {
+            GetComponent<Rigidbody>().AddForce(12000.0f * other.transform.forward);
         }
     }
 
@@ -419,6 +433,11 @@ public class PlayerMotor : MonoBehaviour
 
         if (col.gameObject.GetComponent<TriggerBox>() != null)
         {
+            if (!isAlive)
+            {
+                return;
+            }
+
             TriggerBox trigger = col.gameObject.GetComponent<TriggerBox>();
             if (this.heldItem != null && trigger.Activated)
             {
@@ -644,7 +663,7 @@ public class PlayerMotor : MonoBehaviour
 
         if (this.getItemInHand() != null)
         {
-            this.getItemInHand().transform.parent = transform.root;
+            this.getItemInHand().transform.parent = null;
         }
 
         this.leftArm.SetActive(false);
