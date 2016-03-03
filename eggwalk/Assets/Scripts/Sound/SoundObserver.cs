@@ -9,6 +9,11 @@ public class SoundObserver : MonoBehaviour, Observer {
 		GameEnumerations.EventCategory category = e.Category;
 		
 		switch (category) {
+		case GameEnumerations.EventCategory.Player_TargetApproaching:
+			{
+				SoundSys.playCarBehindAudio ();
+				break;
+			}
 			case GameEnumerations.EventCategory.Player_IsDead:
 			{
 				SoundSys.playDeathCryAudio();

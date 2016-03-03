@@ -17,6 +17,8 @@ public class SoundSystem : MonoBehaviour {
 	[SerializeField] private AudioSource eggDropSound;
 	[SerializeField] private AudioSource eggCrackSound;
 	[SerializeField] private AudioSource childrenLaughingSound;
+	[SerializeField] private AudioSource carHonkSound;
+
 
 	//	[SerializeField] private AudioSource ambientCitySounds;
 
@@ -69,6 +71,12 @@ public class SoundSystem : MonoBehaviour {
 	{
 		completedObjectiveAudio.Play ();
 		eggDropSound.Play ();
+	}
+
+	public void playCarBehindAudio()
+	{
+		if (carHonkSound.isPlaying == false)
+			carHonkSound.Play ();
 	}
 
 	public void playDeathCryAudio()
