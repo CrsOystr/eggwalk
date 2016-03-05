@@ -1,0 +1,283 @@
+fileFormatVersion: 2
+guid: d4d295676ae925c40b5c4ab9ee6619ac
+timeCreated: 1457170682
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: joint1
+    100004: joint2
+    100006: LLingBottom
+    100008: LLingMiddle
+    100010: LLingTop
+    100012: LMiddleBottom
+    100014: LMiddleMiddle
+    100016: LMiddleTop
+    100018: LPinkieBottom
+    100020: LPinkieMiddle
+    100022: LPinkieTop
+    100024: LPointerBottom
+    100026: LPointerMiddle
+    100028: LPointerTop
+    100030: LShoulder
+    100032: LThumbBottom
+    100034: LThumbMiddle
+    100036: LThumbTop
+    100038: LWrist1
+    100040: LWrist2
+    100042: polySurface1
+    100044: polySurface3
+    100046: polySurface4
+    100048: RightHand
+    100050: RightHand 1
+    100052: RMiddleBottom
+    100054: RMiddleMiddle
+    100056: RMiddleTop
+    100058: RPinkieBottom
+    100060: RPinkieMiddle
+    100062: RPinkieTop
+    100064: RPointerBottom
+    100066: RPointerMiddle
+    100068: RPointerTop
+    100070: RRingBottom
+    100072: RRingMiddle
+    100074: RRingTop
+    100076: RShoulder
+    100078: RThumbBottom
+    100080: RThumbMiddle
+    100082: RThumbTop
+    100084: RWrist1
+    100086: RWrist2
+    400000: //RootNode
+    400002: joint1
+    400004: joint2
+    400006: LLingBottom
+    400008: LLingMiddle
+    400010: LLingTop
+    400012: LMiddleBottom
+    400014: LMiddleMiddle
+    400016: LMiddleTop
+    400018: LPinkieBottom
+    400020: LPinkieMiddle
+    400022: LPinkieTop
+    400024: LPointerBottom
+    400026: LPointerMiddle
+    400028: LPointerTop
+    400030: LShoulder
+    400032: LThumbBottom
+    400034: LThumbMiddle
+    400036: LThumbTop
+    400038: LWrist1
+    400040: LWrist2
+    400042: polySurface1
+    400044: polySurface3
+    400046: polySurface4
+    400048: RightHand
+    400050: RightHand 1
+    400052: RMiddleBottom
+    400054: RMiddleMiddle
+    400056: RMiddleTop
+    400058: RPinkieBottom
+    400060: RPinkieMiddle
+    400062: RPinkieTop
+    400064: RPointerBottom
+    400066: RPointerMiddle
+    400068: RPointerTop
+    400070: RRingBottom
+    400072: RRingMiddle
+    400074: RRingTop
+    400076: RShoulder
+    400078: RThumbBottom
+    400080: RThumbMiddle
+    400082: RThumbTop
+    400084: RWrist1
+    400086: RWrist2
+    4300000: polySurface3
+    4300002: polySurface4
+    4300004: polySurface1
+    7400000: EggRise
+    9500000: //RootNode
+    13700000: polySurface1
+    13700002: polySurface3
+    13700004: polySurface4
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: EggRise
+      takeName: Take 001
+      firstFrame: 528
+      lastFrame: 575
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: joint1
+        weight: 1
+      - path: joint1/joint2
+        weight: 1
+      - path: LShoulder
+        weight: 1
+      - path: LShoulder/LWrist1
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LLingBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LLingBottom/LLingMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LLingBottom/LLingMiddle/LLingTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LMiddleBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LMiddleBottom/LMiddleMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LMiddleBottom/LMiddleMiddle/LMiddleTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPinkieBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPinkieBottom/LPinkieMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPinkieBottom/LPinkieMiddle/LPinkieTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPointerBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPointerBottom/LPointerMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LPointerBottom/LPointerMiddle/LPointerTop
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LThumbBottom
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LThumbBottom/LThumbMiddle
+        weight: 1
+      - path: LShoulder/LWrist1/LWrist2/LThumbBottom/LThumbMiddle/LThumbTop
+        weight: 1
+      - path: polySurface1
+        weight: 1
+      - path: RightHand
+        weight: 1
+      - path: RightHand/RightHand 1
+        weight: 1
+      - path: RightHand/RightHand 1/polySurface3
+        weight: 1
+      - path: RightHand/RightHand 1/polySurface4
+        weight: 1
+      - path: RShoulder
+        weight: 1
+      - path: RShoulder/RWrist1
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RMiddleBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RMiddleBottom/RMiddleMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RMiddleBottom/RMiddleMiddle/RMiddleTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPinkieBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPinkieBottom/RPinkieMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPinkieBottom/RPinkieMiddle/RPinkieTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPointerBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPointerBottom/RPointerMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RPointerBottom/RPointerMiddle/RPointerTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RRingBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RRingBottom/RRingMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RRingBottom/RRingMiddle/RRingTop
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RThumbBottom
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RThumbBottom/RThumbMiddle
+        weight: 1
+      - path: RShoulder/RWrist1/RWrist2/RThumbBottom/RThumbMiddle/RThumbTop
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
