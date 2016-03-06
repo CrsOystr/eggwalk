@@ -9,7 +9,7 @@ public class UISystem : MonoBehaviour
 {
     [SerializeField] private GameObject HUDElements;
     [SerializeField] private GameObject PauseElements;
-    [SerializeField] private GameObject SelectionEventSystem;
+    [SerializeField] private EventSystem SelectionEventSystem;
     [SerializeField] private GameOverScreen GameOverElements;
     [SerializeField] private Text LifeText;
     [SerializeField] private BalanceBar Bar;
@@ -252,6 +252,7 @@ public class UISystem : MonoBehaviour
         setFinalScore(finalScore);
         HUDElements.SetActive(false);
         GameOverElements.gameObject.SetActive(true);
+        SelectionEventSystem.SetSelectedGameObject(GameOverElements.gameObject.GetComponentInChildren<Button>().gameObject);
     }
 
     public void goToPauseScreen()
