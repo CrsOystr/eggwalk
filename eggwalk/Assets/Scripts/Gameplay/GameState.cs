@@ -52,11 +52,6 @@ public class GameState : MonoBehaviour {
             
             Time.timeScale = (Time.timeScale != 0.0f) ? 0.0f : 1.0f;
         }
-
-        if (Input.GetButtonDown("Restart"))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
     }
 
     public bool startObjective(int id)
