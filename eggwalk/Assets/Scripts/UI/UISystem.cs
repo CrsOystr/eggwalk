@@ -261,6 +261,7 @@ public class UISystem : MonoBehaviour
         {
             HUDElements.SetActive(false);
             PauseElements.SetActive(true);
+            SelectionEventSystem.SetSelectedGameObject(PauseElements.GetComponentInChildren<Button>().gameObject);
         }
         else
         {
