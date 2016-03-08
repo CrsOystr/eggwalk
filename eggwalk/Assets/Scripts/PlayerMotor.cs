@@ -237,8 +237,9 @@ public class PlayerMotor : MonoBehaviour
         {
             if (incAnim)
             {
+                playerHandParent.transform.Rotate(Vector3.forward * RotationAxisInput * activePlayerStats.CameraRotationSpeed * Time.deltaTime);
                 float a = -1.0f * Mathf.Clamp(this.anim.GetFloat("EggBalance") + RotationAxisInput * 
-                    activePlayerStats.RotationSpeed * Time.deltaTime * activePlayerStats.RotationDueToGravity, -1.0f, 1.0f);
+                    activePlayerStats.RotationSpeed * Time.deltaTime  +  activePlayerStats.RotationDueToGravity * Time.deltaTime, -1.0f, 1.0f);
                 anim.SetFloat("EggBalance", a);
             } else {
                 playerHandParent.transform.Rotate(Vector3.forward * RotationAxisInput * activePlayerStats.RotationSpeed * Time.deltaTime);
@@ -765,6 +766,8 @@ public class PlayerMotor : MonoBehaviour
         playerCamera.transform.localRotation = Quaternion.AngleAxis(0.0f, playerCamera.transform.up);
         playerHandParent.transform.localRotation = Quaternion.AngleAxis(0.0f, playerHandParent.transform.up);
         this.returnedTarget = true;
+        this.buffed = true;
+        StartCoroutine(initialBuffer());
     }
 
     public void lockPlayerRotation(float time)
