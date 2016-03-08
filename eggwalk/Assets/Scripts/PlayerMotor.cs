@@ -609,7 +609,6 @@ public class PlayerMotor : MonoBehaviour
 
             if (incAnim)
             {
-                print("Hello");
                 animEvent.setMaterialToAssign(targetItem.GetComponent<Renderer>().material);
             }
         } else
