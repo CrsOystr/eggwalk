@@ -9,20 +9,21 @@ using System.Xml;
  * ------------
  * 
  * Delivery Scores are stored as ints:
- * key: "[levelname]_eggsdelivered"
+ * key: "[levelname]_eggsdelivered_[index]"
  * value: [number of eggs delivered]
- * example: "CitySmall_eggsdelivered" --> 12
+ * example: "CitySmall_eggsdelivered_3" --> 12 (meaning the 3rd place score succesfully delivered 12 eggs)
  * 
  * Time Scores (index starts at 1, with 1 being the best score):
  * key: "[levelname]_timescore_[index]"
  * value: [time in seconds as float]
  * example: "CitySmall_timescore_1" --> 35.03939f
  *
- * Succesful egg deliveries are stored as ints, with 0 for false, a.k.a. not yet delivered succesfully, and 1 for delivered succesfully)
+ * Succesful egg deliveries are stored as ints, with 0 for false, i.e., not yet delivered succesfully, and 1 for delivered succesfully)
  * key: "[index]_[eggname]"
  * value: [success]
  * example: "1_Common Egg" --> 1
  */
+
 using System.Collections.Generic;
 
 public class PlayerPrefsManager : MonoBehaviour
@@ -38,11 +39,11 @@ public class PlayerPrefsManager : MonoBehaviour
 
     // RIGHT NOW this might not be generic enough, maybe eventually create a method that looks like addScore(string levelname, string scoreType, float newScore) ?
 
-    [SerializeField]
-    private TextAsset _eggDataXML;
+    [SerializeField] private TextAsset _eggDataXML;
 
     public const int SUCCESSFUL = 1;
     public const int UNSUCCESSFUL = 0;
+    public const int NUM_SCORESTORECORD = 10;
 
     private List<EggData> _allEggsInGame;
     private List<EggData> _weightedList;
@@ -118,25 +119,52 @@ public class PlayerPrefsManager : MonoBehaviour
             PlayerPrefs.SetFloat(key, timeScores[i]);
         }
     }
-
-    public void SetEggsDeliveredScore(int eggIndex, string eggName, int score)
+    
+    public List<int> GetEggsDeliveredScores(string levelName) 
     {
-        PlayerPrefs.SetInt(eggIndex.ToString() + "_" + eggName, score);
-    }
-
-    public int[] GetEggsDeliveredScore(string levelname, int numOfScores)
-    {
-        int[] scores = new int[numOfScores];
-
-        for(int i = 0; i < numOfScores; i++)
+        List<int> eggsDelivered = new List<int>();
+        
+        for (int i = 1; i <= NUM_SCORESTORECORD; i++) // starting from 1st place
         {
-            if (PlayerPrefs.HasKey(levelname + "_eggs_delivered"))
-                scores[i] = PlayerPrefs.GetInt(levelname + "_eggs_delivered");
+            key = GenerateEggsDeliveredScoreKey(levelname, i);
+            int score;
+            
+            if(PlayerPrefs.HasKey(key)) 
+            {
+                score = PlayerPrefs.GetInt(key);
+            }
             else
-                scores[i] = 0;
+            {
+                score = 0;
+            }
+            
+            eggsDelivered.Add(score);
+        }
+        
+        return eggsDelivered;
+    }
+    
+    public void SetEggsDeliveredScore(string levelName, int newScore) 
+    {
+		// while this method takes in a single score, it actually calculates and sorts the top scores and sets those all at once.
+
+        List<int> scoreList = GetEggsDeliveredScores(levelName);
+        
+        for (int i = 0; i < scoreList.Count; i++)
+        {
+            if(newScore > scoreList[i]) 
+            {
+                scoreList.Add(newScore);
+            }
         }
 
-        return scores;
+		scoreList.Sort(); // a basic list of ints will automatically be sorted from smallest to largest
+
+		for (int i = 1; i <= NUM_SCORESTORECORD; i++) // starting from 1st place
+		{
+			string key = GenerateEggsDeliveredScoreKey (levelName, i);
+			PlayerPrefs.SetInt (key, scoreList[i]);
+		}
     }
 
     public Object LoadRandomEgg()
@@ -221,6 +249,11 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         string key = eggData.index + "_" + eggData.name;
         PlayerPrefs.SetInt(key, 1);
+    }
+    
+    private string GenerateEggsDeliveredScoreKey(string levelName, int index) 
+    {
+        return levelName + "_eggsdelivered_" + index;
     }
 
 }
