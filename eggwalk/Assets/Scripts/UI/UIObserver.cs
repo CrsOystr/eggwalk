@@ -79,12 +79,12 @@ public class UIObserver : MonoBehaviour, Observer
                 }
             case GameEnumerations.EventCategory.Player_IsDead:
                 {
+                    UISys.goToGameOverScreen(gameState.Score);
+
                     /*
 					 * RECORD LEVEL SCORE
 					 */
                     ppm.SetEggsDeliveredScore(ppm.LastEggInstantiated.index, ppm.LastEggInstantiated.name, gameState.Score);
-
-                    UISys.goToGameOverScreen(gameState.Score);
                     break;
                 }
             case GameEnumerations.EventCategory.Player_HasRotatedHands:
