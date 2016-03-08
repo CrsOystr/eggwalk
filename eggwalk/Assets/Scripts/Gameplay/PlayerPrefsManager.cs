@@ -126,7 +126,7 @@ public class PlayerPrefsManager : MonoBehaviour
         
         for (int i = 1; i <= NUM_SCORESTORECORD; i++) // starting from 1st place
         {
-            key = GenerateEggsDeliveredScoreKey(levelname, i);
+            string key = GenerateEggsDeliveredScoreKey(levelName, i);
             int score;
             
             if(PlayerPrefs.HasKey(key)) 
@@ -158,12 +158,15 @@ public class PlayerPrefsManager : MonoBehaviour
             }
         }
 
-		scoreList.Sort(); // a basic list of ints will automatically be sorted from smallest to largest
+		scoreList.Sort(); // automatically sorts a list of ints from smallest to largest
+        scoreList.Reverse(); // but we want it to be from largest to smallest
 
 		for (int i = 1; i <= NUM_SCORESTORECORD; i++) // starting from 1st place
 		{
 			string key = GenerateEggsDeliveredScoreKey (levelName, i);
 			PlayerPrefs.SetInt (key, scoreList[i]);
+
+            Debug.Log("Recorded score [" + key + "]: " + scoreList[i]);
 		}
     }
 
