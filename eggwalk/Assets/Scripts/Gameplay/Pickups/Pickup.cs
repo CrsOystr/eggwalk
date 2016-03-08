@@ -14,13 +14,16 @@ namespace GameEnumerations
 public interface Pickup {
     int getId();
     string getName();
+    void setName(string name);
     int getMass();
     Transform getCenterOfMass();
     GameObject getTargetItem();
+    Material getEggMaterial();
     void onRotateAction(float rotation);
     void onPickupAction(Transform target);
     void onHurtAction();
     void onDropAction();
+    void onReturnAction();
     int getScoreValue();
     List<PickupModifier> getModifiers();
 }

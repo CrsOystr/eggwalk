@@ -43,6 +43,7 @@ public class ReturnObjective : MonoBehaviour, Objective
 
     public void initializeObjective()
     {
+        
         int r = Random.Range(0, playerPrefsManager.AllEggsInGame.Count);
         int rl = Random.Range(0, returnLocations.Count);
 
@@ -51,6 +52,7 @@ public class ReturnObjective : MonoBehaviour, Objective
 
         this.triggerBox.transform.position = returnLocations[rl].position;
         this.triggerBox.addTargetObject(item);
+        
     }
 
     public void startObjective()

@@ -108,7 +108,14 @@ public class GameplayObserver : MonoBehaviour, Observer
                     player.returnToNeutral();
                     player.removeItemFromHand();
                     player.lockPlayerRotation(2.0f);
-                    Destroy(p);
+
+                    if (!player.IncludeAnimation)
+                    {
+                        Destroy(p);
+                    } else
+                    {
+                        pickup.onReturnAction();
+                    }
 
                     // Play Particles
                     player.startParticleSystem();

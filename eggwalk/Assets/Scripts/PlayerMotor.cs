@@ -25,10 +25,12 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private Transform itemLocation;
     [SerializeField] private Transform itemOrigin;
     [SerializeField] private Arrow arrow;
+    [SerializeField] private GameObject playerEgg;
     [SerializeField] private Animator anim;
     [SerializeField] private float relativeItemScale;
     [SerializeField] private Transform safePoint;
     [SerializeField] private ParticleSystem particles;
+    [SerializeField] private HandAnimEvent animEvent;
     [SerializeField] private bool incAnim;
 
     private PlayerStats originalPlayerStats;
@@ -78,6 +80,12 @@ public class PlayerMotor : MonoBehaviour
         this.buffed = true;
         this.returnedTarget = false;
         this.originalHandTransform = this.PlayerHandParent;
+
+        if (incAnim)
+        {
+            this.heldItem = playerEgg;
+        }
+
         StartCoroutine(initialBuffer());
     }
 
@@ -227,11 +235,15 @@ public class PlayerMotor : MonoBehaviour
     {
         if (heldItem != null)
         {
-            //float a = -1.0f * Mathf.Clamp(this.anim.GetFloat("ArmDirection") + RotationAxisInput * 
-            //    activePlayerStats.RotationSpeed * Time.deltaTime * activePlayerStats.RotationDueToGravity, -1.0f, 1.0f);
-            //anim.SetFloat("ArmDirection", a);
+            if (incAnim)
+            {
+                float a = -1.0f * Mathf.Clamp(this.anim.GetFloat("EggBalance") + RotationAxisInput * 
+                    activePlayerStats.RotationSpeed * Time.deltaTime * activePlayerStats.RotationDueToGravity, -1.0f, 1.0f);
+                anim.SetFloat("EggBalance", a);
+            } else {
+                playerHandParent.transform.Rotate(Vector3.forward * RotationAxisInput * activePlayerStats.RotationSpeed * Time.deltaTime);
+            }
 
-            playerHandParent.transform.Rotate(Vector3.forward * RotationAxisInput * activePlayerStats.RotationSpeed * Time.deltaTime);
             playerCamera.transform.Rotate(-1.0f * Vector3.forward * RotationAxisInput * activePlayerStats.CameraRotationSpeed * Time.deltaTime);
         }
     }
@@ -579,22 +591,40 @@ public class PlayerMotor : MonoBehaviour
      */
     public bool addItemIntoHand(GameObject targetItem)
     {
+        /*
         if (this.heldItem != null)
         {
             return false;
         }
+        */
 
         // Apply effects
         Pickup pickup = targetItem.GetComponent<Pickup>();
         modPlayerAttributes(pickup.getModifiers());
 
-        // Reparent item, and reposition into players hand
-        this.heldItem = targetItem;
-        targetItem.transform.parent = playerHandParent.transform;
-        //targetItem.transform.parent = rightHand.transform;
-        targetItem.transform.localRotation = Quaternion.AngleAxis(180.0f, Vector3.up);
-        targetItem.transform.localPosition = this.itemOrigin.localPosition;
-        targetItem.transform.localScale = new Vector3(this.relativeItemScale, this.relativeItemScale, this.relativeItemScale);
+        if (incAnim)
+        {
+            //playerEgg.GetComponent<Renderer>().material = targetItem.GetComponent<Renderer>().material;
+            //playerEgg.GetComponent<Pickup>().setName(pickup.getName());
+
+            if (incAnim)
+            {
+                print("Hello");
+                animEvent.setMaterialToAssign(targetItem.GetComponent<Renderer>().material);
+            }
+        } else
+        { 
+            // Reparent item, and reposition into players hand
+            this.heldItem = targetItem;
+            targetItem.transform.parent = playerHandParent.transform;
+            //targetItem.transform.parent = rightHand.transform;
+            targetItem.transform.localRotation = Quaternion.AngleAxis(180.0f, Vector3.up);
+            targetItem.transform.localPosition = this.itemOrigin.localPosition;
+            targetItem.transform.localScale = new Vector3(this.relativeItemScale, this.relativeItemScale, this.relativeItemScale);
+            
+        }
+
+
         return true;
     }
 
@@ -612,7 +642,14 @@ public class PlayerMotor : MonoBehaviour
 
         revertAllAttributes();
 
-        this.heldItem = null;
+        if (incAnim)
+        {
+            this.anim.SetBool("EggIsRising", true);
+        } else
+        {
+            this.heldItem = null;
+        }
+
         return true;
     }
 
@@ -708,9 +745,13 @@ public class PlayerMotor : MonoBehaviour
     {
         get
         {
-            return (Mathf.Abs(playerHandParent.transform.eulerAngles.z) < 0.0001f) ? 0  : 
-                NormalizeAngle(playerHandParent.transform.eulerAngles.z);
-            //return this.anim.GetFloat("ArmDirection") * 100.0f;
+            if (incAnim)
+            {
+                return this.anim.GetFloat("EggBalance") * 100.0f;
+            } else {
+                return (Mathf.Abs(playerHandParent.transform.eulerAngles.z) < 0.0001f) ? 0 :
+                    NormalizeAngle(playerHandParent.transform.eulerAngles.z);
+            }
         }
     }
 
@@ -843,6 +884,11 @@ public class PlayerMotor : MonoBehaviour
         this.buffedSpeed = true;
         activePlayerStats.CurrentLives -= damage;
         StartCoroutine(removeBuffer());
+    }
+
+    public bool IncludeAnimation
+    {
+        get { return this.incAnim; }
     }
 
     public Transform ItemLocation

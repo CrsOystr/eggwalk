@@ -213,8 +213,7 @@ Shader "Shader Forge/CrackedEgg" {
                 float4 _MaskLevel1_var = tex2D(_MaskLevel1,TRANSFORM_TEX(i.uv0, _MaskLevel1));
                 float4 _MaskLevel2_var = tex2D(_MaskLevel2,TRANSFORM_TEX(i.uv0, _MaskLevel2));
                 float4 _MaskLevel3_var = tex2D(_MaskLevel3,TRANSFORM_TEX(i.uv0, _MaskLevel3));
-                float3 node_3528 = Function_node_4211( _CrackingLevel , float3(0,0,0) , _MaskLevel1_var.rgb , _MaskLevel2_var.rgb , _MaskLevel3_var.rgb );
-                float3 diffuseColor = (_ColorOverlay.rgb+(_Diffuse_var.rgb-(node_3528*(1.0 - _CrackColor.rgb))));
+                float3 diffuseColor = (_ColorOverlay.rgb+(_Diffuse_var.rgb-(Function_node_4211( _CrackingLevel , float3(0,0,0) , _MaskLevel1_var.rgb , _MaskLevel2_var.rgb , _MaskLevel3_var.rgb )*(1.0 - _CrackColor.rgb))));
                 diffuseColor *= 1-specularMonochrome;
 /// Final Color:
                 outDiffuse = half4( diffuseColor, 0.8 );
@@ -441,8 +440,7 @@ Shader "Shader Forge/CrackedEgg" {
                 float4 _MaskLevel1_var = tex2D(_MaskLevel1,TRANSFORM_TEX(i.uv0, _MaskLevel1));
                 float4 _MaskLevel2_var = tex2D(_MaskLevel2,TRANSFORM_TEX(i.uv0, _MaskLevel2));
                 float4 _MaskLevel3_var = tex2D(_MaskLevel3,TRANSFORM_TEX(i.uv0, _MaskLevel3));
-                float3 node_3528 = Function_node_4211( _CrackingLevel , float3(0,0,0) , _MaskLevel1_var.rgb , _MaskLevel2_var.rgb , _MaskLevel3_var.rgb );
-                float3 diffuseColor = (_ColorOverlay.rgb+(_Diffuse_var.rgb-(node_3528*(1.0 - _CrackColor.rgb))));
+                float3 diffuseColor = (_ColorOverlay.rgb+(_Diffuse_var.rgb-(Function_node_4211( _CrackingLevel , float3(0,0,0) , _MaskLevel1_var.rgb , _MaskLevel2_var.rgb , _MaskLevel3_var.rgb )*(1.0 - _CrackColor.rgb))));
                 diffuseColor *= 1-specularMonochrome;
                 float3 diffuse = (directDiffuse + indirectDiffuse) * diffuseColor;
 /// Final Color:
@@ -533,8 +531,7 @@ Shader "Shader Forge/CrackedEgg" {
                 float4 _MaskLevel1_var = tex2D(_MaskLevel1,TRANSFORM_TEX(i.uv0, _MaskLevel1));
                 float4 _MaskLevel2_var = tex2D(_MaskLevel2,TRANSFORM_TEX(i.uv0, _MaskLevel2));
                 float4 _MaskLevel3_var = tex2D(_MaskLevel3,TRANSFORM_TEX(i.uv0, _MaskLevel3));
-                float3 node_3528 = Function_node_4211( _CrackingLevel , float3(0,0,0) , _MaskLevel1_var.rgb , _MaskLevel2_var.rgb , _MaskLevel3_var.rgb );
-                float3 diffColor = (_ColorOverlay.rgb+(_Diffuse_var.rgb-(node_3528*(1.0 - _CrackColor.rgb))));
+                float3 diffColor = (_ColorOverlay.rgb+(_Diffuse_var.rgb-(Function_node_4211( _CrackingLevel , float3(0,0,0) , _MaskLevel1_var.rgb , _MaskLevel2_var.rgb , _MaskLevel3_var.rgb )*(1.0 - _CrackColor.rgb))));
                 float3 specColor = float3(_Metallic,_Metallic,_Metallic);
                 float specularMonochrome = max(max(specColor.r, specColor.g),specColor.b);
                 diffColor *= (1.0-specularMonochrome);
