@@ -149,24 +149,17 @@ public class PlayerPrefsManager : MonoBehaviour
 		// while this method takes in a single score, it actually calculates and sorts the top scores and sets those all at once.
 
         List<int> scoreList = GetEggsDeliveredScores(levelName);
-        
-        for (int i = 0; i < scoreList.Count; i++)
-        {
-            if(newScore > scoreList[i]) 
-            {
-                scoreList.Add(newScore);
-            }
-        }
 
+		scoreList.Add(newScore); // add the newScore
 		scoreList.Sort(); // automatically sorts a list of ints from smallest to largest
-        scoreList.Reverse(); // but we want it to be from largest to smallest
+        //scoreList.Reverse(); // but we want it to be from largest to smallest
 
 		for (int i = 1; i <= NUM_SCORESTORECORD; i++) // starting from 1st place
 		{
-			string key = GenerateEggsDeliveredScoreKey (levelName, i);
+			string key = GenerateEggsDeliveredScoreKey (levelName, NUM_SCORESTORECORD - i);
 			PlayerPrefs.SetInt (key, scoreList[i]);
 
-            Debug.Log("Recorded score [" + key + "]: " + scoreList[i]);
+			Debug.Log("Recorded score [" + key + "]: " + scoreList[i]);
 		}
     }
 
@@ -185,7 +178,6 @@ public class PlayerPrefsManager : MonoBehaviour
         }
 
         int r = Random.Range(0, _weightedList.Count);
-        Debug.Log(r + ", " + _weightedList[r].name);
         _lastEggInstantiated = _weightedList[r];
         Object egg = Resources.Load(_weightedList[r].name);
         if (egg == null) Debug.Log("egg resource is null!");
