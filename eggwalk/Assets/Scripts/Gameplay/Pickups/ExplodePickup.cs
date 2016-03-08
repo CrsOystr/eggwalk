@@ -14,7 +14,10 @@ public class ExplodePickup : MonoBehaviour, Pickup {
     [SerializeField] private List<PickupModifier> modifiers;
     [SerializeField] private List<GameObject> fragmentRigidBodies;
     [SerializeField] private int scoreValue;
+    [SerializeField] private Material mat;
+    [SerializeField] private ParticleSystem particles;
     [SerializeField] private GameObject explosionEffect;
+    [SerializeField] private bool incAnim;
 
     private float amplitude = 0.1f;
     private float frequency = 1.0f;
@@ -54,26 +57,23 @@ public class ExplodePickup : MonoBehaviour, Pickup {
 
     void FixedUpdate()
     {
-        if (glidingDown)
+        if (incAnim && glidingDown)
         {
             dampening += Time.deltaTime;
-            this.transform.position = 
+            this.transform.position =
                 Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime / dampening);
             return;
-        }
-
-        if (!hasExploded)
-        {
-            float noise = 2 * noiseInfluence * Random.Range(0.0f, 1.0f) - noiseInfluence;
-            float roll = amplitude * Mathf.Sin(1.0f * Mathf.PI * frequency * Time.time + initalPhase);
-            this.transform.Rotate(Vector3.forward, roll + noise);
-            this.transform.Translate(Vector3.up * 0.001f * Mathf.Sin(2.0f * Mathf.PI * 1.1f * Time.time + Mathf.PI / 2.0f));
         }
     }
 
     public int getId()
     {
         return this.id;
+    }
+
+    public void setName(string name)
+    {
+        this.pickupName = name;
     }
 
     public string getName()
@@ -96,6 +96,11 @@ public class ExplodePickup : MonoBehaviour, Pickup {
         return this.gameObject;
     }
 
+    public Material getEggMaterial()
+    {
+        return this.mat;
+    }
+
     public void onRotateAction(float rotation)
     {
         this.speedup = Mathf.Abs(rotation) / 90.0f;
@@ -105,7 +110,6 @@ public class ExplodePickup : MonoBehaviour, Pickup {
     {
         glidingDown = true;
         this.target = target;
-        StartCoroutine(dropDown(3.0f));
     }
 
     public void onHurtAction()
@@ -114,11 +118,25 @@ public class ExplodePickup : MonoBehaviour, Pickup {
         this.gameObject.GetComponent<Renderer>().material.SetInt("_CrackingLevel", crackLevel);
     }
 
+    public void onReturnAction()
+    {
+        this.crackLevel = 0;
+        this.gameObject.GetComponent<Renderer>().material.SetInt("_CrackingLevel", crackLevel);
+    }
+
     public void onDropAction()
     {
         this.hasExploded = true;
 
-        this.GetComponent<MeshRenderer>().enabled = false;
+        particles.Play();
+
+        if (this.GetComponent<MeshRenderer>() != null)
+        {
+            this.GetComponent<MeshRenderer>().enabled = false;
+        } else if (this.GetComponent<SkinnedMeshRenderer>() != null)
+        {
+            this.GetComponent<SkinnedMeshRenderer>().enabled = false;
+        }
 
         if (this.explosionEffect != null)
         {
@@ -141,11 +159,5 @@ public class ExplodePickup : MonoBehaviour, Pickup {
     public List<PickupModifier> getModifiers()
     {
         return this.modifiers;
-    }
-
-    private IEnumerator dropDown(float time)
-    {
-        yield return new WaitForSeconds(time);
-        this.glidingDown = false;
     }
 }

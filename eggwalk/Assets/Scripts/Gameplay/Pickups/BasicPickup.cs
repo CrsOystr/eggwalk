@@ -48,6 +48,11 @@ public class BasicPickup : MonoBehaviour, Pickup {
         return this.pickupName;
     }
 
+    public void setName(string name)
+    {
+        this.pickupName = name;
+    }
+
     public int getMass()
     {
         return this.mass;
@@ -63,7 +68,17 @@ public class BasicPickup : MonoBehaviour, Pickup {
         return this.gameObject;
     }
 
+    public Material getEggMaterial()
+    {
+        return this.GetComponent<Material>();
+    }
+
     public void onRotateAction(float rotation)
+    {
+
+    }
+
+    public void onReturnAction()
     {
 
     }
