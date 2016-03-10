@@ -124,7 +124,7 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         List<int> eggsDelivered = new List<int>();
         
-        for (int i = 1; i <= NUM_SCORESTORECORD; i++) // starting from 1st place
+        for (int i = 0; i < NUM_SCORESTORECORD; i++) // starting from 1st place
         {
             string key = GenerateEggsDeliveredScoreKey(levelName, i);
             int score;
@@ -132,6 +132,7 @@ public class PlayerPrefsManager : MonoBehaviour
             if(PlayerPrefs.HasKey(key)) 
             {
                 score = PlayerPrefs.GetInt(key);
+                Debug.Log("key: " + key + ", value: " + score);
             }
             else
             {

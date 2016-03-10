@@ -17,10 +17,17 @@ public class ScoreboardBehavior : MonoBehaviour {
 
     public void LoadScoresForLevel(string levelName)
     {
+        StartCoroutine(DelayedLoadScoresForLevel(levelName));
+    }
+
+    private IEnumerator DelayedLoadScoresForLevel(string levelName)
+    {
+        yield return new WaitForSeconds(0.5f);
+
         if (_hintPanel.gameObject.activeInHierarchy) _hintPanel.SetActive(false);
 
         // clean up list of instantiated ScorePanels
-        if(_instantiatedScorePanels != null)
+        if (_instantiatedScorePanels != null)
         {
             foreach (ScorePanelBehavior obj in _instantiatedScorePanels)
             {
@@ -28,13 +35,13 @@ public class ScoreboardBehavior : MonoBehaviour {
             }
         }
         _instantiatedScorePanels = new List<ScorePanelBehavior>();
-
+        
         List<int> scoreList = _playerPrefsManager.GetEggsDeliveredScores(levelName);
 
         for (int i = 0; i < scoreList.Count; i++)
         {
             ScorePanelBehavior newScorePanel = Instantiate(_scorePanelPrefab).GetComponent<ScorePanelBehavior>();
-            newScorePanel.scoreText.text = "#" + (i+1) + ": " + scoreList[i];
+            newScorePanel.scoreText.text = "#" + (i + 1) + ": " + scoreList[i];
             newScorePanel.transform.SetParent(transform);
             newScorePanel.transform.Rotate(new Vector3(0, 180, 0));
             newScorePanel.transform.localScale = Vector3.one;
@@ -48,6 +55,11 @@ public class ScoreboardBehavior : MonoBehaviour {
 
         GetComponent<RectTransform>().sizeDelta = new Vector2(-50, scoreList.Count * _scorePanelSpacing + 300f);
 
+        StartCoroutine(ScrollToTop());
+    }
+
+    public void StartScrollToTop()
+    {
         StartCoroutine(ScrollToTop());
     }
 
