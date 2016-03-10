@@ -170,6 +170,7 @@ public class PlayerPrefsManager : MonoBehaviour
             _weightedList = new List<EggData>();
             foreach(EggData e in AllEggsInGame)
             {
+				Debug.Log (e.name + " added " + e.spawnWeight + " times.");
                 for(int i = 0; i < e.spawnWeight; i++)
                 {
                     _weightedList.Add(e);
@@ -178,6 +179,7 @@ public class PlayerPrefsManager : MonoBehaviour
         }
 
         int r = Random.Range(0, _weightedList.Count);
+		Debug.Log ("r = " + r + ", spawned " + _weightedList[r].name);
         _lastEggInstantiated = _weightedList[r];
         Object egg = Resources.Load(_weightedList[r].name);
         if (egg == null) Debug.Log("egg resource is null!");
@@ -207,8 +209,8 @@ public class PlayerPrefsManager : MonoBehaviour
         {
             EggData newData = new EggData();
             newData.name = nameList[i].FirstChild.Value;
-            newData.index = int.Parse(indexList[0].FirstChild.Value);
-            newData.spawnWeight = int.Parse(spawnWeightList[0].FirstChild.Value);
+            newData.index = int.Parse(indexList[i].FirstChild.Value);
+            newData.spawnWeight = int.Parse(spawnWeightList[i].FirstChild.Value);
 
             eggList.Add(newData);
         }
