@@ -916,9 +916,9 @@ public class PlayerMotor : MonoBehaviour
         [SerializeField] private float turningSpeed;
         [SerializeField] private int currentLives;
         [SerializeField] private int playerLives;
-        [SerializeField] private float initialBuffingTime = 10.0f;
-        [SerializeField] private float buffingTime = 2.0f;
-        [SerializeField] private float buffedFactor = 0.5f;
+		[SerializeField] private float initialBuffingTime;// = 10.0f;
+		[SerializeField] private float buffingTime;// = 2.0f;
+		[SerializeField] private float buffedFactor;// = 0.5f;
 
         public float ForwardSpeed
         {
