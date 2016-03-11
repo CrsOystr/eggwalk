@@ -125,8 +125,8 @@ ModelImporter:
     - serializedVersion: 16
       name: TallEggDrop
       takeName: Take 001
-      firstFrame: 100
-      lastFrame: 147
+      firstFrame: 108
+      lastFrame: 145
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
