@@ -1,21 +1,21 @@
 <EggCollection>
   <Egg>
-    <Index>1</Index>
+    <Index>850</Index>
     <Name>Common Egg</Name>
     <SpawnWeight>30</SpawnWeight>
   </Egg>
   <Egg>
-    <Index>2</Index>
+    <Index>20</Index>
     <Name>Tiger Egg</Name>
     <SpawnWeight>30</SpawnWeight>
   </Egg>
   <Egg>
-    <Index>3</Index>
+    <Index>20</Index>
     <Name>Cow Egg</Name>
     <SpawnWeight>30</SpawnWeight>
   </Egg>
   <Egg>
-    <Index>4</Index>
+    <Index>5</Index>
     <Name>Rainbow Egg</Name>
     <SpawnWeight>5</SpawnWeight>
   </Egg>
@@ -25,17 +25,17 @@
     <SpawnWeight>5</SpawnWeight>
   </Egg>
   <Egg>
-    <Index>6</Index>
+    <Index>5</Index>
     <Name>Nuclear Egg (Yellow)</Name>
     <SpawnWeight>5</SpawnWeight>
   </Egg>
   <Egg>
-    <Index>7</Index>
+    <Index>45</Index>
     <Name>Dino Egg</Name>
     <SpawnWeight>10</SpawnWeight>
   </Egg>
   <Egg>
-    <Index>8</Index>
+    <Index>50</Index>
     <Name>Baby On Board Egg</Name>
     <SpawnWeight>5</SpawnWeight>
   </Egg>
