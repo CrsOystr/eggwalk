@@ -34,6 +34,7 @@ public class HandAnimEvent : MonoBehaviour
         }
 
         CurrentEggMaterial = materialToAssign;
+        this.egg.GetComponent<Renderer>().material.SetInt("_CrackingLevel", 0);
 
         this.GetComponent<Animator>().SetBool("EggIsFalling", true);
     }

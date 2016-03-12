@@ -12,6 +12,7 @@ public class ReturnObjective : MonoBehaviour, Objective
     [SerializeField] private List<Transform> returnLocations;
     [SerializeField] private PlayerPrefsManager playerPrefsManager;
 
+    private HashSet<int> currentlyVisited;
     private GameObject currentItem;
     private bool hasStarted;
     private bool hasCompleted;
@@ -43,12 +44,28 @@ public class ReturnObjective : MonoBehaviour, Objective
 
     public void initializeObjective()
     {
-        
+        if (currentlyVisited == null)
+        {
+            currentlyVisited = new HashSet<int>();
+        }
+
+        if (currentlyVisited.Count == returnLocations.Count)
+        {
+            currentlyVisited.RemoveWhere(x => x >= 0);
+        }
+
         int r = Random.Range(0, playerPrefsManager.AllEggsInGame.Count);
-        int rl = Random.Range(0, returnLocations.Count);
 
         GameObject item = Instantiate(playerPrefsManager.LoadRandomEgg(), this.transform.position, this.transform.rotation) as GameObject;
         this.currentItem = item;
+
+        int rl = Random.Range(0, returnLocations.Count);
+        while (currentlyVisited.Contains(rl))
+        {
+            rl = Random.Range(0, returnLocations.Count);
+        }
+
+        currentlyVisited.Add(rl);
 
         this.triggerBox.transform.position = returnLocations[rl].position;
         this.triggerBox.addTargetObject(item);

@@ -121,7 +121,6 @@ public class ExplodePickup : MonoBehaviour, Pickup {
     public void onReturnAction()
     {
         this.crackLevel = 0;
-        this.gameObject.GetComponent<Renderer>().material.SetInt("_CrackingLevel", crackLevel);
     }
 
     public void onDropAction()

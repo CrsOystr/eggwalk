@@ -1,7 +1,7 @@
 // Shader created with Shader Forge v1.26 
 // Shader Forge (c) Neat Corporation / Joachim Holmer - http://www.acegikmo.com/shaderforge/
 // Note: Manually altering this data may prevent you from opening it in Shader Forge
-/*SF_DATA;ver:1.26;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,lico:0,lgpr:1,limd:3,spmd:0,trmd:0,grmd:0,uamb:True,mssp:False,bkdf:True,hqlp:False,rprd:True,enco:False,rmgx:True,rpth:1,vtps:0,hqsc:True,nrmq:1,nrsp:1,vomd:0,spxs:False,tesm:0,olmd:1,culm:0,bsrc:0,bdst:1,dpts:2,wrdp:True,dith:0,rfrpo:True,rfrpn:Refraction,coma:15,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,stcl:False,stva:128,stmr:255,stmw:255,stcp:6,stps:0,stfa:0,stfz:0,ofsf:0,ofsu:0,f2p0:False,fnsp:False,fnfb:False;n:type:ShaderForge.SFN_Final,id:2865,x:32809,y:32713,varname:node_2865,prsc:2|diff-8041-OUT,spec-358-OUT,gloss-1813-OUT,normal-9981-OUT,amdfl-7985-OUT,amspl-4750-OUT,difocc-7099-OUT;n:type:ShaderForge.SFN_Slider,id:358,x:31982,y:32854,ptovrint:False,ptlb:Metallic,ptin:_Metallic,varname:node_358,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0,max:1;n:type:ShaderForge.SFN_Slider,id:1813,x:31979,y:32958,ptovrint:False,ptlb:Gloss,ptin:_Gloss,varname:_Metallic_copy,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0.1,max:1;n:type:ShaderForge.SFN_Tex2d,id:5903,x:30990,y:32705,ptovrint:False,ptlb:MaskLevel1,ptin:_MaskLevel1,varname:node_5903,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:eaff7b082659aa145817525c94a84586,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:3375,x:31480,y:32555,ptovrint:False,ptlb:Diffuse,ptin:_Diffuse,varname:node_3375,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:0be6e1ee1f4113343a4be842bcbe9853,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:6114,x:31224,y:33495,ptovrint:False,ptlb:NormalLevel1,ptin:_NormalLevel1,varname:node_6114,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:4bb951f4b40ca434aab8a86b32e40e98,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Tex2d,id:8667,x:31663,y:33599,ptovrint:False,ptlb:SpecularLevel1,ptin:_SpecularLevel1,varname:node_8667,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:19fa1d08a3b21ef42a5cd5d3c4e861a1,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:6319,x:30990,y:32891,ptovrint:False,ptlb:MaskLevel2,ptin:_MaskLevel2,varname:node_6319,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:aca412df43472834b87f906685f7c1ad,ntxv:0,isnm:False;n:type:ShaderForge.SFN_ValueProperty,id:646,x:30990,y:33293,ptovrint:False,ptlb:CrackingLevel,ptin:_CrackingLevel,varname:node_646,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,v1:1;n:type:ShaderForge.SFN_Tex2d,id:94,x:30990,y:33075,ptovrint:False,ptlb:MaskLevel3,ptin:_MaskLevel3,varname:node_94,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:9d40a2a4529085e4bb0cf96ce4f68133,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:8192,x:31224,y:33682,ptovrint:False,ptlb:NormalLevel2,ptin:_NormalLevel2,varname:node_8192,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:aab93ecdde22ef845857089b89deb318,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Code,id:9981,x:31774,y:33259,varname:node_9981,prsc:2,code:aQBmACAAKABWAGEAbAAgAD0APQAgADAAKQAgAHsACgAgACAAcgBlAHQAdQByAG4AIABMAGUAdgBlAGwAMAA7AAoAfQAgAGUAbABzAGUAIABpAGYAIAAoAFYAYQBsACAAPQA9ACAAMQApACAAewAKACAAIAByAGUAdAB1AHIAbgAgAEwAZQB2AGUAbAAxADsACgB9ACAAZQBsAHMAZQAgAGkAZgAgACgAVgBhAGwAIAA9AD0AIAAyACkAIAB7AAoAIAAgAHIAZQB0AHUAcgBuACAATABlAHYAZQBsADIAOwAKAH0AIABlAGwAcwBlACAAewAKACAAIAByAGUAdAB1AHIAbgAgAEwAZQB2AGUAbAAzADsACgB9AA==,output:2,fname:Function_node_4212,width:247,height:148,input:0,input:2,input:2,input:2,input:2,input_1_label:Val,input_2_label:Level0,input_3_label:Level1,input_4_label:Level2,input_5_label:Level3|A-646-OUT,B-2897-OUT,C-6114-RGB,D-8192-RGB,E-6105-RGB;n:type:ShaderForge.SFN_Tex2d,id:6105,x:31224,y:33880,ptovrint:False,ptlb:NormalLevel3,ptin:_NormalLevel3,varname:node_6105,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:4f2a2a0af56b2c94eae36c84b9aa0c07,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Tex2d,id:2567,x:31669,y:33789,ptovrint:False,ptlb:SpecularLevel2,ptin:_SpecularLevel2,varname:node_2567,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:689523670b8baf64483c2b8a8d048de0,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:8377,x:31669,y:33982,ptovrint:False,ptlb:SpecularLevel3,ptin:_SpecularLevel3,varname:node_8377,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:28264c14dbeba9c40ab3b6864e97f2c5,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Vector3,id:2897,x:31224,y:33377,varname:node_2897,prsc:2,v1:1,v2:0,v3:0;n:type:ShaderForge.SFN_Vector3,id:4858,x:31663,y:33491,varname:node_4858,prsc:2,v1:0.5176471,v2:0.5215687,v3:0.5176471;n:type:ShaderForge.SFN_Code,id:7994,x:31990,y:33458,varname:node_7994,prsc:2,code:aQBmACAAKABWAGEAbAAgAD0APQAgADAAKQAgAHsACgAgACAAcgBlAHQAdQByAG4AIABMAGUAdgBlAGwAMAA7AAoAfQAgAGUAbABzAGUAIABpAGYAIAAoAFYAYQBsACAAPQA9ACAAMQApACAAewAKACAAIAByAGUAdAB1AHIAbgAgAEwAZQB2AGUAbAAxADsACgB9ACAAZQBsAHMAZQAgAGkAZgAgACgAVgBhAGwAIAA9AD0AIAAyACkAIAB7AAoAIAAgAHIAZQB0AHUAcgBuACAATABlAHYAZQBsADIAOwAKAH0AIABlAGwAcwBlACAAewAKACAAIAByAGUAdAB1AHIAbgAgAEwAZQB2AGUAbAAzADsACgB9AA==,output:2,fname:Function_node_4213,width:247,height:148,input:0,input:2,input:2,input:2,input:2,input_1_label:Val,input_2_label:Level0,input_3_label:Level1,input_4_label:Level2,input_5_label:Level3|A-646-OUT,B-4858-OUT,C-8667-RGB,D-2567-RGB,E-8377-RGB;n:type:ShaderForge.SFN_Code,id:3528,x:31300,y:32851,varname:node_3528,prsc:2,code:aQBmACAAKABWAGEAbAAgAD0APQAgADAAKQAgAHsACgAgACAAcgBlAHQAdQByAG4AIABMAGUAdgBlAGwAMAA7AAoAfQAgAGUAbABzAGUAIABpAGYAIAAoAFYAYQBsACAAPQA9ACAAMQApACAAewAKACAAIAByAGUAdAB1AHIAbgAgAEwAZQB2AGUAbAAxADsACgB9ACAAZQBsAHMAZQAgAGkAZgAgACgAVgBhAGwAIAA9AD0AIAAyACkAIAB7AAoAIAAgAHIAZQB0AHUAcgBuACAATABlAHYAZQBsADIAOwAKAH0AIABlAGwAcwBlACAAewAKACAAIAByAGUAdAB1AHIAbgAgAEwAZQB2AGUAbAAzADsACgB9AA==,output:2,fname:Function_node_4211,width:247,height:148,input:0,input:2,input:2,input:2,input:2,input_1_label:Val,input_2_label:Level0,input_3_label:Level1,input_4_label:Level2,input_5_label:Level3|A-646-OUT,B-8414-OUT,C-5903-RGB,D-6319-RGB,E-94-RGB;n:type:ShaderForge.SFN_Vector3,id:8414,x:30990,y:32580,varname:node_8414,prsc:2,v1:0,v2:0,v3:0;n:type:ShaderForge.SFN_Multiply,id:4750,x:32348,y:33458,varname:node_4750,prsc:2|A-7994-OUT,B-5934-OUT;n:type:ShaderForge.SFN_Vector1,id:5934,x:32138,y:33630,varname:node_5934,prsc:2,v1:0.1;n:type:ShaderForge.SFN_Color,id:9923,x:32115,y:32395,ptovrint:False,ptlb:ColorOverlay,ptin:_ColorOverlay,varname:node_9923,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,c1:0,c2:0,c3:0,c4:1;n:type:ShaderForge.SFN_Multiply,id:232,x:31707,y:32847,varname:node_232,prsc:2|A-3528-OUT,B-1530-OUT;n:type:ShaderForge.SFN_Color,id:9692,x:31300,y:33076,ptovrint:False,ptlb:CrackColor,ptin:_CrackColor,varname:node_9692,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,c1:0,c2:0,c3:0,c4:1;n:type:ShaderForge.SFN_OneMinus,id:1530,x:31478,y:33076,varname:node_1530,prsc:2|IN-9692-RGB;n:type:ShaderForge.SFN_Subtract,id:8352,x:31982,y:32651,varname:node_8352,prsc:2|A-3375-RGB,B-232-OUT;n:type:ShaderForge.SFN_Add,id:8041,x:32419,y:32554,varname:node_8041,prsc:2|A-9923-RGB,B-8352-OUT;n:type:ShaderForge.SFN_Vector1,id:7099,x:32508,y:32945,varname:node_7099,prsc:2,v1:0.8;n:type:ShaderForge.SFN_AmbientLight,id:8805,x:32427,y:33053,varname:node_8805,prsc:2;n:type:ShaderForge.SFN_Divide,id:7985,x:32617,y:33053,varname:node_7985,prsc:2|A-8805-RGB,B-7962-OUT;n:type:ShaderForge.SFN_Vector1,id:7962,x:32411,y:33232,varname:node_7962,prsc:2,v1:2;proporder:3375-9923-9692-646-358-1813-5903-6319-94-6114-8192-6105-8667-2567-8377;pass:END;sub:END;*/
+/*SF_DATA;ver:1.26;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,lico:0,lgpr:1,limd:3,spmd:0,trmd:0,grmd:0,uamb:True,mssp:False,bkdf:True,hqlp:False,rprd:True,enco:False,rmgx:True,rpth:1,vtps:0,hqsc:True,nrmq:1,nrsp:1,vomd:0,spxs:False,tesm:0,olmd:1,culm:0,bsrc:0,bdst:1,dpts:2,wrdp:True,dith:0,rfrpo:True,rfrpn:Refraction,coma:15,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,stcl:False,stva:128,stmr:255,stmw:255,stcp:6,stps:0,stfa:0,stfz:0,ofsf:0,ofsu:0,f2p0:False,fnsp:False,fnfb:False;n:type:ShaderForge.SFN_Final,id:2865,x:32809,y:32713,varname:node_2865,prsc:2|diff-8041-OUT,spec-358-OUT,gloss-1813-OUT,normal-9981-OUT,amdfl-7985-OUT,difocc-7099-OUT;n:type:ShaderForge.SFN_Slider,id:358,x:31990,y:32950,ptovrint:False,ptlb:Metallic,ptin:_Metallic,varname:node_358,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0,max:1;n:type:ShaderForge.SFN_Slider,id:1813,x:31990,y:33051,ptovrint:False,ptlb:Gloss,ptin:_Gloss,varname:_Metallic_copy,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0,max:1;n:type:ShaderForge.SFN_Tex2d,id:5903,x:30990,y:32705,ptovrint:False,ptlb:MaskLevel1,ptin:_MaskLevel1,varname:node_5903,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:eaff7b082659aa145817525c94a84586,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:3375,x:31480,y:32555,ptovrint:False,ptlb:Diffuse,ptin:_Diffuse,varname:node_3375,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:f634ac332b0f74b21a45f3047e1657e4,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:6114,x:31224,y:33495,ptovrint:False,ptlb:NormalLevel1,ptin:_NormalLevel1,varname:node_6114,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:4bb951f4b40ca434aab8a86b32e40e98,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Tex2d,id:8667,x:31663,y:33599,ptovrint:False,ptlb:SpecularLevel1,ptin:_SpecularLevel1,varname:node_8667,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:19fa1d08a3b21ef42a5cd5d3c4e861a1,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:6319,x:30990,y:32891,ptovrint:False,ptlb:MaskLevel2,ptin:_MaskLevel2,varname:node_6319,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:aca412df43472834b87f906685f7c1ad,ntxv:0,isnm:False;n:type:ShaderForge.SFN_ValueProperty,id:646,x:30990,y:33293,ptovrint:False,ptlb:CrackingLevel,ptin:_CrackingLevel,varname:node_646,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,v1:1;n:type:ShaderForge.SFN_Tex2d,id:94,x:30990,y:33075,ptovrint:False,ptlb:MaskLevel3,ptin:_MaskLevel3,varname:node_94,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:9d40a2a4529085e4bb0cf96ce4f68133,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:8192,x:31224,y:33682,ptovrint:False,ptlb:NormalLevel2,ptin:_NormalLevel2,varname:node_8192,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:aab93ecdde22ef845857089b89deb318,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Code,id:9981,x:31774,y:33259,varname:node_9981,prsc:2,code:aQBmACAAKABWAGEAbAAgAD0APQAgADAAKQAgAHsACgAgACAAcgBlAHQAdQByAG4AIABMAGUAdgBlAGwAMAA7AAoAfQAgAGUAbABzAGUAIABpAGYAIAAoAFYAYQBsACAAPQA9ACAAMQApACAAewAKACAAIAByAGUAdAB1AHIAbgAgAEwAZQB2AGUAbAAxADsACgB9ACAAZQBsAHMAZQAgAGkAZgAgACgAVgBhAGwAIAA9AD0AIAAyACkAIAB7AAoAIAAgAHIAZQB0AHUAcgBuACAATABlAHYAZQBsADIAOwAKAH0AIABlAGwAcwBlACAAewAKACAAIAByAGUAdAB1AHIAbgAgAEwAZQB2AGUAbAAzADsACgB9AA==,output:2,fname:Function_node_4212,width:247,height:148,input:0,input:2,input:2,input:2,input:2,input_1_label:Val,input_2_label:Level0,input_3_label:Level1,input_4_label:Level2,input_5_label:Level3|A-646-OUT,B-2897-OUT,C-6114-RGB,D-8192-RGB,E-6105-RGB;n:type:ShaderForge.SFN_Tex2d,id:6105,x:31224,y:33880,ptovrint:False,ptlb:NormalLevel3,ptin:_NormalLevel3,varname:node_6105,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:4f2a2a0af56b2c94eae36c84b9aa0c07,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Tex2d,id:2567,x:31669,y:33789,ptovrint:False,ptlb:SpecularLevel2,ptin:_SpecularLevel2,varname:node_2567,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:689523670b8baf64483c2b8a8d048de0,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:8377,x:31669,y:33982,ptovrint:False,ptlb:SpecularLevel3,ptin:_SpecularLevel3,varname:node_8377,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:28264c14dbeba9c40ab3b6864e97f2c5,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Vector3,id:2897,x:31224,y:33377,varname:node_2897,prsc:2,v1:1,v2:0,v3:0;n:type:ShaderForge.SFN_Vector3,id:4858,x:31663,y:33491,varname:node_4858,prsc:2,v1:0.5176471,v2:0.5215687,v3:0.5176471;n:type:ShaderForge.SFN_Code,id:7994,x:31990,y:33458,varname:node_7994,prsc:2,code:aQBmACAAKABWAGEAbAAgAD0APQAgADAAKQAgAHsACgAgACAAcgBlAHQAdQByAG4AIABMAGUAdgBlAGwAMAA7AAoAfQAgAGUAbABzAGUAIABpAGYAIAAoAFYAYQBsACAAPQA9ACAAMQApACAAewAKACAAIAByAGUAdAB1AHIAbgAgAEwAZQB2AGUAbAAxADsACgB9ACAAZQBsAHMAZQAgAGkAZgAgACgAVgBhAGwAIAA9AD0AIAAyACkAIAB7AAoAIAAgAHIAZQB0AHUAcgBuACAATABlAHYAZQBsADIAOwAKAH0AIABlAGwAcwBlACAAewAKACAAIAByAGUAdAB1AHIAbgAgAEwAZQB2AGUAbAAzADsACgB9AA==,output:2,fname:Function_node_4213,width:247,height:148,input:0,input:2,input:2,input:2,input:2,input_1_label:Val,input_2_label:Level0,input_3_label:Level1,input_4_label:Level2,input_5_label:Level3|A-646-OUT,B-4858-OUT,C-8667-RGB,D-2567-RGB,E-8377-RGB;n:type:ShaderForge.SFN_Code,id:3528,x:31300,y:32851,varname:node_3528,prsc:2,code:aQBmACAAKABWAGEAbAAgAD0APQAgADAAKQAgAHsACgAgACAAcgBlAHQAdQByAG4AIABMAGUAdgBlAGwAMAA7AAoAfQAgAGUAbABzAGUAIABpAGYAIAAoAFYAYQBsACAAPQA9ACAAMQApACAAewAKACAAIAByAGUAdAB1AHIAbgAgAEwAZQB2AGUAbAAxADsACgB9ACAAZQBsAHMAZQAgAGkAZgAgACgAVgBhAGwAIAA9AD0AIAAyACkAIAB7AAoAIAAgAHIAZQB0AHUAcgBuACAATABlAHYAZQBsADIAOwAKAH0AIABlAGwAcwBlACAAewAKACAAIAByAGUAdAB1AHIAbgAgAEwAZQB2AGUAbAAzADsACgB9AA==,output:2,fname:Function_node_4211,width:247,height:148,input:0,input:2,input:2,input:2,input:2,input_1_label:Val,input_2_label:Level0,input_3_label:Level1,input_4_label:Level2,input_5_label:Level3|A-646-OUT,B-8414-OUT,C-5903-RGB,D-6319-RGB,E-94-RGB;n:type:ShaderForge.SFN_Vector3,id:8414,x:30990,y:32580,varname:node_8414,prsc:2,v1:0,v2:0,v3:0;n:type:ShaderForge.SFN_Multiply,id:4750,x:32348,y:33458,varname:node_4750,prsc:2|A-7994-OUT,B-5934-OUT;n:type:ShaderForge.SFN_Vector1,id:5934,x:32138,y:33630,varname:node_5934,prsc:2,v1:0;n:type:ShaderForge.SFN_Color,id:9923,x:32115,y:32395,ptovrint:False,ptlb:ColorOverlay,ptin:_ColorOverlay,varname:node_9923,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,c1:0,c2:0,c3:0,c4:1;n:type:ShaderForge.SFN_Color,id:9692,x:31301,y:33124,ptovrint:False,ptlb:CrackColor,ptin:_CrackColor,varname:node_9692,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,c1:0,c2:0,c3:0,c4:1;n:type:ShaderForge.SFN_Add,id:8041,x:32419,y:32554,varname:node_8041,prsc:2|A-9923-RGB,B-2570-OUT;n:type:ShaderForge.SFN_Vector1,id:7099,x:32508,y:32945,varname:node_7099,prsc:2,v1:1;n:type:ShaderForge.SFN_AmbientLight,id:8805,x:32427,y:33053,varname:node_8805,prsc:2;n:type:ShaderForge.SFN_Divide,id:7985,x:32617,y:33053,varname:node_7985,prsc:2|A-8805-RGB,B-7962-OUT;n:type:ShaderForge.SFN_Vector1,id:7962,x:32411,y:33232,varname:node_7962,prsc:2,v1:1;n:type:ShaderForge.SFN_Subtract,id:392,x:31924,y:32646,varname:node_392,prsc:2|A-3375-RGB,B-3407-OUT;n:type:ShaderForge.SFN_Add,id:2570,x:32202,y:32624,varname:node_2570,prsc:2|A-392-OUT,B-6264-OUT;n:type:ShaderForge.SFN_Vector3,id:4805,x:31433,y:32727,varname:node_4805,prsc:2,v1:1,v2:1,v3:1;n:type:ShaderForge.SFN_Multiply,id:3820,x:31681,y:32881,varname:node_3820,prsc:2|A-3528-OUT,B-9692-RGB;n:type:ShaderForge.SFN_Multiply,id:3407,x:31681,y:32709,varname:node_3407,prsc:2|A-4805-OUT,B-3528-OUT,C-1631-OUT;n:type:ShaderForge.SFN_Multiply,id:6264,x:31858,y:32860,varname:node_6264,prsc:2|A-3820-OUT,B-1631-OUT;n:type:ShaderForge.SFN_Vector1,id:1631,x:31526,y:33081,varname:node_1631,prsc:2,v1:3;proporder:3375-9923-9692-646-358-1813-5903-6319-94-6114-8192-6105-8667-2567-8377;pass:END;sub:END;*/
 
 Shader "Shader Forge/CrackedEgg" {
     Properties {
@@ -10,7 +10,7 @@ Shader "Shader Forge/CrackedEgg" {
         _CrackColor ("CrackColor", Color) = (0,0,0,1)
         _CrackingLevel ("CrackingLevel", Float ) = 1
         _Metallic ("Metallic", Range(0, 1)) = 0
-        _Gloss ("Gloss", Range(0, 1)) = 0.1
+        _Gloss ("Gloss", Range(0, 1)) = 0
         _MaskLevel1 ("MaskLevel1", 2D) = "white" {}
         _MaskLevel2 ("MaskLevel2", 2D) = "white" {}
         _MaskLevel3 ("MaskLevel3", 2D) = "white" {}
@@ -49,14 +49,13 @@ Shader "Shader Forge/CrackedEgg" {
             #pragma multi_compile DIRLIGHTMAP_OFF DIRLIGHTMAP_COMBINED DIRLIGHTMAP_SEPARATE
             #pragma multi_compile DYNAMICLIGHTMAP_OFF DYNAMICLIGHTMAP_ON
             #pragma multi_compile_fog
-            #pragma exclude_renderers gles3 metal d3d11_9x xbox360 xboxone ps3 ps4 psp2 
+            #pragma exclude_renderers metal d3d11_9x xbox360 xboxone ps3 ps4 psp2 
             #pragma target 3.0
             uniform float _Metallic;
             uniform float _Gloss;
             uniform sampler2D _MaskLevel1; uniform float4 _MaskLevel1_ST;
             uniform sampler2D _Diffuse; uniform float4 _Diffuse_ST;
             uniform sampler2D _NormalLevel1; uniform float4 _NormalLevel1_ST;
-            uniform sampler2D _SpecularLevel1; uniform float4 _SpecularLevel1_ST;
             uniform sampler2D _MaskLevel2; uniform float4 _MaskLevel2_ST;
             uniform float _CrackingLevel;
             uniform sampler2D _MaskLevel3; uniform float4 _MaskLevel3_ST;
@@ -74,20 +73,6 @@ Shader "Shader Forge/CrackedEgg" {
             }
             
             uniform sampler2D _NormalLevel3; uniform float4 _NormalLevel3_ST;
-            uniform sampler2D _SpecularLevel2; uniform float4 _SpecularLevel2_ST;
-            uniform sampler2D _SpecularLevel3; uniform float4 _SpecularLevel3_ST;
-            float3 Function_node_4213( float Val , float3 Level0 , float3 Level1 , float3 Level2 , float3 Level3 ){
-            if (Val == 0) {
-              return Level0;
-            } else if (Val == 1) {
-              return Level1;
-            } else if (Val == 2) {
-              return Level2;
-            } else {
-              return Level3;
-            }
-            }
-            
             float3 Function_node_4211( float Val , float3 Level0 , float3 Level1 , float3 Level2 , float3 Level3 ){
             if (Val == 0) {
               return Level0;
@@ -195,32 +180,31 @@ Shader "Shader Forge/CrackedEgg" {
                 ugls_en_data.reflUVW = viewReflectDirection;
                 UnityGI gi = UnityGlobalIllumination(d, 1, normalDirection, ugls_en_data );
 ////// Specular:
-                float4 _SpecularLevel1_var = tex2D(_SpecularLevel1,TRANSFORM_TEX(i.uv0, _SpecularLevel1));
-                float4 _SpecularLevel2_var = tex2D(_SpecularLevel2,TRANSFORM_TEX(i.uv0, _SpecularLevel2));
-                float4 _SpecularLevel3_var = tex2D(_SpecularLevel3,TRANSFORM_TEX(i.uv0, _SpecularLevel3));
                 float3 specularColor = float3(_Metallic,_Metallic,_Metallic);
                 float specularMonochrome = max( max(specularColor.r, specularColor.g), specularColor.b);
                 float NdotV = max(0.0,dot( normalDirection, viewDirection ));
                 half grazingTerm = saturate( gloss + specularMonochrome );
-                float3 indirectSpecular = (gi.indirect.specular + (Function_node_4213( _CrackingLevel , float3(0.5176471,0.5215687,0.5176471) , _SpecularLevel1_var.rgb , _SpecularLevel2_var.rgb , _SpecularLevel3_var.rgb )*0.1));
+                float3 indirectSpecular = (gi.indirect.specular);
                 indirectSpecular *= FresnelLerp (specularColor, grazingTerm, NdotV);
 /////// Diffuse:
                 float3 indirectDiffuse = float3(0,0,0);
-                indirectDiffuse += (UNITY_LIGHTMODEL_AMBIENT.rgb/2.0); // Diffuse Ambient Light
+                indirectDiffuse += (UNITY_LIGHTMODEL_AMBIENT.rgb/1.0); // Diffuse Ambient Light
                 indirectDiffuse += gi.indirect.diffuse;
-                indirectDiffuse *= 0.8; // Diffuse AO
+                indirectDiffuse *= 1.0; // Diffuse AO
                 float4 _Diffuse_var = tex2D(_Diffuse,TRANSFORM_TEX(i.uv0, _Diffuse));
                 float4 _MaskLevel1_var = tex2D(_MaskLevel1,TRANSFORM_TEX(i.uv0, _MaskLevel1));
                 float4 _MaskLevel2_var = tex2D(_MaskLevel2,TRANSFORM_TEX(i.uv0, _MaskLevel2));
                 float4 _MaskLevel3_var = tex2D(_MaskLevel3,TRANSFORM_TEX(i.uv0, _MaskLevel3));
-                float3 diffuseColor = (_ColorOverlay.rgb+(_Diffuse_var.rgb-(Function_node_4211( _CrackingLevel , float3(0,0,0) , _MaskLevel1_var.rgb , _MaskLevel2_var.rgb , _MaskLevel3_var.rgb )*(1.0 - _CrackColor.rgb))));
+                float3 node_3528 = Function_node_4211( _CrackingLevel , float3(0,0,0) , _MaskLevel1_var.rgb , _MaskLevel2_var.rgb , _MaskLevel3_var.rgb );
+                float node_1631 = 3.0;
+                float3 diffuseColor = (_ColorOverlay.rgb+((_Diffuse_var.rgb-(float3(1,1,1)*node_3528*node_1631))+((node_3528*_CrackColor.rgb)*node_1631)));
                 diffuseColor *= 1-specularMonochrome;
 /// Final Color:
-                outDiffuse = half4( diffuseColor, 0.8 );
+                outDiffuse = half4( diffuseColor, 1.0 );
                 outSpecSmoothness = half4( specularColor, gloss );
                 outNormal = half4( normalDirection * 0.5 + 0.5, 1 );
                 outEmission = half4(0,0,0,1);
-                outEmission.rgb += indirectSpecular;
+                outEmission.rgb += indirectSpecular * 1;
                 outEmission.rgb += indirectDiffuse * diffuseColor;
                 #ifndef UNITY_HDR_ON
                     outEmission.rgb = exp2(-outEmission.rgb);
@@ -251,14 +235,13 @@ Shader "Shader Forge/CrackedEgg" {
             #pragma multi_compile DIRLIGHTMAP_OFF DIRLIGHTMAP_COMBINED DIRLIGHTMAP_SEPARATE
             #pragma multi_compile DYNAMICLIGHTMAP_OFF DYNAMICLIGHTMAP_ON
             #pragma multi_compile_fog
-            #pragma exclude_renderers gles3 metal d3d11_9x xbox360 xboxone ps3 ps4 psp2 
+            #pragma exclude_renderers metal d3d11_9x xbox360 xboxone ps3 ps4 psp2 
             #pragma target 3.0
             uniform float _Metallic;
             uniform float _Gloss;
             uniform sampler2D _MaskLevel1; uniform float4 _MaskLevel1_ST;
             uniform sampler2D _Diffuse; uniform float4 _Diffuse_ST;
             uniform sampler2D _NormalLevel1; uniform float4 _NormalLevel1_ST;
-            uniform sampler2D _SpecularLevel1; uniform float4 _SpecularLevel1_ST;
             uniform sampler2D _MaskLevel2; uniform float4 _MaskLevel2_ST;
             uniform float _CrackingLevel;
             uniform sampler2D _MaskLevel3; uniform float4 _MaskLevel3_ST;
@@ -276,20 +259,6 @@ Shader "Shader Forge/CrackedEgg" {
             }
             
             uniform sampler2D _NormalLevel3; uniform float4 _NormalLevel3_ST;
-            uniform sampler2D _SpecularLevel2; uniform float4 _SpecularLevel2_ST;
-            uniform sampler2D _SpecularLevel3; uniform float4 _SpecularLevel3_ST;
-            float3 Function_node_4213( float Val , float3 Level0 , float3 Level1 , float3 Level2 , float3 Level3 ){
-            if (Val == 0) {
-              return Level0;
-            } else if (Val == 1) {
-              return Level1;
-            } else if (Val == 2) {
-              return Level2;
-            } else {
-              return Level3;
-            }
-            }
-            
             float3 Function_node_4211( float Val , float3 Level0 , float3 Level1 , float3 Level2 , float3 Level3 ){
             if (Val == 0) {
               return Level0;
@@ -411,9 +380,6 @@ Shader "Shader Forge/CrackedEgg" {
                 lightColor = gi.light.color;
 ////// Specular:
                 float NdotL = max(0, dot( normalDirection, lightDirection ));
-                float4 _SpecularLevel1_var = tex2D(_SpecularLevel1,TRANSFORM_TEX(i.uv0, _SpecularLevel1));
-                float4 _SpecularLevel2_var = tex2D(_SpecularLevel2,TRANSFORM_TEX(i.uv0, _SpecularLevel2));
-                float4 _SpecularLevel3_var = tex2D(_SpecularLevel3,TRANSFORM_TEX(i.uv0, _SpecularLevel3));
                 float LdotH = max(0.0,dot(lightDirection, halfDirection));
                 float3 specularColor = float3(_Metallic,_Metallic,_Metallic);
                 float specularMonochrome = max( max(specularColor.r, specularColor.g), specularColor.b);
@@ -425,7 +391,7 @@ Shader "Shader Forge/CrackedEgg" {
                 float specularPBL = max(0, (NdotL*visTerm*normTerm) * (UNITY_PI / 4) );
                 float3 directSpecular = 1 * pow(max(0,dot(halfDirection,normalDirection)),specPow)*specularPBL*lightColor*FresnelTerm(specularColor, LdotH);
                 half grazingTerm = saturate( gloss + specularMonochrome );
-                float3 indirectSpecular = (gi.indirect.specular + (Function_node_4213( _CrackingLevel , float3(0.5176471,0.5215687,0.5176471) , _SpecularLevel1_var.rgb , _SpecularLevel2_var.rgb , _SpecularLevel3_var.rgb )*0.1));
+                float3 indirectSpecular = (gi.indirect.specular);
                 indirectSpecular *= FresnelLerp (specularColor, grazingTerm, NdotV);
                 float3 specular = (directSpecular + indirectSpecular);
 /////// Diffuse:
@@ -433,14 +399,16 @@ Shader "Shader Forge/CrackedEgg" {
                 half fd90 = 0.5 + 2 * LdotH * LdotH * (1-gloss);
                 float3 directDiffuse = ((1 +(fd90 - 1)*pow((1.00001-NdotL), 5)) * (1 + (fd90 - 1)*pow((1.00001-NdotV), 5)) * NdotL) * attenColor;
                 float3 indirectDiffuse = float3(0,0,0);
-                indirectDiffuse += (UNITY_LIGHTMODEL_AMBIENT.rgb/2.0); // Diffuse Ambient Light
+                indirectDiffuse += (UNITY_LIGHTMODEL_AMBIENT.rgb/1.0); // Diffuse Ambient Light
                 indirectDiffuse += gi.indirect.diffuse;
-                indirectDiffuse *= 0.8; // Diffuse AO
+                indirectDiffuse *= 1.0; // Diffuse AO
                 float4 _Diffuse_var = tex2D(_Diffuse,TRANSFORM_TEX(i.uv0, _Diffuse));
                 float4 _MaskLevel1_var = tex2D(_MaskLevel1,TRANSFORM_TEX(i.uv0, _MaskLevel1));
                 float4 _MaskLevel2_var = tex2D(_MaskLevel2,TRANSFORM_TEX(i.uv0, _MaskLevel2));
                 float4 _MaskLevel3_var = tex2D(_MaskLevel3,TRANSFORM_TEX(i.uv0, _MaskLevel3));
-                float3 diffuseColor = (_ColorOverlay.rgb+(_Diffuse_var.rgb-(Function_node_4211( _CrackingLevel , float3(0,0,0) , _MaskLevel1_var.rgb , _MaskLevel2_var.rgb , _MaskLevel3_var.rgb )*(1.0 - _CrackColor.rgb))));
+                float3 node_3528 = Function_node_4211( _CrackingLevel , float3(0,0,0) , _MaskLevel1_var.rgb , _MaskLevel2_var.rgb , _MaskLevel3_var.rgb );
+                float node_1631 = 3.0;
+                float3 diffuseColor = (_ColorOverlay.rgb+((_Diffuse_var.rgb-(float3(1,1,1)*node_3528*node_1631))+((node_3528*_CrackColor.rgb)*node_1631)));
                 diffuseColor *= 1-specularMonochrome;
                 float3 diffuse = (directDiffuse + indirectDiffuse) * diffuseColor;
 /// Final Color:
@@ -475,7 +443,7 @@ Shader "Shader Forge/CrackedEgg" {
             #pragma multi_compile DIRLIGHTMAP_OFF DIRLIGHTMAP_COMBINED DIRLIGHTMAP_SEPARATE
             #pragma multi_compile DYNAMICLIGHTMAP_OFF DYNAMICLIGHTMAP_ON
             #pragma multi_compile_fog
-            #pragma exclude_renderers gles3 metal d3d11_9x xbox360 xboxone ps3 ps4 psp2 
+            #pragma exclude_renderers metal d3d11_9x xbox360 xboxone ps3 ps4 psp2 
             #pragma target 3.0
             uniform float _Metallic;
             uniform float _Gloss;
@@ -531,7 +499,9 @@ Shader "Shader Forge/CrackedEgg" {
                 float4 _MaskLevel1_var = tex2D(_MaskLevel1,TRANSFORM_TEX(i.uv0, _MaskLevel1));
                 float4 _MaskLevel2_var = tex2D(_MaskLevel2,TRANSFORM_TEX(i.uv0, _MaskLevel2));
                 float4 _MaskLevel3_var = tex2D(_MaskLevel3,TRANSFORM_TEX(i.uv0, _MaskLevel3));
-                float3 diffColor = (_ColorOverlay.rgb+(_Diffuse_var.rgb-(Function_node_4211( _CrackingLevel , float3(0,0,0) , _MaskLevel1_var.rgb , _MaskLevel2_var.rgb , _MaskLevel3_var.rgb )*(1.0 - _CrackColor.rgb))));
+                float3 node_3528 = Function_node_4211( _CrackingLevel , float3(0,0,0) , _MaskLevel1_var.rgb , _MaskLevel2_var.rgb , _MaskLevel3_var.rgb );
+                float node_1631 = 3.0;
+                float3 diffColor = (_ColorOverlay.rgb+((_Diffuse_var.rgb-(float3(1,1,1)*node_3528*node_1631))+((node_3528*_CrackColor.rgb)*node_1631)));
                 float3 specColor = float3(_Metallic,_Metallic,_Metallic);
                 float specularMonochrome = max(max(specColor.r, specColor.g),specColor.b);
                 diffColor *= (1.0-specularMonochrome);
