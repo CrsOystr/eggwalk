@@ -8,6 +8,11 @@ using System.Xml;
  * KEY FORMATS:
  * ------------
  * 
+ * Unlocked levels:
+ * key: "[levelname]_unlocked"
+ * value: [success]
+ * example: "CitySmall_unlocked" --> 1 (meaning the level "CitySmall" has been succesfully unlocked)
+ * 
  * Delivery Scores are stored as ints:
  * key: "[levelname]_eggsdelivered_[index]"
  * value: [number of eggs delivered]
@@ -22,12 +27,20 @@ using System.Xml;
  * key: "[index]_[eggname]"
  * value: [success]
  * example: "1_Common Egg" --> 1
+ * 
+ * Other records
+ * --------------
+ * 
+ * Total eggs delivered:
+ * key: "total_eggs_delivered"
+ * value: [total number of eggs the player has ever delivered]
  */
 
 using System.Collections.Generic;
 
 public class PlayerPrefsManager : MonoBehaviour
 {
+	private const string TOTAL_EGGS_DELIVERED_KEY = "total_eggs_delivered";
 
     public class EggData
     {
@@ -62,6 +75,25 @@ public class PlayerPrefsManager : MonoBehaviour
             return _allEggsInGame;
         }
     }
+
+	public int GetTotalEggsDelivered()
+	{
+		return PlayerPrefs.GetInt (TOTAL_EGGS_DELIVERED_KEY);
+	}
+
+	public bool IsLevelUnlocked(string levelName)
+	{
+		string key = GenerateLevelUnlockedKey (levelName);
+		int success = PlayerPrefs.GetInt (key);
+		return (success == 1) ? true : false;
+	}
+
+	public void SetLevelUnlocked(string levelName, bool isUnlocked)
+	{
+		string key = GenerateLevelUnlockedKey (levelName);
+		int value = isUnlocked ? 1 : 0;
+		PlayerPrefs.SetInt (key, value);
+	}
 
     public void addTimeScore(string levelname, float newTime)
     {
@@ -247,11 +279,20 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         string key = eggData.index + "_" + eggData.name;
         PlayerPrefs.SetInt(key, 1);
+
+		int totalEggsDelivered = PlayerPrefs.GetInt (TOTAL_EGGS_DELIVERED_KEY);
+		totalEggsDelivered++;
+		PlayerPrefs.SetInt (TOTAL_EGGS_DELIVERED_KEY, totalEggsDelivered);
     }
     
     private string GenerateEggsDeliveredScoreKey(string levelName, int index) 
     {
         return levelName + "_eggsdelivered_" + index;
     }
+
+	private string GenerateLevelUnlockedKey(string levelName)
+	{
+		return levelName + "_unlocked";
+	}
 
 }
