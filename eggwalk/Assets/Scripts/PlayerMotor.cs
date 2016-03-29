@@ -28,6 +28,7 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private GameObject playerEgg;
     [SerializeField] private Animator anim;
     [SerializeField] private float relativeItemScale;
+    [SerializeField] private Transform bodyPivot;
     [SerializeField] private Transform safePoint;
     [SerializeField] private ParticleSystem particles;
     [SerializeField] private HandAnimEvent animEvent;
@@ -35,7 +36,8 @@ public class PlayerMotor : MonoBehaviour
 
     private PlayerStats originalPlayerStats;
     private bool playerCanStart = false;
-	private bool canTurn = false;
+    private bool canTurnAnywhere;
+	private bool canTurn;
 	private bool canTurnLeft;
 	private bool canTurnRight;
     private bool canMoveRight;
@@ -84,6 +86,13 @@ public class PlayerMotor : MonoBehaviour
         if (incAnim)
         {
             this.heldItem = playerEgg;
+        }
+
+        if (this.CanPlayerTurnAnywhere)
+        {
+            canTurn = true;
+            canTurnLeft = true;
+            canTurnRight = true;
         }
 
         StartCoroutine(initialBuffer());
@@ -241,10 +250,16 @@ public class PlayerMotor : MonoBehaviour
                 float a = -1.0f * Mathf.Clamp(this.anim.GetFloat("EggBalance") + RotationAxisInput * 
                     activePlayerStats.RotationSpeed * Time.deltaTime  +  activePlayerStats.RotationDueToGravity * Time.deltaTime, -1.0f, 1.0f);
                 anim.SetFloat("EggBalance", a);
+                //playerHandParent.transform.rotation = Quaternion.AngleAxis(90.0f, bodyPivot.up);
+                //playerHandParent.transform.Rotate(bodyPivot.forward, -1.0f * a * 20.0f, Space.Self);
+                //playerHandParent.transform.Rotate(bodyPivot.up, a * 20.0f, Space.World);
+
             } else {
                 playerHandParent.transform.Rotate(Vector3.forward * RotationAxisInput * activePlayerStats.RotationSpeed * Time.deltaTime);
             }
 
+
+            //playerHandParent.transform = Quaternion.AngleAxis(this.anim.GetFloat()); //(transform.forward * Time.deltaTime * activePlayerStats.RotationSpeed * RotationAxisInput * 100.0f, Space.World);
             playerCamera.transform.Rotate(-1.0f * Vector3.forward * RotationAxisInput * activePlayerStats.CameraRotationSpeed * Time.deltaTime);
         }
     }
@@ -299,26 +314,31 @@ public class PlayerMotor : MonoBehaviour
         {
             if (canTurnRight && TurnRightPressed)
             {
-                if (!lastTurn.HasPlayerTurned)
+                isTurning = true;
+                isTurningLeft = false;
+
+                if (!this.CanPlayerTurnAnywhere)
                 {
-                    isTurning = true;
-                    isTurningLeft = false;
                     lastTurn.HasPlayerTurned = true;
-                    playerNotifier.notify(new GameEvent(null,
-                        GameEnumerations.EventCategory.Player_IsTurningRight));
                 }
+
+                playerNotifier.notify(new GameEvent(null,
+                    GameEnumerations.EventCategory.Player_IsTurningRight));
             }
 
             if (canTurnLeft && TurnLeftPressed)
             {
-                if (!lastTurn.HasPlayerTurned)
+
+                isTurning = true;
+                isTurningLeft = true;
+
+                if (!this.CanPlayerTurnAnywhere)
                 {
-                    isTurning = true;
-                    isTurningLeft = true;
                     lastTurn.HasPlayerTurned = true;
-                    playerNotifier.notify(new GameEvent(null,
-                        GameEnumerations.EventCategory.Player_IsTurningLeft));
                 }
+
+                playerNotifier.notify(new GameEvent(null,
+                    GameEnumerations.EventCategory.Player_IsTurningLeft));
             }
         }
 
@@ -417,19 +437,28 @@ public class PlayerMotor : MonoBehaviour
 
             if (turn.canTurnLeft(this.transform.forward))
             {
-                canTurnLeft = true;
+                if (!this.CanPlayerTurnAnywhere)
+                {
+                    canTurnLeft = true;
+                }
                 playerNotifier.notify(new GameEvent(null, 
                     GameEnumerations.EventCategory.Player_CanTurnLeft));
             }
 
             if (turn.canTurnRight(this.transform.forward))
             {
-                canTurnRight = true;
+                if (!this.CanPlayerTurnAnywhere)
+                {
+                    canTurnRight = true;
+                }
                 playerNotifier.notify(new GameEvent(null, 
                     GameEnumerations.EventCategory.Player_CanTurnRight));
             }
 
-            this.canTurn = true;
+            if (!this.CanPlayerTurnAnywhere)
+            {
+                this.canTurn = true;
+            }
             this.lastTurn = turn;
             col.gameObject.GetComponent<TurningVolume>().IsPlayerTurning = true;
 
@@ -486,9 +515,13 @@ public class PlayerMotor : MonoBehaviour
             col.gameObject.GetComponent<TurningVolume>().IsPlayerTurning = false;
             this.lastTurn = null;
 
-            this.canTurn = false;
-            this.canTurnRight = false;
-            this.canTurnLeft = false;
+            if (!this.CanPlayerTurnAnywhere)
+            {
+                this.canTurn = false;
+                this.canTurnRight = false;
+                this.canTurnLeft = false;
+            }
+
             return;
         }
     }
@@ -534,6 +567,13 @@ public class PlayerMotor : MonoBehaviour
         TurnLeftInput = Input.GetButtonDown("TurnLeft");
         float AltTurnRightInput = Input.GetAxis("TurnRight");
         float AltTurnLeftInput = Input.GetAxis("TurnLeft");
+
+        if (Input.GetButtonDown("Hurt"))
+        {
+            RecieveDamage(1);
+            playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, 
+                GameEnumerations.EventCategory.Player_IsHurt));
+        }
 
         if (AltTurnRightInput > 0.0f)
         {
@@ -668,7 +708,7 @@ public class PlayerMotor : MonoBehaviour
 
     public void bumpPlayer()
     {
-        float noise = UnityEngine.Random.Range(-20.0f, 20.0f);
+        float noise = UnityEngine.Random.Range(-5.0f, 5.0f);
         addRollingRotationToHand(noise);
     }
 
@@ -728,6 +768,12 @@ public class PlayerMotor : MonoBehaviour
     public int getTotalLives()
     {
         return activePlayerStats.PlayerLives;
+    }
+
+    public bool CanPlayerTurnAnywhere
+    {
+        get { return this.canTurnAnywhere; }
+        set { this.canTurnAnywhere = value; }
     }
 
     /**

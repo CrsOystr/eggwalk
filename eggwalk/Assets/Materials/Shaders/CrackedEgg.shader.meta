@@ -1,11 +1,11 @@
 fileFormatVersion: 2
 guid: 26a87db4b0a5ce7468c8a94c353e83b3
-timeCreated: 1457753953
+timeCreated: 1458969477
 licenseType: Free
 ShaderImporter:
   defaultTextures:
   - _MaskLevel1: {fileID: 2800000, guid: eaff7b082659aa145817525c94a84586, type: 3}
-  - _Diffuse: {fileID: 2800000, guid: f634ac332b0f74b21a45f3047e1657e4, type: 3}
+  - _Diffuse: {fileID: 2800000, guid: dcf0905854d7ec647a889bacb4eb9727, type: 3}
   - _NormalLevel1: {fileID: 2800000, guid: 4bb951f4b40ca434aab8a86b32e40e98, type: 3}
   - _SpecularLevel1: {fileID: 2800000, guid: 19fa1d08a3b21ef42a5cd5d3c4e861a1, type: 3}
   - _MaskLevel2: {fileID: 2800000, guid: aca412df43472834b87f906685f7c1ad, type: 3}

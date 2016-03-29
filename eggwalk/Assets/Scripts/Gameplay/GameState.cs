@@ -168,6 +168,7 @@ public class GameState : MonoBehaviour {
 
             if (p != null)
             {
+                p.GetComponent<PlayerMotor>().CanPlayerTurnAnywhere = gameMode.CanTurnAnywhere;
                 notifier.notify(new GameEvent(new List<GameObject> { p, pickup }, 
                     GameEnumerations.EventCategory.Player_StartedObjective));
             }

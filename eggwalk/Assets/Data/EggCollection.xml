@@ -17,21 +17,36 @@
   <Egg>
     <Index>4</Index>
     <Name>Rainbow Egg</Name>
-    <SpawnWeight>10</SpawnWeight>
+    <SpawnWeight>7</SpawnWeight>
   </Egg>
   <Egg>
     <Index>5</Index>
     <Name>Nuclear Egg (Green)</Name>
-    <SpawnWeight>5</SpawnWeight>
+    <SpawnWeight>3</SpawnWeight>
   </Egg>
   <Egg>
     <Index>6</Index>
     <Name>Nuclear Egg (Yellow)</Name>
-    <SpawnWeight>5</SpawnWeight>
+    <SpawnWeight>3</SpawnWeight>
   </Egg>
   <Egg>
     <Index>7</Index>
     <Name>Dino Egg</Name>
-    <SpawnWeight>5</SpawnWeight>
+    <SpawnWeight>3</SpawnWeight>
+  </Egg>
+  <Egg>
+    <Index>8</Index>
+    <Name>007 Egg</Name>
+    <SpawnWeight>3</SpawnWeight>
+  </Egg>
+  <Egg>
+    <Index>9</Index>
+    <Name>USA Egg</Name>
+    <SpawnWeight>3</SpawnWeight>
+  </Egg>
+  <Egg>
+    <Index>10</Index>
+    <Name>Canada Egg</Name>
+    <SpawnWeight>3</SpawnWeight>
   </Egg>
 </EggCollection>
