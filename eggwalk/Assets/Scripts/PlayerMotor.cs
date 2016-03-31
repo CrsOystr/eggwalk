@@ -29,6 +29,7 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private float relativeItemScale;
     [SerializeField] private Transform bodyPivot;
+    [SerializeField] private Transform backPivot;
     [SerializeField] private Transform safePoint;
     [SerializeField] private ParticleSystem particles;
     [SerializeField] private HandAnimEvent animEvent;
@@ -367,34 +368,25 @@ public class PlayerMotor : MonoBehaviour
 
         if (col.gameObject.tag.Equals("Building"))
         {
-            float d = Vector3.Dot(col.gameObject.transform.forward, transform.right);
-            if (d > 0.95f)
-            {
-
-            }
-
             if (isAlive)
             {
                 float dir = Vector3.Dot(col.gameObject.transform.forward, this.transform.forward);
                 if (dir < -0.90)
                 {
-                    if (!buffed)
-                    {
-                        isTurning = true;
+                    isTurning = true;
 
-                        Ray rightRay = new Ray(this.transform.position, this.transform.right);
-                        Ray leftRay = new Ray(this.transform.position, -1.0f * this.transform.right);
-                        RaycastHit rightHit;
-                        RaycastHit leftHit;
+                    Ray rightRay = new Ray(this.backPivot.position, this.backPivot.right);
+                    Ray leftRay = new Ray(this.backPivot.position, -1.0f * this.backPivot.right);
+                    RaycastHit rightHit;
+                    RaycastHit leftHit;
 
-                        Physics.Raycast(rightRay, out rightHit, 1 << 8);
-                        Physics.Raycast(leftRay, out leftHit, 1 << 8);
+                    Physics.Raycast(rightRay, out rightHit, 1 << 8);
+                    Physics.Raycast(leftRay, out leftHit, 1 << 8);
 
-                        isTurningLeft = (leftHit.distance > rightHit.distance);
+                    isTurningLeft = (leftHit.distance > rightHit.distance);
 
-                        playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, 
-                            GameEnumerations.EventCategory.Player_IsHurt));
-                    }
+                    playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject },
+                        GameEnumerations.EventCategory.Player_IsHurt));
                 }
             }
         }
