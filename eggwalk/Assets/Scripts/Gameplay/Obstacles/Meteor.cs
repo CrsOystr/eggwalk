@@ -6,6 +6,7 @@ public class Meteor : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private ParticleSystem impactExplosion;
     [SerializeField] private float speed;
+    [SerializeField] private GameObject impactMesh;
     private float lastStep;
     private bool hasLaunched = false;
     private bool hasExploded;
@@ -17,6 +18,11 @@ public class Meteor : MonoBehaviour
         if (target == null)
         {
             print("Assign Meteor GameObject target: " + gameObject.name);
+        }
+
+        if (impactMesh != null)
+        {
+            this.impactMesh.GetComponent<MeshRenderer>().enabled = false;
         }
     }
 
@@ -49,6 +55,11 @@ public class Meteor : MonoBehaviour
     {
         hasExploded = true;
         impactExplosion.Play();
+
+        if (impactMesh != null)
+        {
+            this.impactMesh.GetComponent<MeshRenderer>().enabled = true;
+        }
     }
 
     public bool HasExploded

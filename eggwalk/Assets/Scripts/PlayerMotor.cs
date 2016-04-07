@@ -59,6 +59,9 @@ public class PlayerMotor : MonoBehaviour
     private float turnAmount;
     private bool returnedTarget;
     private Transform originalHandTransform;
+
+    private float buttonCooldown = 0.0f;
+    private int buttonCount;
     
     void Awake()
     {
@@ -259,7 +262,6 @@ public class PlayerMotor : MonoBehaviour
                 playerHandParent.transform.Rotate(Vector3.forward * RotationAxisInput * activePlayerStats.RotationSpeed * Time.deltaTime);
             }
 
-
             //playerHandParent.transform = Quaternion.AngleAxis(this.anim.GetFloat()); //(transform.forward * Time.deltaTime * activePlayerStats.RotationSpeed * RotationAxisInput * 100.0f, Space.World);
             playerCamera.transform.Rotate(-1.0f * Vector3.forward * RotationAxisInput * activePlayerStats.CameraRotationSpeed * Time.deltaTime);
         }
@@ -287,6 +289,7 @@ public class PlayerMotor : MonoBehaviour
         {
             turnRadius += deltaAngle;
             this.transform.rotation = Quaternion.AngleAxis(projectedAngle, Vector3.up);
+            print(turnRadius);
         }
         else
         {
@@ -396,7 +399,7 @@ public class PlayerMotor : MonoBehaviour
     {
         if (other.GetComponentInParent<FireHydrant>() != null)
         {
-            GetComponent<Rigidbody>().AddForce(12000.0f * other.transform.forward);
+            GetComponent<Rigidbody>().AddForce(other.GetComponent<FireHydrant>().Force * other.transform.forward);
         }
     }
 
@@ -451,6 +454,7 @@ public class PlayerMotor : MonoBehaviour
             {
                 this.canTurn = true;
             }
+
             this.lastTurn = turn;
             col.gameObject.GetComponent<TurningVolume>().IsPlayerTurning = true;
 
@@ -559,13 +563,6 @@ public class PlayerMotor : MonoBehaviour
         TurnLeftInput = Input.GetButtonDown("TurnLeft");
         float AltTurnRightInput = Input.GetAxis("TurnRight");
         float AltTurnLeftInput = Input.GetAxis("TurnLeft");
-
-        if (Input.GetButtonDown("Hurt"))
-        {
-            RecieveDamage(1);
-            playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject }, 
-                GameEnumerations.EventCategory.Player_IsHurt));
-        }
 
         if (AltTurnRightInput > 0.0f)
         {
@@ -1050,5 +1047,13 @@ public class PlayerMotor : MonoBehaviour
         {
             get { return this.buffedFactor; }
         }
+    }
+
+    enum Direction
+    {
+        North,
+        East,
+        South,
+        West
     }
 }
