@@ -23,6 +23,7 @@ public class UnlockLevelsManager : MonoBehaviour {
 				buttonText.text = "Locked!";
 			}
 		}
+        print(totalEggsDelivered);
 	}
 
 	[System.Serializable]

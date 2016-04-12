@@ -49,4 +49,64 @@
     <Name>Canada Egg</Name>
     <SpawnWeight>3</SpawnWeight>
   </Egg>
+  <Egg>
+    <Index>11</Index>
+    <Name>Dreggula Egg</Name>
+    <SpawnWeight>1</SpawnWeight>
+  </Egg>
+  <Egg>
+    <Index>12</Index>
+    <Name>EAE Egg</Name>
+    <SpawnWeight>1</SpawnWeight>
+  </Egg>
+  <Egg>
+    <Index>13</Index>
+    <Name>Faberge Egg (Blue)</Name>
+    <SpawnWeight>1</SpawnWeight>
+  </Egg>
+  <Egg>
+    <Index>14</Index>
+    <Name>Faberge Egg (Green)</Name>
+    <SpawnWeight>1</SpawnWeight>
+  </Egg>
+  <Egg>
+    <Index>15</Index>
+    <Name>Faberge Egg (Red)</Name>
+    <SpawnWeight>1</SpawnWeight>
+  </Egg>
+  <Egg>
+    <Index>16</Index>
+    <Name>Fire Egg</Name>
+    <SpawnWeight>1</SpawnWeight>
+  </Egg>
+  <Egg>
+    <Index>17</Index>
+    <Name>Grass Egg</Name>
+    <SpawnWeight>1</SpawnWeight>
+  </Egg>
+  <Egg>
+    <Index>18</Index>
+    <Name>Jailed Chick Egg</Name>
+    <SpawnWeight>1</SpawnWeight>
+  </Egg>
+  <Egg>
+    <Index>19</Index>
+    <Name>Monster Egg (Blue)</Name>
+    <SpawnWeight>1</SpawnWeight>
+  </Egg>
+  <Egg>
+    <Index>20</Index>
+    <Name>Monster Egg (Green)</Name>
+    <SpawnWeight>1</SpawnWeight>
+  </Egg>
+  <Egg>
+    <Index>21</Index>
+    <Name>Pirate Egg</Name>
+    <SpawnWeight>1</SpawnWeight>
+  </Egg>
+  <Egg>
+    <Index>22</Index>
+    <Name>Roger Egg</Name>
+    <SpawnWeight>1</SpawnWeight>
+  </Egg>
 </EggCollection>

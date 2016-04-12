@@ -289,7 +289,6 @@ public class PlayerMotor : MonoBehaviour
         {
             turnRadius += deltaAngle;
             this.transform.rotation = Quaternion.AngleAxis(projectedAngle, Vector3.up);
-            print(turnRadius);
         }
         else
         {

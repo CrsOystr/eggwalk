@@ -164,7 +164,6 @@ public class PlayerPrefsManager : MonoBehaviour
             if(PlayerPrefs.HasKey(key)) 
             {
                 score = PlayerPrefs.GetInt(key);
-                Debug.Log("key: " + key + ", value: " + score);
             }
             else
             {
@@ -256,12 +255,8 @@ public class PlayerPrefsManager : MonoBehaviour
             if (PlayerPrefs.HasKey(key))
             {
                 int intBool = PlayerPrefs.GetInt(key);
-                if (intBool == 1) hasBeenDelivered = true;
+                if (intBool >= 1) hasBeenDelivered = true;
                 else if (intBool == 0) hasBeenDelivered = false;
-                else
-                {
-                    Debug.LogError("Error parsing egg data: 'hasBeenSuccesfullyDelivered' not stored as 1 or 0");
-                }
             }
             else
             {
@@ -277,8 +272,11 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public void RecordSuccessfulDelivery(EggData eggData)
     {
-        string key = eggData.index + "_" + eggData.name;
-        PlayerPrefs.SetInt(key, 1);
+        print("succesfully delivered " + eggData.name);
+
+        string key = GenerateEggDataKey(eggData.index, eggData.name);
+        int timesDeliveredSoFar = PlayerPrefs.HasKey(key) ? PlayerPrefs.GetInt(key) : 0;
+        PlayerPrefs.SetInt(key, timesDeliveredSoFar + 1);
 
 		int totalEggsDelivered = PlayerPrefs.GetInt (TOTAL_EGGS_DELIVERED_KEY);
 		totalEggsDelivered++;
@@ -294,5 +292,10 @@ public class PlayerPrefsManager : MonoBehaviour
 	{
 		return levelName + "_unlocked";
 	}
+
+    private string GenerateEggDataKey(int index, string eggName)
+    {
+        return index + "_" + eggName;
+    }
 
 }
