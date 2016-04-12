@@ -190,8 +190,6 @@ public class PlayerPrefsManager : MonoBehaviour
 		{
 			string key = GenerateEggsDeliveredScoreKey (levelName, NUM_SCORESTORECORD - i);
 			PlayerPrefs.SetInt (key, scoreList[i]);
-
-			Debug.Log("Recorded score [" + key + "]: " + scoreList[i]);
 		}
     }
 
@@ -202,7 +200,6 @@ public class PlayerPrefsManager : MonoBehaviour
             _weightedList = new List<EggData>();
             foreach(EggData e in AllEggsInGame)
             {
-				Debug.Log (e.name + " added " + e.spawnWeight + " times.");
                 for(int i = 0; i < e.spawnWeight; i++)
                 {
                     _weightedList.Add(e);
@@ -211,7 +208,6 @@ public class PlayerPrefsManager : MonoBehaviour
         }
 
         int r = Random.Range(0, _weightedList.Count);
-		Debug.Log ("r = " + r + ", spawned " + _weightedList[r].name);
         _lastEggInstantiated = _weightedList[r];
         Object egg = Resources.Load(_weightedList[r].name);
         if (egg == null) Debug.Log("egg resource is null!");
@@ -272,8 +268,6 @@ public class PlayerPrefsManager : MonoBehaviour
 
     public void RecordSuccessfulDelivery(EggData eggData)
     {
-        print("succesfully delivered " + eggData.name);
-
         string key = GenerateEggDataKey(eggData.index, eggData.name);
         int timesDeliveredSoFar = PlayerPrefs.HasKey(key) ? PlayerPrefs.GetInt(key) : 0;
         PlayerPrefs.SetInt(key, timesDeliveredSoFar + 1);
