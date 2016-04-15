@@ -29,9 +29,9 @@ public class SoundObserver : MonoBehaviour, Observer {
 				SoundSys.playCompletedObjectiveAudio();
 				break;
 			}
-			case GameEnumerations.EventCategory.Player_StartedObjective:
+			case GameEnumerations.EventCategory.Gameplay_StartLevel:
 			{
-				SoundSys.playMissionMusicAudio();
+				StartCoroutine(SoundSys.playMissionMusicAudio());
 				break;
 			}
 		}

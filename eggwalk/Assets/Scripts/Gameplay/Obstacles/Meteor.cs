@@ -7,6 +7,9 @@ public class Meteor : MonoBehaviour
     [SerializeField] private ParticleSystem impactExplosion;
     [SerializeField] private float speed;
     [SerializeField] private GameObject impactMesh;
+	[SerializeField] private AudioSource ApproachingSound;
+	[SerializeField] private AudioSource ImpactSound;
+
     private float lastStep;
     private bool hasLaunched = false;
     private bool hasExploded;
@@ -49,12 +52,15 @@ public class Meteor : MonoBehaviour
     public void Launch()
     {
         hasLaunched = true;
+		ApproachingSound.Play ();
+
     } 
 
     private void Explode()
     {
         hasExploded = true;
         impactExplosion.Play();
+		ImpactSound.Play ();
 
         if (impactMesh != null)
         {

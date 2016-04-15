@@ -11,6 +11,8 @@ public class SoundSystem : MonoBehaviour {
 	 */
 
 	[SerializeField] private AudioSource missionMusic;
+	[SerializeField] private AudioSource missionMusicLoop;
+	[SerializeField] private AudioSource missionMusicEnd;
 	[SerializeField] private AudioSource deathSound;
 	[SerializeField] private AudioSource ambientNatureSounds;
 	[SerializeField] private AudioSource completedObjectiveAudio;
@@ -88,11 +90,33 @@ public class SoundSystem : MonoBehaviour {
 		deathSound.Play ();
 	}
 
-	public void playMissionMusicAudio()
+	public IEnumerator playMissionMusicAudio()
 	{
-		if (!missionMusic.isPlaying) {
-			missionMusic.Play ();
-			ambientNatureSounds.volume = 0.63f;
+		//bool go = true;
+
+		missionMusic.Play ();
+		yield return new WaitForSeconds (missionMusic.clip.length); //return new WaitForSeconds(missionMusic.length);
+		missionMusicLoop.Play ();
+
+		/*
+		if (!dead) {
+			missionMusicLoop.Play ();
+			yield return new WaitForSeconds (missionMusicLoop.clip.length);
 		}
+		else {
+			missionMusicEnd.Play ();
+			go = false;
+		}
+
+		while (go) {
+			if (!dead) {
+				missionMusicLoop.Play ();
+				yield return new WaitForSeconds (missionMusicLoop.clip.length);
+			}
+			else {
+				missionMusicEnd.Play ();
+				go = false;
+			}
+		}*/
 	}
 }

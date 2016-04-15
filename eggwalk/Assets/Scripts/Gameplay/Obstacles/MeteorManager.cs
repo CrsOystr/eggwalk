@@ -9,6 +9,17 @@ public class MeteorManager : MonoBehaviour, Observer
     public List<int> scoreRequired;
     private int currentMeteor = 0;
 
+	void Start()
+	{
+		for (int i = 0; i < scoreRequired.Count; i++)
+		{
+			if (gameState.Score == scoreRequired[i])
+			{
+				LaunchMeteor();
+			}
+		}
+	}
+
     public void onNotify(GameEvent e)
     {
         GameEnumerations.EventCategory category = e.Category;
@@ -34,7 +45,7 @@ public class MeteorManager : MonoBehaviour, Observer
     {
         if (currentMeteor < meteors.Count)
         {
-            meteors[currentMeteor].Launch();
+			meteors [currentMeteor].Launch ();
             currentMeteor++;
         }
     }
