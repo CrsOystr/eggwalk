@@ -66,8 +66,9 @@ public class CodexManager : MonoBehaviour {
 
     private IEnumerator ScrollToTop()
     {
-        yield return null;
-
-        _scrollRect.verticalScrollbar.value = 1f;
+        Time.timeScale = 0;
+        yield return new WaitForSeconds(1.0f);
+        print("hey");
+        _scrollRect.normalizedPosition = new Vector2(0, 1);
     }
 }

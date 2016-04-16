@@ -22,7 +22,6 @@ public class ScoreboardBehavior : MonoBehaviour {
 
     private IEnumerator DelayedLoadScoresForLevel(string levelName)
     {
-        yield return new WaitForSeconds(0.5f);
 
         if (_hintPanel.gameObject.activeInHierarchy) _hintPanel.SetActive(false);
 
@@ -54,6 +53,8 @@ public class ScoreboardBehavior : MonoBehaviour {
         }
 
         GetComponent<RectTransform>().sizeDelta = new Vector2(-50, scoreList.Count * _scorePanelSpacing + 300f);
+        
+        yield return new WaitForSeconds(0.5f);
 
         StartCoroutine(ScrollToTop());
     }
