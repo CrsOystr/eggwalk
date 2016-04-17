@@ -58,8 +58,13 @@ public class GameplayObserver : MonoBehaviour, Observer
                             pickup.onHurtAction();
                         }
                     }
-                    player.bumpPlayer();
-                    player.RecieveDamage(1);
+
+                    if (!player.Buffed)
+                    {
+                        player.bumpPlayer();
+                        player.RecieveDamage(1);
+                    }
+
                     break;
                 }
             case GameEnumerations.EventCategory.Player_IsDead:

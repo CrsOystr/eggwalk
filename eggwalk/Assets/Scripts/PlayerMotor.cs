@@ -313,7 +313,7 @@ public class PlayerMotor : MonoBehaviour
      */
     private void handleTurning(bool TurnRightPressed, bool TurnLeftPressed)
     {
-        if (canTurn)
+        /*if (canTurn)
         {
             if (canTurnRight && TurnRightPressed)
             {
@@ -343,7 +343,7 @@ public class PlayerMotor : MonoBehaviour
                 playerNotifier.notify(new GameEvent(null,
                     GameEnumerations.EventCategory.Player_IsTurningLeft));
             }
-        }
+        }*/
 
         if (isTurning)
         {
@@ -373,10 +373,14 @@ public class PlayerMotor : MonoBehaviour
             if (isAlive)
             {
                 float dir = Vector3.Dot(col.gameObject.transform.forward, this.transform.forward);
-                if (dir < -0.90)
-                {
-                    isTurning = true;
+                float incoming1 = Vector3.Dot(this.transform.forward, col.gameObject.transform.right);
+                float incoming2 = Vector3.Dot(this.transform.right, col.gameObject.transform.forward);
 
+                bool incomingFromRight = (incoming1 < -0.95f) && (incoming2 > 0.95f);
+                bool incomingFromLeft = (incoming1 > 0.95f) && (incoming2 < -0.95f);
+
+                if (dir < -0.90 || incomingFromLeft || incomingFromRight)
+                {
                     Ray rightRay = new Ray(this.backPivot.position, this.backPivot.right);
                     Ray leftRay = new Ray(this.backPivot.position, -1.0f * this.backPivot.right);
                     RaycastHit rightHit;
@@ -385,6 +389,14 @@ public class PlayerMotor : MonoBehaviour
                     Physics.Raycast(rightRay, out rightHit, 1 << 8);
                     Physics.Raycast(leftRay, out leftHit, 1 << 8);
 
+                    if (rightHit.transform.gameObject == col.gameObject ||
+                        leftHit.transform.gameObject == col.gameObject)
+                    {
+                        print("Returned");
+                        return;
+                    }
+
+                    isTurning = true;
                     isTurningLeft = (leftHit.distance > rightHit.distance);
 
                     playerNotifier.notify(new GameEvent(new List<GameObject> { this.gameObject },
@@ -398,7 +410,7 @@ public class PlayerMotor : MonoBehaviour
     {
         if (other.GetComponentInParent<FireHydrant>() != null)
         {
-            GetComponent<Rigidbody>().AddForce(other.GetComponent<FireHydrant>().Force * other.transform.forward);
+            this.GetComponent<Rigidbody>().AddForce(other.GetComponentInParent<FireHydrant>().Force * other.transform.forward);
         }
     }
 
@@ -692,6 +704,11 @@ public class PlayerMotor : MonoBehaviour
         yield return new WaitForSeconds(activePlayerStats.BuffingTime);
         this.buffed = false;
         this.buffedSpeed = false;
+    }
+
+    public bool Buffed
+    {
+        get { return this.buffed; }
     }
 
     public void bumpPlayer()

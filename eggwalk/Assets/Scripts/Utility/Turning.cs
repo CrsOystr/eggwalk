@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
-public class Testing : MonoBehaviour {
+public class Turning : MonoBehaviour {
 
     public float speed;
     private float currentTurn;
     private bool turnRight;
     private bool isTurning;
-	
-	// Update is called once per frame
-	void Update ()
+    private bool lastInputWasRight;
+    private bool lastInputWasLeft;
+    private bool reverse;
+    private float trajectory = 90.0f;
+    private Stack<int> stack = new Stack<int>();
+
+    // Update is called once per frame
+    void Update ()
     {
         bool turnRightInput = Input.GetButtonDown("TurnRight");
         bool turnLeftInput = Input.GetButtonDown("TurnLeft");
@@ -18,10 +23,16 @@ public class Testing : MonoBehaviour {
         {
             turnRight = true;
             isTurning = true;
+            lastInputWasRight = true;
 
-            if (Mathf.Abs(currentTurn) > 0.0f)
+            if (stack.Count == 0)
             {
-                currentTurn = 90.0f - Mathf.Abs(currentTurn);
+                stack.Push(2);
+            }
+
+            if (stack.Peek() != 2 && Mathf.Abs(currentTurn) > 0.0f)
+            {
+                reverse = true;
             }
         }
 
@@ -29,12 +40,27 @@ public class Testing : MonoBehaviour {
         {
             turnRight = false;
             isTurning = true;
+            lastInputWasLeft = true;
 
-            if (Mathf.Abs(currentTurn) > 0.0f)
+            if (stack.Count == 0)
             {
-                currentTurn = 90.0f - Mathf.Abs(currentTurn);
+                stack.Push(1);
+            }
+
+            if (stack.Peek() != 1 && Mathf.Abs(currentTurn) > 0.0f)
+            {
+                reverse = true;
             }
         }
+
+        if (reverse)
+        {
+            currentTurn = 90.0f - Mathf.Abs(currentTurn);
+            reverse = false;
+        }
+
+        lastInputWasRight = false;
+        lastInputWasLeft = false;
 
         if (isTurning)
         {
@@ -50,7 +76,6 @@ public class Testing : MonoBehaviour {
         if (Mathf.Abs(currentTurn) + Mathf.Abs(deltaTurn) < 90.0f)
         {
             currentTurn += Mathf.Abs(deltaTurn);
-            print(currentTurn);
             this.transform.Rotate(this.transform.up, deltaTurn);
         } else
         {
@@ -61,6 +86,7 @@ public class Testing : MonoBehaviour {
             this.transform.Rotate(this.transform.up, Mathf.Sign(deltaTurn) * Mathf.Min(compRight, compLeft));
             isTurning = false;
             currentTurn = 0.0f;
+            stack = new Stack<int>();
         }
     }
 }
