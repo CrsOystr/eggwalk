@@ -40,6 +40,11 @@ public class GameState : MonoBehaviour {
 
     void Update()
     {
+        if (Input.GetButtonDown("Restart"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
         if (this.hasStartedLevel && !this.isGameOver)
         {
             this.timeInLevel += Time.deltaTime;

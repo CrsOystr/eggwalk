@@ -124,6 +124,11 @@ public class UISystem : MonoBehaviour
                                              "Lives " + 0 + "/" + maxLives;
     }
 
+    public void restartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     public void returnButtonAction(string level)
     {
         SceneManager.LoadScene(level);

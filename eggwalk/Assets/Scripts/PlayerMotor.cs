@@ -34,6 +34,7 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private ParticleSystem particles;
     [SerializeField] private HandAnimEvent animEvent;
     [SerializeField] private bool incAnim;
+    [SerializeField] private Turning turningModule;
 
     private PlayerStats originalPlayerStats;
     private bool playerCanStart = false;
@@ -313,11 +314,10 @@ public class PlayerMotor : MonoBehaviour
      */
     private void handleTurning(bool TurnRightPressed, bool TurnLeftPressed)
     {
-        /*if (canTurn)
+        if (canTurn)
         {
             if (canTurnRight && TurnRightPressed)
             {
-                isTurning = true;
                 isTurningLeft = false;
 
                 if (!this.CanPlayerTurnAnywhere)
@@ -331,8 +331,6 @@ public class PlayerMotor : MonoBehaviour
 
             if (canTurnLeft && TurnLeftPressed)
             {
-
-                isTurning = true;
                 isTurningLeft = true;
 
                 if (!this.CanPlayerTurnAnywhere)
@@ -343,7 +341,7 @@ public class PlayerMotor : MonoBehaviour
                 playerNotifier.notify(new GameEvent(null,
                     GameEnumerations.EventCategory.Player_IsTurningLeft));
             }
-        }*/
+        }
 
         if (isTurning)
         {
@@ -376,10 +374,7 @@ public class PlayerMotor : MonoBehaviour
                 float incoming1 = Vector3.Dot(this.transform.forward, col.gameObject.transform.right);
                 float incoming2 = Vector3.Dot(this.transform.right, col.gameObject.transform.forward);
 
-                bool incomingFromRight = (incoming1 < -0.95f) && (incoming2 > 0.95f);
-                bool incomingFromLeft = (incoming1 > 0.95f) && (incoming2 < -0.95f);
-
-                if (dir < -0.90 || incomingFromLeft || incomingFromRight)
+                if (dir < -0.90)
                 {
                     Ray rightRay = new Ray(this.backPivot.position, this.backPivot.right);
                     Ray leftRay = new Ray(this.backPivot.position, -1.0f * this.backPivot.right);
@@ -388,13 +383,6 @@ public class PlayerMotor : MonoBehaviour
 
                     Physics.Raycast(rightRay, out rightHit, 1 << 8);
                     Physics.Raycast(leftRay, out leftHit, 1 << 8);
-
-                    if (rightHit.transform.gameObject == col.gameObject ||
-                        leftHit.transform.gameObject == col.gameObject)
-                    {
-                        print("Returned");
-                        return;
-                    }
 
                     isTurning = true;
                     isTurningLeft = (leftHit.distance > rightHit.distance);
@@ -543,9 +531,6 @@ public class PlayerMotor : MonoBehaviour
         if (particles != null)
         {
             particles.Play();
-        } else
-        {
-            print("Particles in Player Prefab has not been set");
         }
     }
 
@@ -713,7 +698,7 @@ public class PlayerMotor : MonoBehaviour
 
     public void bumpPlayer()
     {
-        float noise = UnityEngine.Random.Range(-5.0f, 5.0f);
+        float noise = Mathf.Sign(getRollingRotation) * -1.0f * 0.05f;
         addRollingRotationToHand(noise);
     }
 
@@ -733,6 +718,7 @@ public class PlayerMotor : MonoBehaviour
     {
         this.arrow.setActive(false);
         this.GetComponent<Rigidbody>().freezeRotation = false;
+        this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         this.GetComponent<Rigidbody>().AddForce(Vector3.right * 500.0f);
 
         if (this.getItemInHand() != null)

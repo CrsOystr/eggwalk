@@ -21,6 +21,7 @@ public class UnlockLevelsManager : MonoBehaviour {
 			} else {
 				button.enabled = false;
 				buttonText.text = "Locked!";
+                //print("Locked" + );
 			}
 		}
         print(totalEggsDelivered);

@@ -1,16 +1,16 @@
-#if (UNITY_4 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_4 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5)
 	#define UNITY_4_AND_GREATER
 #endif
 
-#if (UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5)
 	#define UNITY_4_1_AND_GREATER
 #endif
 
-#if (UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5)
 	#define UNITY_4_2_AND_GREATER
 #endif
 
-#if (UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5)
 	#define UNITY_4_3_AND_GREATER
 #endif
 
@@ -247,6 +247,43 @@ public static class Util
 
 
 
+
+	public static string GetBuildSizePathDescription(BuildInfo buildReport)
+	{
+		BuildReportTool.BuildPlatform buildPlatform = BuildReportTool.ReportGenerator.GetBuildPlatformFromString(buildReport.BuildType, buildReport.BuildTargetUsed);
+		
+		if (buildPlatform == BuildPlatform.Windows32 ||
+			buildPlatform == BuildPlatform.Windows64 ||
+			buildPlatform == BuildPlatform.Linux32 ||
+			buildPlatform == BuildPlatform.Linux64)
+		{
+			// in windows builds, `buildFilePath` is the executable file
+			// we additionaly need to get the size of the Data folder
+
+			// in 32 bit builds, `buildFilePath` is the executable file (.x86 file). we still need the Data folder
+			// in 64 bit builds, `buildFilePath` is the executable file (.x86_64 file). we still need the Data folder
+
+			var exeFile = Path.GetFileName(buildReport.BuildFilePath);
+			var dataFolder = BuildReportTool.Util.ReplaceFileType(exeFile, "_Data");
+			var buildParentFolder = Path.GetDirectoryName(buildReport.BuildFilePath);
+
+			return string.Format("File size of {0} and the {1} folder in <b>{2}</b>", exeFile, dataFolder, buildParentFolder);
+		}
+
+		if (buildPlatform == BuildPlatform.LinuxUniversal)
+		{
+			// in universal builds, `buildFilePath` is the 32-bit executable. we still need the 64-bit executable and the Data folder
+			
+			var exe32File = Path.GetFileName(buildReport.BuildFilePath);
+			var exe64File = BuildReportTool.Util.ReplaceFileType(exe32File, ".x86_64");
+			var dataFolder = BuildReportTool.Util.ReplaceFileType(exe32File, "_Data");
+			var buildParentFolder = Path.GetDirectoryName(buildReport.BuildFilePath);
+
+			return string.Format("File size of {0}, {1}, and the {2} folder in <b>{3}</b>", exe32File, exe64File, dataFolder, buildParentFolder);
+		}
+
+		return string.Format("File size of <b>{0}</b>", buildReport.BuildFilePath);
+	}
 
 
 

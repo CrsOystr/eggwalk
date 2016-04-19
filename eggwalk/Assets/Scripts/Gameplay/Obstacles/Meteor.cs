@@ -19,10 +19,7 @@ public class Meteor : MonoBehaviour
     {
         hasExploded = false;
 
-        if (targetTransform == null)
-        {
-            print("Assign Meteor GameObject target: " + gameObject.name);
-        } else
+        if (targetTransform != null)
         {
             target = targetTransform.position;
         }
@@ -70,6 +67,14 @@ public class Meteor : MonoBehaviour
         if (impactMesh != null)
         {
             this.impactMesh.GetComponent<MeshRenderer>().enabled = true;
+        }
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.collider.gameObject.GetComponent<VehicleBehavior>() != null)
+        {
+            Physics.IgnoreCollision(GetComponent<Collider>(), col.gameObject.GetComponent<Collider>());
         }
     }
 

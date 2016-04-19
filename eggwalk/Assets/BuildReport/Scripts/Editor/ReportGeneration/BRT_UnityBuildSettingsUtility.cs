@@ -1,12 +1,22 @@
 #if UNITY_5 && (!UNITY_5_0 && !UNITY_5_1)
 #define UNITY_5_2_AND_GREATER
 #endif
+
 #if UNITY_5 && (!UNITY_5_0 && !UNITY_5_1 && !UNITY_5_2)
 #define UNITY_5_3_AND_GREATER
 #endif
 
+#if UNITY_4 || UNITY_5_0 || UNITY_5_1
+#define UNITY_5_1_AND_LESSER
+#endif
+
+#if UNITY_4 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3
+#define UNITY_5_3_AND_LESSER
+#endif
+
 using System.Collections.Generic;
 using System.Linq;
+using DldUtil;
 using UnityEditor;
 using UnityEngine;
 
@@ -224,7 +234,10 @@ public static class UnityBuildSettingsUtility
 
 		settings.ConnectProfiler = EditorUserBuildSettings.connectProfiler;
 		
-#if UNITY_5_2_AND_GREATER
+#if UNITY_5_3_AND_GREATER
+		// this setting actually started appearing in Unity 5.2.2 (it is not present in 5.2.1)
+		// but our script compilation defines can't detect the patch number in the version,
+		// so we have no choice but to restrict this to 5.3
 		settings.ForceOptimizeScriptCompilation = EditorUserBuildSettings.forceOptimizeScriptCompilation;
 #endif
 
@@ -318,7 +331,7 @@ public static class UnityBuildSettingsUtility
 		}
 		settings.AspectRatiosAllowed = aspectRatiosList.ToArray();
 
-#if UNITY_5_3_AND_GREATER
+#if UNITY_5_2_AND_GREATER
 		settings.GraphicsAPIsUsed = PlayerSettings.GetGraphicsAPIs(EditorUserBuildSettings.activeBuildTarget).Select(type => type.ToString()).ToArray();
 #endif
 
@@ -353,6 +366,20 @@ public static class UnityBuildSettingsUtility
 #endif
 	}
 
+	public static string GetReadableWebGLOptimizationLevel(string optimizationLevelCode)
+	{
+		switch(optimizationLevelCode)
+		{
+			case "1":
+				return "1: Slow (fast builds)";
+			case "2":
+				return "2: Fast";
+			case "3":
+				return "3: Fastest (very slow builds)";
+		}
+
+		return optimizationLevelCode;
+	}
 
 
 	public static void PopulateStandaloneSettings(UnityBuildSettings settings)
@@ -378,7 +405,7 @@ public static class UnityBuildSettingsUtility
 
 		// windows only build settings
 		// ---------------------------------------------------------------
-#if !UNITY_5_3
+#if UNITY_5_1_AND_LESSER
 		settings.WinUseDirect3D11IfAvailable = PlayerSettings.useDirect3D11;
 #endif
 		settings.WinDirect3D9FullscreenModeUsed = PlayerSettings.d3d9FullscreenMode.ToString();
@@ -473,11 +500,11 @@ public static class UnityBuildSettingsUtility
 #if UNITY_5
 		settings.iOSLogObjCUncaughtExceptions = PlayerSettings.logObjCUncaughtExceptions;
 #endif
-
-#if UNITY_5_3
-		settings.iOSTargetGraphics = string.Join(",", PlayerSettings.GetGraphicsAPIs(BuildTarget.iOS).Select(type => type.ToString()).ToArray());
-#else
+		
+#if UNITY_5_1_AND_LESSER
 		settings.iOSTargetGraphics = PlayerSettings.targetIOSGraphics.ToString();
+#else
+		settings.iOSTargetGraphics = string.Join(",", PlayerSettings.GetGraphicsAPIs(BuildTarget.iOS).Select(type => type.ToString()).ToArray());
 #endif
 
 		// Android only build settings
@@ -522,7 +549,7 @@ public static class UnityBuildSettingsUtility
 		settings.AndroidKeystoreName = PlayerSettings.Android.keystoreName;
 		
 
-
+#if UNITY_5_3_AND_LESSER // blackberry build option no longer in Unity 5.4
 		// BlackBerry only build settings
 		// ---------------------------------------------------------------
 
@@ -545,6 +572,7 @@ public static class UnityBuildSettingsUtility
 		settings.BlackBerryHasGpsPermissions = PlayerSettings.BlackBerry.HasGPSPermissions();
 		settings.BlackBerryHasIdPermissions = PlayerSettings.BlackBerry.HasIdentificationPermissions();
 		settings.BlackBerryHasSharedPermissions = PlayerSettings.BlackBerry.HasSharedPermissions();
+#endif
 	}
 
 

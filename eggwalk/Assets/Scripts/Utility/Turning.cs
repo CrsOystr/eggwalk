@@ -82,7 +82,6 @@ public class Turning : MonoBehaviour {
             float compRight = 90.0f - (this.transform.eulerAngles.y % 90);
             float compLeft = this.transform.eulerAngles.y % 90;
 
-            print("Comp Right: " + compRight + "Comp Left: " + compLeft + " Sign: " + Mathf.Sign(deltaTurn));
             this.transform.Rotate(this.transform.up, Mathf.Sign(deltaTurn) * Mathf.Min(compRight, compLeft));
             isTurning = false;
             currentTurn = 0.0f;
