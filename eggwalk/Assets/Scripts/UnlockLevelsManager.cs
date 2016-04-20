@@ -17,10 +17,15 @@ public class UnlockLevelsManager : MonoBehaviour {
 			Text buttonText = _levelButtons [i].GetComponentInChildren<Text> ();
 			if (_levelButtons [i].LevelName == _unlockLevelData [i].levelName && totalEggsDelivered >= _unlockLevelData [i].eggsToUnlock) {
 				button.enabled = true;
+				button.interactable = true;
+				buttonText.fontSize = 48;
 				buttonText.text = (i + 1).ToString();
 			} else {
-				button.enabled = false;
-				buttonText.text = "Locked!";
+				//button.enabled = false;
+				button.interactable = false;
+				buttonText.fontSize = 24;
+				buttonText.text = (_unlockLevelData [i].eggsToUnlock - totalEggsDelivered) + " eggs to go!";
+				//buttonText.text = "Locked!";
                 //print("Locked" + );
 			}
 		}
