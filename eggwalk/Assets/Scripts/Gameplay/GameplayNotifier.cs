@@ -15,7 +15,10 @@ public class GameplayNotifier : MonoBehaviour, Subject {
 
 	public void notify(GameEvent e) {
 		for (int i = 0; i < S_GameObjectObservers.Count; i++) {
-			S_GameObjectObservers[i].GetComponent<Observer>().onNotify(e);
+            if (S_GameObjectObservers[i].GetComponent<Observer>() != null)
+            {
+                S_GameObjectObservers[i].GetComponent<Observer>().onNotify(e);
+            }
 		}
 	}
 }
