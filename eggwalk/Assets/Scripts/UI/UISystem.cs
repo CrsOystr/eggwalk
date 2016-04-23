@@ -249,7 +249,30 @@ public class UISystem : MonoBehaviour
 
     public void setFinalScore(int score)
     {
-        this.FinalScoreLabel.text = "SCORE: " + score;
+		if (score == 0)
+			this.FinalScoreLabel.text = score + " eggs...";
+		else if (score == 1)
+			this.FinalScoreLabel.text = score + " egg?";
+		else if (score < 5)
+			this.FinalScoreLabel.text = score + " eggs.";
+		else if (score < 10)
+			this.FinalScoreLabel.text = score + " eggs!";
+		else if (score < 15)
+			this.FinalScoreLabel.text = score + " eggs!!!";
+		else if (score < 25)
+			this.FinalScoreLabel.text = score + " eggs!!!!!!";
+		else if (score < 35)
+			this.FinalScoreLabel.text = score + " eggs!!!!!!!!!";
+		else if (score < 50)
+			this.FinalScoreLabel.text = score + " eggs!!!!!!!!!!!!";
+		else if (score < 70)
+			this.FinalScoreLabel.text = score + " eggs!!!!!!!!!!!!!!!!";
+		else if (score < 100)
+			this.FinalScoreLabel.text ="You win.\n" + score + " eggs!";
+		else
+			this.FinalScoreLabel.text = score + " eggs!!!!!!!!!!!!!!!!!!!!";
+		
+		
     }
 
     public void goToGameOverScreen(int finalScore)

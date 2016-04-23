@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.Collections;
 
 public class UIObserver : MonoBehaviour, Observer
 {
@@ -79,8 +80,9 @@ public class UIObserver : MonoBehaviour, Observer
                 }
             case GameEnumerations.EventCategory.Player_IsDead:
                 {
-                    UISys.goToGameOverScreen(gameState.Score);
-
+					
+                    //UISys.goToGameOverScreen(gameState.Score);
+					StartCoroutine(GoToDeathScreen(3.0f));
                     /*
 					 * RECORD LEVEL SCORE
 					 */
@@ -173,5 +175,13 @@ public class UIObserver : MonoBehaviour, Observer
                     break;
                 }
         }
+
     }
+
+	public IEnumerator GoToDeathScreen(float time)
+	{
+		yield return new WaitForSeconds (time);
+		UISys.goToGameOverScreen(gameState.Score);
+
+	}
 }

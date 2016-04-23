@@ -46,6 +46,10 @@ public class GameplayObserver : MonoBehaviour, Observer
 
                     break;
                 }
+			case GameEnumerations.EventCategory.Gameplay_Paused:
+			{
+				break;
+			}
             case GameEnumerations.EventCategory.Player_IsHurt:
                 {
                     PlayerMotor player = e.Entity[0].GetComponent<PlayerMotor>();
