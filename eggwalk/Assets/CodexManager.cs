@@ -16,14 +16,11 @@ public class CodexManager : MonoBehaviour {
     private ScrollRect _scrollRect;
     private bool _hasBeenLoaded;
 
-    void Start()
-    {
-
-    }
-
     void OnEnable()
     {
         if (_hasBeenLoaded) return;
+
+        Time.timeScale = 1.0f;
 
         _eggUIElements = new List<EggCodexUIElement>();
         RectTransform rectTransform = _eggUIPrefab.GetComponent<RectTransform>();
