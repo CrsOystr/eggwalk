@@ -9,7 +9,7 @@ public class CodexManager : MonoBehaviour {
     [SerializeField] private PlayerPrefsManager _playerPrefsManager;
     [SerializeField] private float _rowSpacing;
     [SerializeField] private float _columnSpacing;
-    [SerializeField] private int _eggsPerRow;
+    [SerializeField] private int _eggsPerRow = 2;
 
     private List<EggCodexUIElement> _eggUIElements;
     private RectTransform _thisRect;
@@ -68,7 +68,7 @@ public class CodexManager : MonoBehaviour {
         _hasBeenLoaded = true;
 
         //StartCoroutine(ScrollToTop());
-        _scrollRect.verticalNormalizedPosition = 0.0f;
+        _scrollRect.verticalNormalizedPosition = 1.0f;
     }
 
     private IEnumerator ScrollToTop()
