@@ -17,6 +17,7 @@ public class GameState : MonoBehaviour {
     private bool isGameOver;
     private bool hasCompletedLevel;
     private bool hasStartedLevel;
+    private bool isPaused;
 
 	void Awake ()
     {
@@ -28,6 +29,7 @@ public class GameState : MonoBehaviour {
         Time.timeScale = 1.0f;
         this.score = 0;
         this.deliveredItems = new List<string>();
+        isPaused = false;
 
         this.timeToStart = gameMode.InitialTimeToStartLevel;
         this.hasStartedLevel = false;
@@ -52,11 +54,15 @@ public class GameState : MonoBehaviour {
 
 		if(gameMode.CanPauseGame && Input.GetButtonDown("Pause") && !isGameOver)
         {
-			Time.timeScale = (Time.timeScale != 0.0f) ? 0.0f : 1.0f;
-            this.notifier.notify(new GameEvent(new List<GameObject> { },
-                GameEnumerations.EventCategory.Gameplay_Paused));
-            
+            pauseAction(); 
         }
+    }
+
+    public void pauseAction()
+    {
+        this.notifier.notify(new GameEvent(null,
+                GameEnumerations.EventCategory.Gameplay_Paused));
+        isPaused = !isPaused;
     }
 
     public bool startObjective(int id)

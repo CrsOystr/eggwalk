@@ -24,6 +24,7 @@ public class UISystem : MonoBehaviour
     [SerializeField] private Text CountdownText;
     [SerializeField] private Text ScoreText;
     [SerializeField] private Text FinalScoreLabel;
+    [SerializeField] private GameState gameState;
     [SerializeField] private List<string> deliveredMessages;
 
     private bool HurtMaskisVisible;
@@ -281,6 +282,11 @@ public class UISystem : MonoBehaviour
         HUDElements.SetActive(false);
         GameOverElements.gameObject.SetActive(true);
         SelectionEventSystem.SetSelectedGameObject(GameOverElements.gameObject.GetComponentInChildren<Button>().gameObject);
+    }
+
+    public void pauseButtonAction()
+    {
+        gameState.pauseAction();
     }
 
     public void goToPauseScreen()

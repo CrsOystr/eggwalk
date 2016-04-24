@@ -16,6 +16,11 @@ public class CodexManager : MonoBehaviour {
     private ScrollRect _scrollRect;
     private bool _hasBeenLoaded;
 
+    void Start()
+    {
+
+    }
+
     void OnEnable()
     {
         if (_hasBeenLoaded) return;
@@ -42,6 +47,7 @@ public class CodexManager : MonoBehaviour {
                 egg.transform.SetParent(_eggUIElement.transform);
                 egg.layer = LayerMask.NameToLayer("UI");
                 egg.GetComponent<ExplodePickup>().enabled = false;
+                egg.transform.GetChild(0).gameObject.SetActive(false);
                 egg.transform.localScale = new Vector3(10f, 10f, 10f);
                 _eggUIElement.eggObject = egg;
             }
@@ -61,14 +67,14 @@ public class CodexManager : MonoBehaviour {
 
         _hasBeenLoaded = true;
 
-        StartCoroutine(ScrollToTop());
+        //StartCoroutine(ScrollToTop());
+        _scrollRect.verticalNormalizedPosition = 0.0f;
     }
 
     private IEnumerator ScrollToTop()
     {
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         yield return new WaitForSeconds(1.0f);
-        print("hey");
         _scrollRect.normalizedPosition = new Vector2(0, 1);
     }
 }
