@@ -7,6 +7,7 @@ public class GameState : MonoBehaviour {
 
     [SerializeField] private GameplayNotifier notifier;
     [SerializeField] private GameMode gameMode;
+	[SerializeField] private bool restartButtonEnabled;
     [SerializeField] private List<GameObject> objectiveList;
 
     private int timeToStart;
@@ -18,6 +19,7 @@ public class GameState : MonoBehaviour {
     private bool hasCompletedLevel;
     private bool hasStartedLevel;
     private bool isPaused;
+	private bool tutorialPaused;
 
 	void Awake ()
     {
@@ -30,6 +32,7 @@ public class GameState : MonoBehaviour {
         this.score = 0;
         this.deliveredItems = new List<string>();
         isPaused = false;
+		tutorialPaused = false;
 
         this.timeToStart = gameMode.InitialTimeToStartLevel;
         this.hasStartedLevel = false;
@@ -42,7 +45,8 @@ public class GameState : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetButtonDown("Restart"))
+
+        if (restartButtonEnabled && Input.GetButtonDown("Restart"))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
@@ -60,10 +64,29 @@ public class GameState : MonoBehaviour {
 
     public void pauseAction()
     {
-        this.notifier.notify(new GameEvent(null,
+		if (tutorialPaused == false) {
+			this.notifier.notify (new GameEvent (null,
                 GameEnumerations.EventCategory.Gameplay_Paused));
-        isPaused = !isPaused;
+			isPaused = !isPaused;
+		}
+		this.notifier.notify(new GameEvent(null,
+			GameEnumerations.EventCategory.Gameplay_PauseMenu));
+
+        //isPaused = !isPaused;
     }
+
+	public void tutorialPause()
+	{
+			this.notifier.notify (new GameEvent (null,
+				GameEnumerations.EventCategory.Gameplay_Paused));
+			isPaused = !isPaused;
+
+			tutorialPaused = !tutorialPaused;
+		}
+	public void tutorialRemoveObj(GameObject obj)
+	{
+		obj.SetActive (false);
+	}
 
     public bool startObjective(int id)
     {

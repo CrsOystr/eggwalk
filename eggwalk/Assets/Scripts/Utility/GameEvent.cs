@@ -20,6 +20,7 @@ namespace GameEnumerations {
         Gameplay_Countdown,
         Gameplay_StartLevel,
         Gameplay_Paused,
+		Gameplay_PauseMenu,
         Gameplay_CompletedLevel
     };
 }
