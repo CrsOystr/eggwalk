@@ -40,6 +40,7 @@ public class UISystem : MonoBehaviour
         TurnLeftSignalIsVisible = false;
 
         setImageAlpha(ref HurtImageMask, 0.0f);
+		setImageAlpha(ref HurtDeathImageMask, 0.0f);
         setImageAlpha(ref TurnRightSignal, 0.0f);
         setImageAlpha(ref TurnLeftSignal, 0.0f);
         DeliveredTextBox.color = new Color(DeliveredTextBox.color.r,
@@ -154,6 +155,12 @@ public class UISystem : MonoBehaviour
         HurtImageMask.color = new Color(HurtImageMask.color.r, HurtImageMask.color.g, HurtImageMask.color.b, 1.0f);
         HurtMaskisVisible = true;
     }
+
+	public void showHurtDeathMask(bool visible)
+	{
+		HurtDeathImageMask.color = new Color(HurtDeathImageMask.color.r, HurtDeathImageMask.color.g, HurtDeathImageMask.color.b, 1.0f);
+	}
+
 
     public void showRightSignalImage(bool visible)
     {

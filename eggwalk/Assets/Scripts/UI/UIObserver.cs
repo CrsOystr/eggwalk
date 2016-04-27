@@ -85,7 +85,7 @@ public class UIObserver : MonoBehaviour, Observer
                 }
             case GameEnumerations.EventCategory.Player_IsDead:
                 {
-					
+					UISys.showHurtDeathMask (true);
                     //UISys.goToGameOverScreen(gameState.Score);
 					StartCoroutine(GoToDeathScreen(3.0f));
                     /*

@@ -9,6 +9,7 @@ public class GameMode : MonoBehaviour {
     [SerializeField] private bool resetLivesAfterObjectiveComplete;
     [SerializeField] private bool canTurnAnywhere;
     [SerializeField] private bool canPauseGame = true;
+	[SerializeField] private bool canInstantlyRestart = false;
     [SerializeField] private float maximumTimeAllowed;
     [SerializeField] private int initialTimeToStartLevel;
     [SerializeField] private int scoreRequiredToClearLevel;
@@ -53,6 +54,11 @@ public class GameMode : MonoBehaviour {
     {
         get { return this.canPauseGame; }
     }
+
+	public bool CanInstantlyRestart
+	{
+		get { return this.canInstantlyRestart; }
+	}
 
     public bool CanTurnAnywhere
     {

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections;
 
 [RequireComponent(typeof(BoxCollider))]
@@ -8,86 +9,54 @@ using System.Collections;
 public class TutorialObjectBehavior : MonoBehaviour
 {
 	[SerializeField] private GameState gs;
+	[SerializeField] private UISystem UISys;
 	[SerializeField] private GameObject disp;
+	[SerializeField] private GameObject but;
+	[SerializeField] private EventSystem es;
+
+
 	public bool pause;
 	public bool killOnExit;
 	public bool endTutorial;
 
 
-	//Image img;
-
-	// Use this for initialization
-	void Start ()
-	{
-		//zone = GetComponent<BoxCollider> ();
-		//disp = GetComponent<GameObject> ();
-	}
-	
-	// Update is called once per frame
-	/*
-	void Update ()
-	{
-		
-	}
-
-	public bool isOn;
-	
-	public void setOn(bool o)
-	{
-		isOn = o;
-	}
-	
-	public bool isSwitchOn()
-	{
-		return isOn;
-	}
-	*/
 
 	void OnTriggerEnter(Collider col) {
 		
 		if (col.gameObject.tag == "Player") {
-			disp.SetActive(true);
-			if (pause)
-				gs.tutorialPause();
-			/*
-			if (pause)
-				PauseGame();
+			if (endTutorial == false)
+				disp.SetActive (true);
 			else
-				DisplayContinuously();
-				*/
-			//display the UI image
+				StartCoroutine (endTutorialProcess ());
+
+			if (pause) {
+				gs.tutorialPause ();
+				es.SetSelectedGameObject (but);
+			}	
 		}
-			//sb.setOn (true);
 	}
 	
 	void OnTriggerExit(Collider col) {
 		
 		if (col.gameObject.tag == "Player") {
-			disp.SetActive(false);
-			if (!pause)
-				gs.tutorialPause();
+			if (!endTutorial)
+				disp.SetActive(false);
 			if (killOnExit)
 				this.gameObject.SetActive(false);
+				
 		}
-			//sb.setOn (false);
 	}
-	/*
-	void OnTriggerStay(Collider col)
+
+	private IEnumerator endTutorialProcess()
 	{
-
-		if (pause)
-			PauseGame ();
-	}
-
-	private void PauseGame()
-	{
-		
-	}
-
-	private void DisplayContinuously()
-	{
+		//Text tx = disp.GetComponent<Text>();
+		yield return new WaitForSeconds(1.5f);
+		gs.tutorialPause();
+		disp.SetActive (true);
+		es.SetSelectedGameObject (but);
+		//tx.text = "Tutorial Completed!";
+		//yield return new WaitForSeconds (2f);
 
 	}
-	*/
 }
 

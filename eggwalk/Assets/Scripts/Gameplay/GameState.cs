@@ -7,7 +7,6 @@ public class GameState : MonoBehaviour {
 
     [SerializeField] private GameplayNotifier notifier;
     [SerializeField] private GameMode gameMode;
-	[SerializeField] private bool restartButtonEnabled;
     [SerializeField] private List<GameObject> objectiveList;
 
     private int timeToStart;
@@ -46,7 +45,7 @@ public class GameState : MonoBehaviour {
     void Update()
     {
 
-        if (restartButtonEnabled && Input.GetButtonDown("Restart"))
+		if (gameMode.CanInstantlyRestart && Input.GetButtonDown("Restart"))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }

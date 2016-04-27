@@ -110,6 +110,12 @@ public class PlayerMotor : MonoBehaviour
             return;
         }
 
+		if (Time.timeScale == 0.0f) {
+			return;
+		}
+
+		
+
         if (activePlayerStats.CurrentLives <= 0 || Mathf.Abs(getRollingRotation) > activePlayerStats.DropAtRotation)
         {
             if (isAlive)

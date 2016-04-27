@@ -19,7 +19,7 @@ public class Turning : MonoBehaviour {
         bool turnRightInput = Input.GetButtonDown("TurnRight");
         bool turnLeftInput = Input.GetButtonDown("TurnLeft");
 
-        if (turnRightInput)
+		if (turnRightInput && Time.timeScale == 1.0f)
         {
             turnRight = true;
             isTurning = true;
@@ -36,7 +36,7 @@ public class Turning : MonoBehaviour {
             }
         }
 
-        if (turnLeftInput)
+		if (turnLeftInput && Time.timeScale == 1.0f)
         {
             turnRight = false;
             isTurning = true;
@@ -58,7 +58,7 @@ public class Turning : MonoBehaviour {
             currentTurn = 90.0f - Mathf.Abs(currentTurn);
             reverse = false;
         }
-
+			
         lastInputWasRight = false;
         lastInputWasLeft = false;
 
